@@ -16,7 +16,14 @@ namespace BBAR_Stat_Tool
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+
+            ConfigFile.LoadConfig();
+            frmMain firstMain = new frmMain();
+            GeneralOps.Startup(firstMain);
+            ConfigFile.ACTUAL_MAIN = firstMain;
+
+            Application.Run(firstMain);
+            
         }
     }
 }
