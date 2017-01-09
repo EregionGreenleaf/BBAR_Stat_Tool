@@ -28,6 +28,7 @@ namespace BBAR_Stat_Tool
             {
                 ADDRESS = ConfigurationSettings.AppSettings["Address Start"];
                 int tempInt = 0;
+                double tempDouble = 2.0;
                 START_PAGE = int.TryParse(ConfigurationSettings.AppSettings["Start Page"], out tempInt) ? tempInt : 0;
                 END_PAGE = int.TryParse(ConfigurationSettings.AppSettings["End Page"], out tempInt) ? tempInt : 0;
                 SEPARATOR = ConfigurationSettings.AppSettings["Separator"];
@@ -40,6 +41,7 @@ namespace BBAR_Stat_Tool
                 MEDIUM = false;
                 HEAVY = false;
                 ASSAULT = false;
+                EXPECTED_TIME = double.TryParse(ConfigurationSettings.AppSettings["Expected download time per page"], out tempDouble) ? tempDouble : 2.0;
                 return true;
             }
             catch (Exception exp)
@@ -56,6 +58,7 @@ namespace BBAR_Stat_Tool
                 MEDIUM = false;
                 HEAVY = false;
                 ASSAULT = false;
+                EXPECTED_TIME = 2.0;
                 return false;
             }
         }
@@ -66,6 +69,12 @@ namespace BBAR_Stat_Tool
         public static bool MEDIUM { get; set; }
         public static bool HEAVY { get; set; }
         public static bool ASSAULT { get; set; }
+
+        public static double EXPECTED_TIME { get; set; }
+        public static double ACTUAL_TIME { get; set; }
+        public static int TOTAL_PAGES { get; set; }
+        public static int MAX_PAGES = 3500;
+        
 
     }
 }
