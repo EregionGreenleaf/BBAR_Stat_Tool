@@ -33,6 +33,7 @@
             this.lblCopyright = new System.Windows.Forms.Label();
             this.btnOne = new System.Windows.Forms.Button();
             this.ttBtnOne = new System.Windows.Forms.ToolTip(this.components);
+            this.btnTest = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblCopyright
@@ -59,12 +60,26 @@
             this.btnOne.UseVisualStyleBackColor = true;
             this.btnOne.Click += new System.EventHandler(this.btnOne_Click);
             // 
+            // btnTest
+            // 
+            this.btnTest.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnTest.Location = new System.Drawing.Point(12, 166);
+            this.btnTest.Name = "btnTest";
+            this.btnTest.Size = new System.Drawing.Size(274, 28);
+            this.btnTest.TabIndex = 2;
+            this.btnTest.Text = "Test Get";
+            this.ttBtnOne.SetToolTip(this.btnTest, "Configure the Data you want from the MWO Leaderboards and download them.");
+            this.btnTest.UseCompatibleTextRendering = true;
+            this.btnTest.UseVisualStyleBackColor = true;
+            this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(298, 361);
+            this.Controls.Add(this.btnTest);
             this.Controls.Add(this.btnOne);
             this.Controls.Add(this.lblCopyright);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
@@ -85,6 +100,7 @@
         private System.Windows.Forms.Label lblCopyright;
         private System.Windows.Forms.Button btnOne;
         private System.Windows.Forms.ToolTip ttBtnOne;
+        private System.Windows.Forms.Button btnTest;
     }
 }
 

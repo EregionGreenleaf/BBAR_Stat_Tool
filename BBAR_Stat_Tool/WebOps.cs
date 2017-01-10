@@ -32,42 +32,42 @@ namespace BBAR_Stat_Tool
             return s;
         }
 
-        /*
-        public static void TestLoginPost(string BaseAddress)
+        
+        public static async void TestLoginPost(string BaseAddress)
         {
-            using (var client = new HttpClient() { BaseAddress = new Uri(BaseAddress) })
+            var cookieContainer = new CookieContainer();
+            Uri uri = new Uri("https://mwomercs.com/profile/leaderboards");
+            var handler = new HttpClientHandler();
+            handler.CookieContainer = cookieContainer;
+            using (var client = new HttpClient(handler) { BaseAddress = new Uri(BaseAddress) })
             {
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/xml"));
-                //XDocument xDoc = XDocument.Parse("<AssignmentInformation><Id></Id><Resource><Id>bcd376a3-4886-e611-80cd-000c29d0250d</Id><Name>Francesco Allegrezza</Name></Resource><TaskId>460fc75a-0ab7-e611-9c04-94659cdc7633</TaskId><Units>0.5</Units></AssignmentInformation>");
-                //var xmlString = xDoc.ToString();
-                HttpContent content;
-                HttpContentHeaders header;
-                //Stream x = await content.ReadAsStreamAsync();
-                HttpResponseMessage risposta = client.PostAsync(BaseAddress,).Result;
 
-
-                using (
-                        HttpResponseMessage response = client.PostAsync(
-                                                                        AssignmentsApiBaseAddress + "Create", new FormUrlEncodedContent(
-                                                                            new[]
-                                                                                {
-                                                                                    new KeyValuePair<string, string>("assignment", xmlString)
-                                                                                }
-                                                                            )
-                                                                       ).Result
-                      )
+                HttpResponseMessage risposta = client.PostAsync(BaseAddress, new FormUrlEncodedContent(
+                        new[]
+                        {
+                            new KeyValuePair<string,string> ("email","eregiongreenleafthegray@yahoo.it"),
+                            new KeyValuePair<string,string> ("password","chupa33")
+                        })
+                    ).Result;
+                string responseBodyAsText = await risposta.Content.ReadAsStringAsync();
+                List<IEnumerable<string>> SID = new List<IEnumerable<string>>();
+                foreach (var head in risposta.Headers)
                 {
-                    if (!response.IsSuccessStatusCode)
-                    {
-                        return;
-                    }
+                    SID.Add(head.Value);
+                }
+                client.DefaultRequestHeaders.Add("Cookie:", "leaderboard_season=1");
+                risposta = client.GetAsync("https://mwomercs.com/profile/leaderboards").Result; //, new FormUrlEncodedContent(richiesta)).Result;
+                responseBodyAsText = await risposta.Content.ReadAsStringAsync();
 
-                    string result = response.Content.ReadAsStringAsync().Result;
+                List<IEnumerable<string>> DD = new List<IEnumerable<string>>();
+                foreach(var tt in client.DefaultRequestHeaders)
+                {
                 }
             }
         }
-        */
+        
 
         public static string LoginAndDownload()
         {

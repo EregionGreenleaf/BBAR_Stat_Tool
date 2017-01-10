@@ -280,6 +280,8 @@ namespace BBAR_Stat_Tool
                 return;
             }
         }
+        
+        /*
         private void CheckPages()
         {
             int tempInt = 0;
@@ -335,32 +337,8 @@ namespace BBAR_Stat_Tool
             txtStartPage.BackColor = Color.FromArgb(224, 224, 224);
             txtEndPage.BackColor = Color.FromArgb(224, 224, 224);
         }
+        */
 
-        private void txtStartPage_Leave(object sender, EventArgs e)
-        {
-            CheckPages();
-        }
-
-        private void txtEndPage_Leave(object sender, EventArgs e)
-        {
-            CheckPages();
-        }
-
-        private void lblTimer_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtStartGeneral_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            ConfigFile.ACTUAL_MAIN.Show();
-            this.Hide();
-        }
 
         private void chbFullGeneral_CheckedChanged(object sender, EventArgs e)
         {
@@ -391,30 +369,10 @@ namespace BBAR_Stat_Tool
             txtStartAssault.Enabled = !chbFullAssault.Checked;
             txtEndAssault.Enabled = !chbFullAssault.Checked;
         }
-
-        private void txtEndGeneral_TextChanged(object sender, EventArgs e)
+        
+        private void txtGENERIC_Leave(object sender, EventArgs e)
         {
-
-        }
-
-        private void txtStartLight_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtStartLight_Leave(object sender, EventArgs e)
-        {
-            CheckPage(txtStartLight);
-        }
-
-        private void txtStartGeneral_Leave(object sender, EventArgs e)
-        {
-            CheckPage(txtStartGeneral);
-        }
-
-        private void txtEndGeneral_Leave(object sender, EventArgs e)
-        {
-            CheckPage(txtEndGeneral);
+            CheckPage(sender as TextBox);
         }
 
         private void panel1_Leave(object sender, EventArgs e)
@@ -425,19 +383,96 @@ namespace BBAR_Stat_Tool
             int startMedium, endMedium, totalMedium;
             int startHeavy, endHeavy, totalHeavy;
             int startAssault, endAssault, totalAssault;
-            string errors = "";
-            if (chbGeneral.Checked)
+            string errors = null;
+            if (chbGeneral.Checked && chbFullGeneral.Checked == false)
             {
                 startGeneral = int.TryParse(txtStartGeneral.Text, out tempInt) ? tempInt : -666;
                 endGeneral = int.TryParse(txtEndGeneral.Text, out tempInt) ? tempInt : -666;
                 totalGeneral = endGeneral - startGeneral;
-                if (totalGeneral < 0)
+                if (totalGeneral < 0 || totalGeneral > ConfigFile.MAX_PAGES)
                 {
-                    errors += "\n- General pages ";
+                    txtStartGeneral.BackColor = Color.Red;
+                    txtEndGeneral.BackColor = Color.Red;
+                    if (totalGeneral < 0)
+                        errors += "\n- GENERAL pages values are incorrect.";
+                    if (totalGeneral > ConfigFile.MAX_PAGES)
+                        errors += "\n- GENERAL pages values totals more then the maximum allowed: " + ConfigFile.MAX_PAGES;
                 }
-                    
             }
-            MessageBox.Show("OK");
+            if (chbAssault.Checked && chbFullAssault.Checked == false)
+            {
+                startAssault = int.TryParse(txtStartAssault.Text, out tempInt) ? tempInt : -666;
+                endAssault = int.TryParse(txtEndAssault.Text, out tempInt) ? tempInt : -666;
+                totalAssault = endAssault - startAssault;
+                if (totalAssault < 0 || totalAssault > ConfigFile.MAX_PAGES)
+                {
+                    txtStartAssault.BackColor = Color.Red;
+                    txtEndAssault.BackColor = Color.Red;
+                    if (totalAssault < 0)
+                        errors += "\n- ASSAULT pages values are incorrect.";
+                    if (totalAssault > ConfigFile.MAX_PAGES)
+                        errors += "\n- ASSAULT pages values totals more then the maximum allowed: " + ConfigFile.MAX_PAGES;
+                }
+            }
+            if (chbHeavy.Checked && chbFullHeavy.Checked == false)
+            {
+                startHeavy = int.TryParse(txtStartHeavy.Text, out tempInt) ? tempInt : -666;
+                endHeavy = int.TryParse(txtEndHeavy.Text, out tempInt) ? tempInt : -666;
+                totalHeavy = endHeavy - startHeavy;
+                if (totalHeavy < 0 || totalHeavy > ConfigFile.MAX_PAGES)
+                {
+                    txtStartHeavy.BackColor = Color.Red;
+                    txtEndHeavy.BackColor = Color.Red;
+                    if (totalHeavy < 0)
+                        errors += "\n- HEAVY pages values are incorrect.";
+                    if (totalHeavy > ConfigFile.MAX_PAGES)
+                        errors += "\n- HEAVY pages values totals more then the maximum allowed: " + ConfigFile.MAX_PAGES;
+                }
+            }
+            if (chbMedium.Checked && chbFullMedium.Checked == false)
+            {
+                startMedium = int.TryParse(txtStartMedium.Text, out tempInt) ? tempInt : -666;
+                endMedium = int.TryParse(txtEndMedium.Text, out tempInt) ? tempInt : -666;
+                totalMedium = endMedium - startMedium;
+                if (totalMedium < 0 || totalMedium > ConfigFile.MAX_PAGES)
+                {
+                    txtStartMedium.BackColor = Color.Red;
+                    txtEndMedium.BackColor = Color.Red;
+                    if (totalMedium < 0)
+                        errors += "\n- MEDIUM pages values are incorrect.";
+                    if (totalMedium > ConfigFile.MAX_PAGES)
+                        errors += "\n- MEDIUM pages values totals more then the maximum allowed: " + ConfigFile.MAX_PAGES;
+                }
+            }
+            if (chbLight.Checked && chbFullLight.Checked == false)
+            {
+                startLight = int.TryParse(txtStartLight.Text, out tempInt) ? tempInt : -666;
+                endLight = int.TryParse(txtEndLight.Text, out tempInt) ? tempInt : -666;
+                totalLight = endLight - startLight;
+                if (totalLight < 0 || totalLight > ConfigFile.MAX_PAGES)
+                {
+                    txtStartLight.BackColor = Color.Red;
+                    txtEndLight.BackColor = Color.Red;
+                    if (totalLight < 0)
+                        errors += "\n- LIGHT pages values are incorrect.";
+                    if (totalLight > ConfigFile.MAX_PAGES)
+                        errors += "\n- LIGHT pages values totals more then the maximum allowed: " + ConfigFile.MAX_PAGES;
+                }
+            }
+            if(errors != null)
+                MessageBox.Show(errors, "General 'page values' errors.", MessageBoxButtons.OK);
+        }
+
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            ConfigFile.ACTUAL_MAIN.Show();
+            this.Hide();
+        }
+
+        private void txtGeneral_MouseCaptureChanged(object sender, EventArgs e)
+        {
+            (sender as TextBox).SelectAll();
         }
     }
 }

@@ -47,6 +47,7 @@ namespace BBAR_Stat_Tool
 	<tbody>";
 
             string actualPage; //= WebOps.downloadWebPage(html);
+            WebOps.TestLoginPost("https://mwomercs.com/do/login");
             WebOps.GetPage();
             //actualPage = WebOps.LoginAndDownload();
             actualPage = WebOps.downloadWebPage(html);
