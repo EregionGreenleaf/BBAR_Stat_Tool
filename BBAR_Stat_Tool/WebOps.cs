@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -29,6 +31,43 @@ namespace BBAR_Stat_Tool
             string s = reader.ReadToEnd();
             return s;
         }
+
+        /*
+        public static void TestLoginPost(string BaseAddress)
+        {
+            using (var client = new HttpClient() { BaseAddress = new Uri(BaseAddress) })
+            {
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/xml"));
+                //XDocument xDoc = XDocument.Parse("<AssignmentInformation><Id></Id><Resource><Id>bcd376a3-4886-e611-80cd-000c29d0250d</Id><Name>Francesco Allegrezza</Name></Resource><TaskId>460fc75a-0ab7-e611-9c04-94659cdc7633</TaskId><Units>0.5</Units></AssignmentInformation>");
+                //var xmlString = xDoc.ToString();
+                HttpContent content;
+                HttpContentHeaders header;
+                //Stream x = await content.ReadAsStreamAsync();
+                HttpResponseMessage risposta = client.PostAsync(BaseAddress,).Result;
+
+
+                using (
+                        HttpResponseMessage response = client.PostAsync(
+                                                                        AssignmentsApiBaseAddress + "Create", new FormUrlEncodedContent(
+                                                                            new[]
+                                                                                {
+                                                                                    new KeyValuePair<string, string>("assignment", xmlString)
+                                                                                }
+                                                                            )
+                                                                       ).Result
+                      )
+                {
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        return;
+                    }
+
+                    string result = response.Content.ReadAsStringAsync().Result;
+                }
+            }
+        }
+        */
 
         public static string LoginAndDownload()
         {

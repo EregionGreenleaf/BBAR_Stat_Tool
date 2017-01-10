@@ -35,6 +35,8 @@ namespace BBAR_Stat_Tool
                 FILE_OUTPUT = ConfigurationSettings.AppSettings["Output File"];
                 SEASON_FIRST = int.TryParse(ConfigurationSettings.AppSettings["First Season"], out tempInt) ? tempInt : 1;
                 SEASON_LAST = int.TryParse(ConfigurationSettings.AppSettings["Last Season"], out tempInt) ? tempInt : 7;
+                MAX_PAGES = int.TryParse(ConfigurationSettings.AppSettings["Default Max Page"], out tempInt) ? tempInt : 3500;
+                MIN_PAGES = int.TryParse(ConfigurationSettings.AppSettings["Default Min Page"], out tempInt) ? tempInt : 0;
 
                 GENERAL = false;
                 LIGHT = false;
@@ -49,9 +51,11 @@ namespace BBAR_Stat_Tool
                 Logger.PrintLC("Failed to load Settings from the configuration file.\nLoading the default settings instead.");
                 ADDRESS = "";
                 START_PAGE = 1;
-                END_PAGE = 2000;
+                END_PAGE = 200;
                 SEASON_FIRST = 1;
                 SEASON_LAST = 7;
+                MAX_PAGES = 3500;
+                MIN_PAGES = 0;
 
                 GENERAL = false;
                 LIGHT = false;
@@ -74,6 +78,7 @@ namespace BBAR_Stat_Tool
         public static double ACTUAL_TIME { get; set; }
         public static int TOTAL_PAGES { get; set; }
         public static int MAX_PAGES = 3500;
+        public static int MIN_PAGES = 0;
         
 
     }
