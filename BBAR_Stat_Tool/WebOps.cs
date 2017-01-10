@@ -39,6 +39,7 @@ namespace BBAR_Stat_Tool
             Uri uri = new Uri("https://mwomercs.com/profile/leaderboards");
             var handler = new HttpClientHandler();
             handler.CookieContainer = cookieContainer;
+            handler.CookieContainer.Add(uri, new System.Net.Cookie("leaderboard_season", "0"));
             using (var client = new HttpClient(handler) { BaseAddress = new Uri(BaseAddress) })
             {
                 client.DefaultRequestHeaders.Accept.Clear();
@@ -57,9 +58,13 @@ namespace BBAR_Stat_Tool
                 {
                     SID.Add(head.Value);
                 }
-                client.DefaultRequestHeaders.Add("Cookie:", "leaderboard_season=1");
-                risposta = client.GetAsync("https://mwomercs.com/profile/leaderboards").Result; //, new FormUrlEncodedContent(richiesta)).Result;
-                responseBodyAsText = await risposta.Content.ReadAsStringAsync();
+                for(int a = 0; a < 100; a++)
+                {
+                    risposta = client.GetAsync("https://mwomercs.com/profile/leaderboards?page=" + a +"&type=0").Result;
+                    responseBodyAsText = await risposta.Content.ReadAsStringAsync();
+                }
+                //client.DefaultRequestHeaders.Add("Cookie:", "leaderboard_season=1");
+                
 
                 List<IEnumerable<string>> DD = new List<IEnumerable<string>>();
                 foreach(var tt in client.DefaultRequestHeaders)
