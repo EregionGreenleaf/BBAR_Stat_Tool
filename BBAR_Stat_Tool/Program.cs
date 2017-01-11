@@ -21,6 +21,7 @@ namespace BBAR_Stat_Tool
             frmMain firstMain = new frmMain();
             GeneralOps.Startup(firstMain);
             ConfigFile.ACTUAL_MAIN = firstMain;
+            Logger.Initialize(@"F:\CODICE\Output");
 
             Application.Run(firstMain);
             

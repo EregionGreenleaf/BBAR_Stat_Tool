@@ -33,13 +33,14 @@ namespace BBAR_Stat_Tool
         }
 
         
-        public static async void TestLoginPost(string BaseAddress)
+        public static async void TestLoginPost(string BaseAddress, int season, int type)
         {
+            season = season - 1;
             var cookieContainer = new CookieContainer();
             Uri uri = new Uri("https://mwomercs.com/profile/leaderboards");
             var handler = new HttpClientHandler();
             handler.CookieContainer = cookieContainer;
-            handler.CookieContainer.Add(uri, new System.Net.Cookie("leaderboard_season", "0"));
+            handler.CookieContainer.Add(uri, new System.Net.Cookie("leaderboard_season", season.ToString()));
             using (var client = new HttpClient(handler) { BaseAddress = new Uri(BaseAddress) })
             {
                 client.DefaultRequestHeaders.Accept.Clear();
@@ -53,23 +54,25 @@ namespace BBAR_Stat_Tool
                         })
                     ).Result;
                 string responseBodyAsText = await risposta.Content.ReadAsStringAsync();
-                List<IEnumerable<string>> SID = new List<IEnumerable<string>>();
-                foreach (var head in risposta.Headers)
-                {
-                    SID.Add(head.Value);
-                }
-                for(int a = 0; a < 100; a++)
-                {
-                    risposta = client.GetAsync("https://mwomercs.com/profile/leaderboards?page=" + a +"&type=0").Result;
-                    responseBodyAsText = await risposta.Content.ReadAsStringAsync();
-                }
-                //client.DefaultRequestHeaders.Add("Cookie:", "leaderboard_season=1");
-                
 
-                List<IEnumerable<string>> DD = new List<IEnumerable<string>>();
-                foreach(var tt in client.DefaultRequestHeaders)
+                Logger.PrintF(@"F:\CODICE\Output\General_Season_05.txt", "** STARTING DOWNLOAD", true);
+                string resp = null;
+                int lastPage = 0;
+                for(int a = 3500; a < 3600; a++)
                 {
+                    risposta = client.GetAsync("https://mwomercs.com/profile/leaderboards?page=" + a.ToString() +"&type=" + type.ToString()).Result;
+                    responseBodyAsText = await risposta.Content.ReadAsStringAsync();
+                    resp = DataOps.ParseHTML(responseBodyAsText);
+                    if (resp.Contains("<td colspan='10'>No results found"))
+                    {
+                        lastPage = a;
+                        resp = resp.Replace("<td colspan='10'>No results found", "");
+                        Logger.PrintF(@"F:\CODICE\Output\General_Season_05.txt", resp, false);
+                        break;
+                    }
+                    Logger.PrintF(@"F:\CODICE\Output\General_Season_05.txt", resp, false);
                 }
+                Logger.PrintF(@"F:\CODICE\Output\General_Season_05.txt", "** FINISH DOWNLOADING", true);
             }
         }
         

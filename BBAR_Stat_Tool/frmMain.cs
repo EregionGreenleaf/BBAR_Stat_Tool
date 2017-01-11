@@ -55,7 +55,7 @@ namespace BBAR_Stat_Tool
 
         private void btnTest_Click(object sender, EventArgs e)
         {
-            WebOps.TestLoginPost("https://mwomercs.com/do/login");
+            WebOps.TestLoginPost("https://mwomercs.com/do/login",5,0);
         }
     }
 }
