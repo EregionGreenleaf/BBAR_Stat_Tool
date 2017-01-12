@@ -63,11 +63,11 @@
             // btnTest
             // 
             this.btnTest.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnTest.Location = new System.Drawing.Point(12, 166);
+            this.btnTest.Location = new System.Drawing.Point(12, 46);
             this.btnTest.Name = "btnTest";
             this.btnTest.Size = new System.Drawing.Size(274, 28);
             this.btnTest.TabIndex = 2;
-            this.btnTest.Text = "Test Get";
+            this.btnTest.Text = "Test Connection Speed";
             this.ttBtnOne.SetToolTip(this.btnTest, "Configure the Data you want from the MWO Leaderboards and download them.");
             this.btnTest.UseCompatibleTextRendering = true;
             this.btnTest.UseVisualStyleBackColor = true;

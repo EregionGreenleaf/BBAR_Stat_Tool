@@ -33,9 +33,36 @@ namespace BBAR_Stat_Tool
         }
 
         
-        public static async void TestLoginPost(string BaseAddress, int season, int type)
+        public static async void LoginAndDownload(int season, int type, string email, string password)
         {
+
+            string typeStr = null;
+            switch (type)
+            {
+                case 0:
+                    typeStr = "GENERAL";
+                    break;
+                case 1:
+                    typeStr = "LIGHT";
+                    break;
+                case 2:
+                    typeStr = "MEDIUM";
+                    break;
+                case 3:
+                    typeStr = "HEAVY";
+                    break;
+                case 4:
+                    typeStr = "ASSAULT";
+                    break;
+            }
+            string fileName;
+            if (season<10)
+                fileName = "S0" + season + "_" + typeStr + ".txt";
+            else
+                fileName = "S" + season + "_" + typeStr + ".txt";
+
             season = season - 1;
+            string BaseAddress = "https://mwomercs.com/do/login";
             var cookieContainer = new CookieContainer();
             Uri uri = new Uri("https://mwomercs.com/profile/leaderboards");
             var handler = new HttpClientHandler();
@@ -49,16 +76,16 @@ namespace BBAR_Stat_Tool
                 HttpResponseMessage risposta = client.PostAsync(BaseAddress, new FormUrlEncodedContent(
                         new[]
                         {
-                            new KeyValuePair<string,string> ("email","eregiongreenleafthegray@yahoo.it"),
-                            new KeyValuePair<string,string> ("password","chupa33")
+                            new KeyValuePair<string,string> ("email", email),
+                            new KeyValuePair<string,string> ("password", password)
                         })
                     ).Result;
                 string responseBodyAsText = await risposta.Content.ReadAsStringAsync();
 
-                Logger.PrintF(@"F:\CODICE\Output\General_Season_05.txt", "** STARTING DOWNLOAD", true);
+                Logger.PrintF(@"F:\CODICE\Output\" + fileName, "** STARTING DOWNLOAD", true);
                 string resp = null;
                 int lastPage = 0;
-                for(int a = 3500; a < 3600; a++)
+                for(int a = 0; a < 3500; a++)
                 {
                     risposta = client.GetAsync("https://mwomercs.com/profile/leaderboards?page=" + a.ToString() +"&type=" + type.ToString()).Result;
                     responseBodyAsText = await risposta.Content.ReadAsStringAsync();
@@ -67,12 +94,12 @@ namespace BBAR_Stat_Tool
                     {
                         lastPage = a;
                         resp = resp.Replace("<td colspan='10'>No results found", "");
-                        Logger.PrintF(@"F:\CODICE\Output\General_Season_05.txt", resp, false);
+                        Logger.PrintF(@"F:\CODICE\Output\" + fileName, resp, false);
                         break;
                     }
-                    Logger.PrintF(@"F:\CODICE\Output\General_Season_05.txt", resp, false);
+                    Logger.PrintF(@"F:\CODICE\Output\" + fileName, resp, false);
                 }
-                Logger.PrintF(@"F:\CODICE\Output\General_Season_05.txt", "** FINISH DOWNLOADING", true);
+                Logger.PrintF(@"F:\CODICE\Output\" + fileName, "** FINISH DOWNLOADING", true);
             }
         }
         

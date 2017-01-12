@@ -474,5 +474,23 @@ namespace BBAR_Stat_Tool
         {
             (sender as TextBox).SelectAll();
         }
+
+        private void btnDownload_Click(object sender, EventArgs e)
+        {
+            int tempInt = 0;
+            int season = int.TryParse(cmbSeasonNumber.Text, out tempInt) ? tempInt : 0;
+            string email = txtEMail.Text;
+            string password = txtPassword.Text;
+            if (chbGeneral.Checked)
+                WebOps.LoginAndDownload(season, 0, email, password );
+            if (chbLight.Checked)
+                WebOps.LoginAndDownload(season, 1, email, password);
+            if (chbMedium.Checked)
+                WebOps.LoginAndDownload(season, 2, email, password);
+            if (chbHeavy.Checked)
+                WebOps.LoginAndDownload(season, 3, email, password);
+            if (chbAssault.Checked)
+                WebOps.LoginAndDownload(season, 4, email, password);
+        }
     }
 }

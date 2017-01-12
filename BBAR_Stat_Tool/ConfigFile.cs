@@ -13,7 +13,7 @@ namespace BBAR_Stat_Tool
         public static frmMain ACTUAL_MAIN { get; set; } = null;
         public static frmGetData ACTUAL_GETDATA { get; set; } = null;
 
-
+        public static string SAVE_PATH { get; set; }
         public static int SEASON_FIRST { get; set; }
         public static int SEASON_LAST { get; set; }
         public static string ADDRESS { get; set; }

@@ -101,9 +101,9 @@
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(368, 94);
+            this.progressBar1.Location = new System.Drawing.Point(334, 400);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(149, 23);
+            this.progressBar1.Size = new System.Drawing.Size(189, 23);
             this.progressBar1.Step = 1;
             this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.progressBar1.TabIndex = 2;
@@ -510,7 +510,7 @@
             this.btnCancel.BackColor = System.Drawing.Color.Black;
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnCancel.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancel.Location = new System.Drawing.Point(387, 151);
+            this.btnCancel.Location = new System.Drawing.Point(368, 308);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(129, 35);
             this.btnCancel.TabIndex = 10;
@@ -524,13 +524,14 @@
             this.btnDownload.BackColor = System.Drawing.Color.Black;
             this.btnDownload.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnDownload.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDownload.Location = new System.Drawing.Point(387, 194);
+            this.btnDownload.Location = new System.Drawing.Point(368, 349);
             this.btnDownload.Name = "btnDownload";
             this.btnDownload.Size = new System.Drawing.Size(129, 35);
             this.btnDownload.TabIndex = 11;
             this.btnDownload.Text = "Start Download";
             this.toolTip1.SetToolTip(this.btnDownload, "Returns back");
             this.btnDownload.UseVisualStyleBackColor = false;
+            this.btnDownload.Click += new System.EventHandler(this.btnDownload_Click);
             // 
             // panel2
             // 
@@ -571,7 +572,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(529, 436);
+            this.ClientSize = new System.Drawing.Size(529, 441);
             this.Controls.Add(this.btnDownload);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.panel2);
