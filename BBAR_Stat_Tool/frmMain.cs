@@ -55,7 +55,7 @@ namespace BBAR_Stat_Tool
 
         private void btnTest_Click(object sender, EventArgs e)
         {
-
+            WebOps.LoginAndDownload(7, 0, "eregiongreenleafthegray@yahoo.it", "chupa33");
             //WebOps.LoginAndDownload(1,0,);
         }
     }

@@ -32,8 +32,8 @@ namespace BBAR_Stat_Tool
             return s;
         }
 
-        
-        public static async void LoginAndDownload(int season, int type, string email, string password)
+
+        public static async void LoginAndDownload(int season, int type, string email, string password, int startPage = 0, int finishPage = 8000)
         {
 
             string typeStr = null;
@@ -61,7 +61,9 @@ namespace BBAR_Stat_Tool
             else
                 fileName = "S" + season + "_" + typeStr + ".txt";
 
-            season = season - 1;
+            string DirDestination = @"C:\UTIL\BBAR_\Output\";
+            season = season - 1; //adjust to 'base 0' web request
+            finishPage += 1; //adjust to include last page
             string BaseAddress = "https://mwomercs.com/do/login";
             var cookieContainer = new CookieContainer();
             Uri uri = new Uri("https://mwomercs.com/profile/leaderboards");
@@ -82,113 +84,27 @@ namespace BBAR_Stat_Tool
                     ).Result;
                 string responseBodyAsText = await risposta.Content.ReadAsStringAsync();
 
-                Logger.PrintF(@"F:\CODICE\Output\" + fileName, "** STARTING DOWNLOAD", true);
+                Logger.PrintF(DirDestination + fileName, "** STARTING DOWNLOAD", true);
                 string resp = null;
                 int lastPage = 0;
-                for(int a = 0; a < 3500; a++)
+                for(int page = startPage; page < finishPage; page++)
                 {
-                    risposta = client.GetAsync("https://mwomercs.com/profile/leaderboards?page=" + a.ToString() +"&type=" + type.ToString()).Result;
+                    risposta = client.GetAsync("https://mwomercs.com/profile/leaderboards?page=" + page.ToString() +"&type=" + type.ToString()).Result;
                     responseBodyAsText = await risposta.Content.ReadAsStringAsync();
                     resp = DataOps.ParseHTML(responseBodyAsText);
                     if (resp.Contains("<td colspan='10'>No results found"))
                     {
-                        lastPage = a;
+                        lastPage = page;
                         resp = resp.Replace("<td colspan='10'>No results found", "");
-                        Logger.PrintF(@"F:\CODICE\Output\" + fileName, resp, false);
+                        Logger.PrintF(DirDestination + fileName, resp, false);
                         break;
                     }
-                    Logger.PrintF(@"F:\CODICE\Output\" + fileName, resp, false);
+                    Logger.PrintF(DirDestination + fileName, resp, false);
                 }
-                Logger.PrintF(@"F:\CODICE\Output\" + fileName, "** FINISH DOWNLOADING", true);
+                Logger.PrintF(DirDestination + fileName, "** FINISH DOWNLOADING", true);
             }
         }
         
-
-        public static string LoginAndDownload()
-        {
-            string formUrl = "https://mwomercs.com/do/login"; // NOTE: This is the URL the form POSTs to, not the URL of the form (you can find this in the "action" attribute of the HTML's form tag
-            string formParams = string.Format("email={0}&password={1}", "eregiongreenleafthegray@yahoo.it", "chupa33");
-            string cookieHeader;
-
-            WebRequest req = WebRequest.Create(formUrl);
-            //var cookies = new CookieContainer();
-            //HttpWebRequest req = (HttpWebRequest)WebRequest.Create(formUrl);
-            //req.CookieContainer = cookies;
-
-            req.ContentType = "application/x-www-form-urlencoded";
-            req.Method = "POST";
-            byte[] bytes = Encoding.ASCII.GetBytes(formParams);
-            req.ContentLength = bytes.Length;
-
-            //using (Stream os = req.GetRequestStream())
-            //{
-            //    os.Write(bytes, 0, bytes.Length);
-            //}
-
-            Stream os = req.GetRequestStream();
-            os.Write(bytes, 0, bytes.Length);
-
-            WebResponse resp = req.GetResponse();
-            //HttpContext httpContext = new HttpContext(req, resp);
-
-
-            cookieHeader = resp.Headers["Set-Cookie"];
-            string pageFrom;
-            using (StreamReader sr = new StreamReader(resp.GetResponseStream()))
-            {
-                pageFrom = sr.ReadToEnd();
-            }
-            //############################################################################
-
-
-            //var cookies = new CookieContainer();
-            //HttpWebRequest req = (HttpWebRequest)WebRequest.Create(formUrl);
-            //req.CookieContainer = cookies;
-
-            foreach (var risp in resp.Headers)
-            {
-                if (risp == "Set-Cookie")
-                {
-
-                }
-            }
-
-
-
-
-
-            string pageSource;
-            string getUrl = "https://mwomercs.com/profile/leaderboards";
-
-            WebRequest getRequest = WebRequest.Create(getUrl);
-
-            //getRequest.Headers.Add("Cookie", cookieHeader);
-
-            //HttpWebRequest getRequest = (HttpWebRequest)WebRequest.Create(getUrl);
-            //getRequest.CookieContainer = new CookieContainer();
-            //getRequest.CookieContainer.Add(resp.Cookies);
-            //getRequest.Method = "GET";
-            int tStart = cookieHeader.IndexOf("PHPSESSID=");
-            string SID = cookieHeader.Substring(tStart, 36);
-            string finalHeader = "Cookie: leaderboard__rank_by=0; hl=en_us; _ga=GA1.2.1705776397.1474369677; " + SID;
-            //cookieHeader =     "leaderboard__rank_by=0; hl=en_us; _ga=GA1.2.1705776397.1474369677; PHPSESSID=e0a2p0kf3vpc7aja7vkhgdlah1";
-
-            getRequest.Headers.Add(finalHeader);
-
-            WebResponse getResponse = getRequest.GetResponse();
-            using (StreamReader sr = new StreamReader(getResponse.GetResponseStream()))
-            {
-                pageSource = sr.ReadToEnd();
-            }
-
-            //HttpWebRequest getRequest = (HttpWebRequest)WebRequest.Create(getUrl);
-            //getRequest.CookieContainer = new CookieContainer();
-            //getRequest.CookieContainer.Add(resp.Cookies);
-            //getRequest.Headers.Add("Cookie", cookieHeader);
-            return cookieHeader;
-        }
-
-
         public static void GetPage()
         {
             //Run selenium
