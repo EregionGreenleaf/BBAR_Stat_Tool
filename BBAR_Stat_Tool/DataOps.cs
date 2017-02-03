@@ -38,6 +38,16 @@ namespace BBAR_Stat_Tool
             return final;
         }
 
+        public static string SearchPlayerData(string full)
+        {
+            return string.Empty;
+        }
+
+        public static PlayerStatT ParsePlayerStat(string stat)
+        {
+            return new PlayerStatT();
+        }
+
         public static string GetXMLFromObject(object o)
         {
             StringWriter sw = new StringWriter();

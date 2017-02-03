@@ -19,11 +19,14 @@ namespace BBAR_Stat_Tool
         public long? GamesPlayed { get; set; }
         public int? AvarageMatchScore { get; set; }
         public int? WebPage { get; set; }
+        public int? Season { get; set; }
+        public int? Category { get; set; }
 
         public PlayerStatT(long? rank = null, string name = null, int? wins = null,
                            int? losses = null, double? wlr = null, int? kills = null,
                            int? deaths = null, double? kdr = null, long? gamesPlayed = null,
-                           int? avarageMatchScore = null, int? webPage = null)
+                           int? avarageMatchScore = null, int? webPage = null, int? season = 0,
+                           int? category = 0)
         {
             Rank = rank;
             Name = name;
@@ -36,6 +39,8 @@ namespace BBAR_Stat_Tool
             GamesPlayed = gamesPlayed;
             AvarageMatchScore = avarageMatchScore;
             WebPage = webPage;
+            Season = season;
+            Category = category;
         }
     }
 }

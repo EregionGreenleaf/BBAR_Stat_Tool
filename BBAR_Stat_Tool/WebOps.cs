@@ -1,6 +1,6 @@
-﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Firefox;
+﻿//using OpenQA.Selenium;
+//using OpenQA.Selenium.Chrome;
+//using OpenQA.Selenium.Firefox;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,6 +11,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+
 
 namespace BBAR_Stat_Tool
 {
@@ -32,9 +33,77 @@ namespace BBAR_Stat_Tool
             return s;
         }
 
+        public static async void SearchPlayer(string playerName, List<int> seasons, List<int> category, string email, string password)
+        {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
+                                                | SecurityProtocolType.Tls11
+                                                | SecurityProtocolType.Tls12
+                                                | SecurityProtocolType.Ssl3;
+            List<PlayerStatT> ThisPlayer = new List<PlayerStatT>();
+            foreach(int thisSeason in seasons)
+            {
+                int season = thisSeason - 1;
+                string BaseAddress = "https://mwomercs.com/do/login";
+                var cookieContainer = new CookieContainer();
+                Uri uri = new Uri("https://mwomercs.com/profile/leaderboards");
+                var handler = new HttpClientHandler();
+                handler.CookieContainer = cookieContainer;
+                handler.CookieContainer.Add(uri, new System.Net.Cookie("leaderboard_season", season.ToString()));
+                using (var client = new HttpClient(handler) { BaseAddress = new Uri(BaseAddress) })
+                {
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/xml"));
 
+                    HttpResponseMessage risposta = await client.PostAsync(BaseAddress, new FormUrlEncodedContent(
+                            new[]
+                            {
+                            new KeyValuePair<string,string> ("email", email),
+                            new KeyValuePair<string,string> ("password", password)
+                            })
+                        );
+                    string responseBodyAsText = await risposta.Content.ReadAsStringAsync();
+
+                    //Logger.PrintF(DirDestination + fileName, "** STARTING DOWNLOAD", true);
+                    string resp = null;
+                    int lastPage = 0;
+                    foreach (int cat in category)
+                    {
+                        risposta = await client.GetAsync("https://mwomercs.com/profile/leaderboards?type=" + cat.ToString() + "&user=" + playerName);
+                        responseBodyAsText = await risposta.Content.ReadAsStringAsync();
+                        resp = DataOps.ParseHTML(responseBodyAsText);
+                        string statString = DataOps.SearchPlayerData(resp);
+                        PlayerStatT actualPlayerStat = DataOps.ParsePlayerStat(statString);
+                        //SCRIVERE FUNZIONE IN DATAOPS PER IL PARSING DELLA RIGA SPECIFICA DEL GIOCATORE
+                    }
+
+                    //for (int page = startPage; page < finishPage; page++)
+                    //{
+                    //    risposta = await client.GetAsync("https://mwomercs.com/profile/leaderboards?page=" + page.ToString() + "&type=" + type.ToString());
+                    //    responseBodyAsText = await risposta.Content.ReadAsStringAsync();
+                    //    resp = DataOps.ParseHTML(responseBodyAsText);
+                    //    if (resp.Contains("<td colspan='10'>No results found"))
+                    //    {
+                    //        lastPage = page;
+                    //        resp = resp.Replace("<td colspan='10'>No results found", "");
+                    //        Logger.PrintF(DirDestination + fileName, resp, false);
+                    //        break;
+                    //    }
+                    //    Logger.PrintF(DirDestination + fileName, resp, false);
+                    //}
+                    
+                    //Logger.PrintF(DirDestination + fileName, "** FINISH DOWNLOADING", true);
+                }
+
+            }
+
+        }
+        
         public static async void LoginAndDownload(int season, int type, string email, string password, int startPage = 0, int finishPage = 8000)
         {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
+        | SecurityProtocolType.Tls11
+        | SecurityProtocolType.Tls12
+        | SecurityProtocolType.Ssl3;
 
             string typeStr = null;
             switch (type)
@@ -61,7 +130,7 @@ namespace BBAR_Stat_Tool
             else
                 fileName = "S" + season + "_" + typeStr + ".txt";
 
-            string DirDestination = @"C:\UTIL\BBAR_\Output\";
+            string DirDestination = @"C:\TEST\Output\";
             season = season - 1; //adjust to 'base 0' web request
             finishPage += 1; //adjust to include last page
             string BaseAddress = "https://mwomercs.com/do/login";
@@ -75,21 +144,21 @@ namespace BBAR_Stat_Tool
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/xml"));
 
-                HttpResponseMessage risposta = client.PostAsync(BaseAddress, new FormUrlEncodedContent(
+                HttpResponseMessage risposta = await client.PostAsync(BaseAddress, new FormUrlEncodedContent(
                         new[]
                         {
                             new KeyValuePair<string,string> ("email", email),
                             new KeyValuePair<string,string> ("password", password)
                         })
-                    ).Result;
+                    );
                 string responseBodyAsText = await risposta.Content.ReadAsStringAsync();
 
                 Logger.PrintF(DirDestination + fileName, "** STARTING DOWNLOAD", true);
                 string resp = null;
                 int lastPage = 0;
-                for(int page = startPage; page < finishPage; page++)
+                for (int page = startPage; page < finishPage; page++)
                 {
-                    risposta = client.GetAsync("https://mwomercs.com/profile/leaderboards?page=" + page.ToString() +"&type=" + type.ToString()).Result;
+                    risposta = await client.GetAsync("https://mwomercs.com/profile/leaderboards?page=" + page.ToString() +"&type=" + type.ToString());
                     responseBodyAsText = await risposta.Content.ReadAsStringAsync();
                     resp = DataOps.ParseHTML(responseBodyAsText);
                     if (resp.Contains("<td colspan='10'>No results found"))
@@ -105,14 +174,16 @@ namespace BBAR_Stat_Tool
             }
         }
         
-        public static void GetPage()
+        /*public static void GetPage()
         {
             //Run selenium
             //ChromeDriver cd = new ChromeDriver(@"chromedriver_win32");
+
             FirefoxDriver cd = new FirefoxDriver();
             cd.Url = @"https://mwomercs.com/login";
             cd.Navigate();
             IWebElement e = cd.FindElementById("email");
+
             e.SendKeys("eregiongreenleafthegray@yahoo.it");
             e = cd.FindElementById("password");
             e.SendKeys("chupa33");
@@ -201,6 +272,7 @@ namespace BBAR_Stat_Tool
             WebResponse wr = hwr.GetResponse();
             string s = new System.IO.StreamReader(wr.GetResponseStream()).ReadToEnd();
         }
+        */
 
         public static bool WriteLine(PlayerStatT player)
         {
