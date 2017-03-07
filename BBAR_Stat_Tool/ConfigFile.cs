@@ -12,6 +12,8 @@ namespace BBAR_Stat_Tool
 
         public static frmMain ACTUAL_MAIN { get; set; } = null;
         public static frmGetData ACTUAL_GETDATA { get; set; } = null;
+        public static frmGetDataSingle ACTUAL_GETDATASINGLE { get; set; } = null;
+        public static List<PlayerStatT> GLOBAL_PLAYER { get; set; }
 
         public static string SAVE_PATH { get; set; }
         public static int SEASON_FIRST { get; set; }

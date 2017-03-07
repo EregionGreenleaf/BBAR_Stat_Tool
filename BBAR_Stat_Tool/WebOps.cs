@@ -33,15 +33,17 @@ namespace BBAR_Stat_Tool
             return s;
         }
 
-        public static async void SearchPlayer(string playerName, List<int> seasons, List<int> category, string email, string password)
+        public static async Task SearchPlayer(string playerName, List<int> seasons, List<int> category, string email, string password)
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
                                                 | SecurityProtocolType.Tls11
                                                 | SecurityProtocolType.Tls12
                                                 | SecurityProtocolType.Ssl3;
             List<PlayerStatT> ThisPlayer = new List<PlayerStatT>();
-            foreach(int thisSeason in seasons)
+            ConfigFile.GLOBAL_PLAYER = new List<PlayerStatT>();
+            foreach (int thisSeason in seasons)
             {
+                
                 int season = thisSeason - 1;
                 string BaseAddress = "https://mwomercs.com/do/login";
                 var cookieContainer = new CookieContainer();
@@ -53,57 +55,53 @@ namespace BBAR_Stat_Tool
                 {
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/xml"));
-
-                    HttpResponseMessage risposta = await client.PostAsync(BaseAddress, new FormUrlEncodedContent(
-                            new[]
-                            {
+                    HttpResponseMessage risposta = new HttpResponseMessage();
+                    try
+                    {
+                        risposta = await client.PostAsync(BaseAddress, new FormUrlEncodedContent(
+                                new[]
+                                {
                             new KeyValuePair<string,string> ("email", email),
                             new KeyValuePair<string,string> ("password", password)
-                            })
-                        );
+                                })
+                            );
+                    }
+                    catch(Exception exp)
+                    {
+                        Logger.PrintC("Error: " + exp.Message);
+                    }
                     string responseBodyAsText = await risposta.Content.ReadAsStringAsync();
 
                     //Logger.PrintF(DirDestination + fileName, "** STARTING DOWNLOAD", true);
                     string resp = null;
                     int lastPage = 0;
-                    foreach (int cat in category)
+                    foreach (int thisCategory in category)
                     {
-                        risposta = await client.GetAsync("https://mwomercs.com/profile/leaderboards?type=" + cat.ToString() + "&user=" + playerName);
-                        responseBodyAsText = await risposta.Content.ReadAsStringAsync();
+                        string address = "https://mwomercs.com/profile/leaderboards?type=" + thisCategory.ToString() + "&user=" + playerName;
+                        risposta = await client.GetAsync(address);
+                        responseBodyAsText = risposta.Content.ReadAsStringAsync().Result;
                         resp = DataOps.ParseHTML(responseBodyAsText);
                         string statString = DataOps.SearchPlayerData(resp);
                         PlayerStatT actualPlayerStat = DataOps.ParsePlayerStat(statString);
-                        //SCRIVERE FUNZIONE IN DATAOPS PER IL PARSING DELLA RIGA SPECIFICA DEL GIOCATORE
+                        actualPlayerStat.Season = thisSeason;
+                        actualPlayerStat.Category = thisCategory;
+                        actualPlayerStat.WebPage = -666;
+                        actualPlayerStat.WebAddress = address;
+
+                        ConfigFile.GLOBAL_PLAYER.Add(actualPlayerStat);
                     }
-
-                    //for (int page = startPage; page < finishPage; page++)
-                    //{
-                    //    risposta = await client.GetAsync("https://mwomercs.com/profile/leaderboards?page=" + page.ToString() + "&type=" + type.ToString());
-                    //    responseBodyAsText = await risposta.Content.ReadAsStringAsync();
-                    //    resp = DataOps.ParseHTML(responseBodyAsText);
-                    //    if (resp.Contains("<td colspan='10'>No results found"))
-                    //    {
-                    //        lastPage = page;
-                    //        resp = resp.Replace("<td colspan='10'>No results found", "");
-                    //        Logger.PrintF(DirDestination + fileName, resp, false);
-                    //        break;
-                    //    }
-                    //    Logger.PrintF(DirDestination + fileName, resp, false);
-                    //}
-                    
-                    //Logger.PrintF(DirDestination + fileName, "** FINISH DOWNLOADING", true);
                 }
-
             }
-
         }
-        
+
+
+
         public static async void LoginAndDownload(int season, int type, string email, string password, int startPage = 0, int finishPage = 8000)
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
-        | SecurityProtocolType.Tls11
-        | SecurityProtocolType.Tls12
-        | SecurityProtocolType.Ssl3;
+                                                | SecurityProtocolType.Tls11
+                                                | SecurityProtocolType.Tls12
+                                                | SecurityProtocolType.Ssl3;
 
             string typeStr = null;
             switch (type)
@@ -161,6 +159,10 @@ namespace BBAR_Stat_Tool
                     risposta = await client.GetAsync("https://mwomercs.com/profile/leaderboards?page=" + page.ToString() +"&type=" + type.ToString());
                     responseBodyAsText = await risposta.Content.ReadAsStringAsync();
                     resp = DataOps.ParseHTML(responseBodyAsText);
+                    //if (resp.Contains("< tr class="))
+                    //    resp.Substring(24);
+                        //resp = resp.Replace("< tr class=", "");
+
                     if (resp.Contains("<td colspan='10'>No results found"))
                     {
                         lastPage = page;

@@ -85,6 +85,12 @@
     <Compile Include="frmGetData.Designer.cs">
       <DependentUpon>frmGetData.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmGetDataSingle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGetDataSingle.Designer.cs">
+      <DependentUpon>frmGetDataSingle.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -102,6 +108,9 @@
     <EmbeddedResource Include="frmGetData.resx">
       <DependentUpon>frmGetData.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmGetDataSingle.resx">
+      <DependentUpon>frmGetDataSingle.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
     </EmbeddedResource>
@@ -118,6 +127,7 @@
     <None Include="Properties\app.manifest">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\DataSources\PlayerStatT.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

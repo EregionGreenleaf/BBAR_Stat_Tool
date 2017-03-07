@@ -40,12 +40,35 @@ namespace BBAR_Stat_Tool
 
         public static string SearchPlayerData(string full)
         {
-            return string.Empty;
+            int index = full.IndexOf("<tr class=");
+            string subString = full.Substring(index + 24);
+            string[] partial = subString.Split(';');
+            string[] finalArray = partial.Take(10).ToArray();
+            string finalString = string.Join(";",finalArray);
+            return finalString;
         }
 
         public static PlayerStatT ParsePlayerStat(string stat)
         {
-            return new PlayerStatT();
+            PlayerStatT playerStat = new PlayerStatT();
+            string[] partial = stat.Split(';');
+            if (partial.Length == 10)
+            {
+                int tempI;
+                double tempD;
+                string tempS;
+                playerStat.Rank = int.TryParse(partial[0], out tempI) ? tempI : 0;
+                playerStat.Name = partial[1];
+                playerStat.Wins = int.TryParse(partial[2], out tempI) ? tempI : 0;
+                playerStat.Losses = int.TryParse(partial[3], out tempI) ? tempI : 0;
+                playerStat.WLr = double.TryParse(partial[4].Replace('.',','), out tempD) ? tempD : 0.0;
+                playerStat.Kills = int.TryParse(partial[5], out tempI) ? tempI : 0;
+                playerStat.Deaths = int.TryParse(partial[6], out tempI) ? tempI : 0;
+                playerStat.KDr = double.TryParse(partial[7].Replace('.',','), out tempD) ? tempD : 0.0;
+                playerStat.GamesPlayed = int.TryParse(partial[8], out tempI) ? tempI : 0;
+                playerStat.AvarageMatchScore = int.TryParse(partial[9], out tempI) ? tempI : 0;
+            }
+            return playerStat;
         }
 
         public static string GetXMLFromObject(object o)

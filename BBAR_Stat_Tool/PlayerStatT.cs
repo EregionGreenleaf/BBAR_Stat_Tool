@@ -21,12 +21,13 @@ namespace BBAR_Stat_Tool
         public int? WebPage { get; set; }
         public int? Season { get; set; }
         public int? Category { get; set; }
+        public string WebAddress { get; set; }
 
         public PlayerStatT(long? rank = null, string name = null, int? wins = null,
                            int? losses = null, double? wlr = null, int? kills = null,
                            int? deaths = null, double? kdr = null, long? gamesPlayed = null,
                            int? avarageMatchScore = null, int? webPage = null, int? season = 0,
-                           int? category = 0)
+                           int? category = 0, string webAddress = null)
         {
             Rank = rank;
             Name = name;
@@ -41,6 +42,7 @@ namespace BBAR_Stat_Tool
             WebPage = webPage;
             Season = season;
             Category = category;
+            WebAddress = webAddress;
         }
     }
 }

@@ -216,8 +216,6 @@ namespace BBAR_Stat_Tool
         {
             double tempDouble = 0;
             double expected = 0.0;
-            //string[] valueStr = lblTimer.Text.Split(' ');
-            //double valueDouble = double.TryParse(valueStr[0], out tempDouble) ? tempDouble : 0.0;
             double time;
             int check = 0;
             if (chbAssault.Checked)

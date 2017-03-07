@@ -34,6 +34,8 @@
             this.btnOne = new System.Windows.Forms.Button();
             this.ttBtnOne = new System.Windows.Forms.ToolTip(this.components);
             this.btnTest = new System.Windows.Forms.Button();
+            this.btnGetSinglePlayer = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblCopyright
@@ -73,12 +75,36 @@
             this.btnTest.UseVisualStyleBackColor = true;
             this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
             // 
+            // btnGetSinglePlayer
+            // 
+            this.btnGetSinglePlayer.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnGetSinglePlayer.Location = new System.Drawing.Point(12, 80);
+            this.btnGetSinglePlayer.Name = "btnGetSinglePlayer";
+            this.btnGetSinglePlayer.Size = new System.Drawing.Size(274, 27);
+            this.btnGetSinglePlayer.TabIndex = 3;
+            this.btnGetSinglePlayer.Text = "Test Single Player Get";
+            this.btnGetSinglePlayer.UseVisualStyleBackColor = true;
+            this.btnGetSinglePlayer.Click += new System.EventHandler(this.btnTest2_Click);
+            // 
+            // button1
+            // 
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.button1.Location = new System.Drawing.Point(12, 167);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(274, 27);
+            this.button1.TabIndex = 4;
+            this.button1.Text = "Test Single Player Get";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(298, 361);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnGetSinglePlayer);
             this.Controls.Add(this.btnTest);
             this.Controls.Add(this.btnOne);
             this.Controls.Add(this.lblCopyright);
@@ -101,6 +127,8 @@
         private System.Windows.Forms.Button btnOne;
         private System.Windows.Forms.ToolTip ttBtnOne;
         private System.Windows.Forms.Button btnTest;
+        private System.Windows.Forms.Button btnGetSinglePlayer;
+        private System.Windows.Forms.Button button1;
     }
 }
 
