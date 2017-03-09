@@ -79,6 +79,7 @@
   <ItemGroup>
     <Compile Include="ConfigFile.cs" />
     <Compile Include="DataOps.cs" />
+    <Compile Include="DataT\MessageT.cs" />
     <Compile Include="frmGetData.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,7 +101,8 @@
     <Compile Include="GeneralOps.cs" />
     <Compile Include="HtmlPage.cs" />
     <Compile Include="Logger.cs" />
-    <Compile Include="PlayerStatT.cs" />
+    <Compile Include="Mex.cs" />
+    <Compile Include="DataT\PlayerStatT.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Timer.cs" />
@@ -155,6 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Omicron.ico" />
+    <Content Include="TODO.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -394,7 +394,7 @@ namespace BBAR_Stat_Tool
                     if (totalGeneral < 0)
                         errors += "\n- GENERAL pages values are incorrect.";
                     if (totalGeneral > ConfigFile.MAX_PAGES)
-                        errors += "\n- GENERAL pages values totals more then the maximum allowed: " + ConfigFile.MAX_PAGES;
+                        errors += "\n- GENERAL pages values totals over the maximum allowed: " + ConfigFile.MAX_PAGES;
                 }
             }
             if (chbAssault.Checked && chbFullAssault.Checked == false)
@@ -409,7 +409,7 @@ namespace BBAR_Stat_Tool
                     if (totalAssault < 0)
                         errors += "\n- ASSAULT pages values are incorrect.";
                     if (totalAssault > ConfigFile.MAX_PAGES)
-                        errors += "\n- ASSAULT pages values totals more then the maximum allowed: " + ConfigFile.MAX_PAGES;
+                        errors += "\n- ASSAULT pages values totals over the maximum allowed: " + ConfigFile.MAX_PAGES;
                 }
             }
             if (chbHeavy.Checked && chbFullHeavy.Checked == false)
@@ -424,7 +424,7 @@ namespace BBAR_Stat_Tool
                     if (totalHeavy < 0)
                         errors += "\n- HEAVY pages values are incorrect.";
                     if (totalHeavy > ConfigFile.MAX_PAGES)
-                        errors += "\n- HEAVY pages values totals more then the maximum allowed: " + ConfigFile.MAX_PAGES;
+                        errors += "\n- HEAVY pages values totals over the maximum allowed: " + ConfigFile.MAX_PAGES;
                 }
             }
             if (chbMedium.Checked && chbFullMedium.Checked == false)
@@ -439,7 +439,7 @@ namespace BBAR_Stat_Tool
                     if (totalMedium < 0)
                         errors += "\n- MEDIUM pages values are incorrect.";
                     if (totalMedium > ConfigFile.MAX_PAGES)
-                        errors += "\n- MEDIUM pages values totals more then the maximum allowed: " + ConfigFile.MAX_PAGES;
+                        errors += "\n- MEDIUM pages values totals over the maximum allowed: " + ConfigFile.MAX_PAGES;
                 }
             }
             if (chbLight.Checked && chbFullLight.Checked == false)
@@ -454,7 +454,7 @@ namespace BBAR_Stat_Tool
                     if (totalLight < 0)
                         errors += "\n- LIGHT pages values are incorrect.";
                     if (totalLight > ConfigFile.MAX_PAGES)
-                        errors += "\n- LIGHT pages values totals more then the maximum allowed: " + ConfigFile.MAX_PAGES;
+                        errors += "\n- LIGHT pages values totals over the maximum allowed: " + ConfigFile.MAX_PAGES;
                 }
             }
             if(errors != null)

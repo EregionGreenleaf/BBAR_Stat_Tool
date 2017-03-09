@@ -1,0 +1,2 @@
+﻿- Creare il metodo per l'individuazione automatica dell'ultima stagione disponibile.
+- 

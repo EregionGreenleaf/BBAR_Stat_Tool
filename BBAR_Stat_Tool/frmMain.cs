@@ -55,53 +55,53 @@ namespace BBAR_Stat_Tool
 
         private void btnTest_Click(object sender, EventArgs e)
         {
-            WebOps.LoginAndDownload(9, 0, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            WebOps.LoginAndDownload(9, 1, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            WebOps.LoginAndDownload(9, 2, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            WebOps.LoginAndDownload(9, 3, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            WebOps.LoginAndDownload(9, 4, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
+            WebOps.LoginAndDownload(9, 0, "eregiongreenleafthegray@yahoo.it", "chupa33", 910, 3500);
+            //WebOps.LoginAndDownload(9, 1, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
+            //WebOps.LoginAndDownload(9, 2, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
+            //WebOps.LoginAndDownload(9, 3, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
+            //WebOps.LoginAndDownload(9, 4, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
 
-            WebOps.LoginAndDownload(7, 0, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            WebOps.LoginAndDownload(7, 1, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            WebOps.LoginAndDownload(7, 2, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            WebOps.LoginAndDownload(7, 3, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            WebOps.LoginAndDownload(7, 4, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
+            //WebOps.LoginAndDownload(7, 0, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
+            //WebOps.LoginAndDownload(7, 1, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
+            //WebOps.LoginAndDownload(7, 2, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
+            //WebOps.LoginAndDownload(7, 3, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
+            //WebOps.LoginAndDownload(7, 4, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
 
-            WebOps.LoginAndDownload(6, 0, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            WebOps.LoginAndDownload(6, 1, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            WebOps.LoginAndDownload(6, 2, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            WebOps.LoginAndDownload(6, 3, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            WebOps.LoginAndDownload(6, 4, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
+            //WebOps.LoginAndDownload(6, 0, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
+            //WebOps.LoginAndDownload(6, 1, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
+            //WebOps.LoginAndDownload(6, 2, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
+            //WebOps.LoginAndDownload(6, 3, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
+            //WebOps.LoginAndDownload(6, 4, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
 
-            WebOps.LoginAndDownload(5, 0, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            WebOps.LoginAndDownload(5, 1, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            WebOps.LoginAndDownload(5, 2, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            WebOps.LoginAndDownload(5, 3, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            WebOps.LoginAndDownload(5, 4, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
+            //WebOps.LoginAndDownload(5, 0, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
+            //WebOps.LoginAndDownload(5, 1, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
+            //WebOps.LoginAndDownload(5, 2, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
+            //WebOps.LoginAndDownload(5, 3, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
+            //WebOps.LoginAndDownload(5, 4, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
 
-            WebOps.LoginAndDownload(4, 0, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            WebOps.LoginAndDownload(4, 1, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            WebOps.LoginAndDownload(4, 2, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            WebOps.LoginAndDownload(4, 3, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            WebOps.LoginAndDownload(4, 4, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
+            //WebOps.LoginAndDownload(4, 0, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
+            //WebOps.LoginAndDownload(4, 1, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
+            //WebOps.LoginAndDownload(4, 2, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
+            //WebOps.LoginAndDownload(4, 3, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
+            //WebOps.LoginAndDownload(4, 4, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
 
-            WebOps.LoginAndDownload(3, 0, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            WebOps.LoginAndDownload(3, 1, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            WebOps.LoginAndDownload(3, 2, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            WebOps.LoginAndDownload(3, 3, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            WebOps.LoginAndDownload(3, 4, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
+            //WebOps.LoginAndDownload(3, 0, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
+            //WebOps.LoginAndDownload(3, 1, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
+            //WebOps.LoginAndDownload(3, 2, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
+            //WebOps.LoginAndDownload(3, 3, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
+            //WebOps.LoginAndDownload(3, 4, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
 
-            WebOps.LoginAndDownload(2, 0, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            WebOps.LoginAndDownload(2, 1, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            WebOps.LoginAndDownload(2, 2, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            WebOps.LoginAndDownload(2, 3, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            WebOps.LoginAndDownload(2, 4, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
+            //WebOps.LoginAndDownload(2, 0, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
+            //WebOps.LoginAndDownload(2, 1, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
+            //WebOps.LoginAndDownload(2, 2, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
+            //WebOps.LoginAndDownload(2, 3, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
+            //WebOps.LoginAndDownload(2, 4, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
 
-            WebOps.LoginAndDownload(1, 0, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            WebOps.LoginAndDownload(1, 1, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            WebOps.LoginAndDownload(1, 2, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            WebOps.LoginAndDownload(1, 3, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            WebOps.LoginAndDownload(1, 4, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
+            //WebOps.LoginAndDownload(1, 0, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
+            //WebOps.LoginAndDownload(1, 1, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
+            //WebOps.LoginAndDownload(1, 2, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
+            //WebOps.LoginAndDownload(1, 3, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
+            //WebOps.LoginAndDownload(1, 4, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
 
             //WebOps.LoginAndDownload(1,0,);
         }

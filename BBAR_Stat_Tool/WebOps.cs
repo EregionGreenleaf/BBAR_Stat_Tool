@@ -96,7 +96,7 @@ namespace BBAR_Stat_Tool
 
 
 
-        public static async void LoginAndDownload(int season, int type, string email, string password, int startPage = 0, int finishPage = 8000)
+        public static async void LoginAndDownload(int season, int type, string email, string password, int startPage = 0, int finishPage = 10000, int taskNumber = 1)
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
                                                 | SecurityProtocolType.Tls11
@@ -152,6 +152,8 @@ namespace BBAR_Stat_Tool
                 string responseBodyAsText = await risposta.Content.ReadAsStringAsync();
 
                 Logger.PrintF(DirDestination + fileName, "** STARTING DOWNLOAD", true);
+                string ownRank = "<tr class=\"yourRankRow\">";
+                string endPages = "<td colspan='10'>No results found";
                 string resp = null;
                 int lastPage = 0;
                 for (int page = startPage; page < finishPage; page++)
@@ -159,14 +161,13 @@ namespace BBAR_Stat_Tool
                     risposta = await client.GetAsync("https://mwomercs.com/profile/leaderboards?page=" + page.ToString() +"&type=" + type.ToString());
                     responseBodyAsText = await risposta.Content.ReadAsStringAsync();
                     resp = DataOps.ParseHTML(responseBodyAsText);
-                    //if (resp.Contains("< tr class="))
-                    //    resp.Substring(24);
-                        //resp = resp.Replace("< tr class=", "");
+                    if (resp.Contains(ownRank))
+                        resp = resp.Replace(ownRank, string.Empty);
 
-                    if (resp.Contains("<td colspan='10'>No results found"))
+                    if (resp.Contains(endPages))
                     {
                         lastPage = page;
-                        resp = resp.Replace("<td colspan='10'>No results found", "");
+                        resp = resp.Replace(endPages, string.Empty);
                         Logger.PrintF(DirDestination + fileName, resp, false);
                         break;
                     }

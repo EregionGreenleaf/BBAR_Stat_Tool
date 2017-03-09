@@ -19,8 +19,8 @@ namespace BBAR_Stat_Tool
         {
             //Get assembly Version
             //Version xx = Assembly.GetEntryAssembly().GetName().Version;
-            string CopyrightStr = frm.lblCopyrightText;
-            frm.lblCopyrightText = CopyrightStr + getExeVersion();
+            //string CopyrightStr = frm.lblCopyrightText;
+            frm.lblCopyrightText += getExeVersion();
             return true;
         }
         public static string getExeVersion()
