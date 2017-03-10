@@ -1,2 +1,2 @@
 ﻿- Creare il metodo per l'individuazione automatica dell'ultima stagione disponibile.
-- 
+- Aggiungere dove serve il sistema di messaggistica.

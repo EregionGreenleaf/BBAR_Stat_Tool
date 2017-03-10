@@ -10,9 +10,11 @@ namespace BBAR_Stat_Tool
     {
 
         private static List<MessageT> Messages = new List<MessageT>();
+      
         public static int? ERROR = 0;
         public static int? WARNING = 1;
         public static int? INFO = 2;
+        public static int? MAX_TYPE = 2;
 
         /// <summary>
         /// Removes a Message at Index or Last
@@ -38,10 +40,64 @@ namespace BBAR_Stat_Tool
                 return true;
             }
         }
-        public static bool RemoveType(int type)
-        {
 
-            return false;
+        public static bool RemoveMessage(string partial, bool sensitive = true)
+        {
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(partial))
+                {
+                    if (sensitive == true)
+                    {
+                        Messages.RemoveAll(x => x.Message.Contains(partial));
+                    }
+                    else
+                    {
+                        Messages.RemoveAll(x => x.Message.ToUpper().Contains(partial.ToUpper()));
+                    }
+                    
+                }
+                else
+                    return false;
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public static bool RemoveMessageType(int? type)
+        {
+            try
+            {
+                if (type >= 0 && type <= MAX_TYPE)
+                    Messages.RemoveAll(x => x.Type == type);
+                else
+                    return false;
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public static bool RemoveAll()
+        {
+            try
+            {
+                for(int i = 0; i <= MAX_TYPE; i++)
+                {
+                    if (!RemoveMessageType(i))
+                        return false;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
         }
 
         /// <summary>
@@ -60,18 +116,27 @@ namespace BBAR_Stat_Tool
                     {
                         MessageT newMex = new MessageT(message, (int)type);
                         Messages.Add(newMex);
+                        return true;
                     }
                     catch
                     {
                         return false;
                     }
                 }
-                return true;
+                return false;
             }
             catch
             {
                 return false;
             }
+        }
+
+       
+        public static object ReadMessageType(int type)
+        {
+            List<MessageT> ll = new List<MessageT>();
+            ll = Messages.Where(x => x.Type == type).ToList();
+            return ll;
         }
 
     }

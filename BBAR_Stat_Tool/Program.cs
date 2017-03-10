@@ -14,6 +14,11 @@ namespace BBAR_Stat_Tool
         [STAThread]
         static void Main()
         {
+            Timer.SetFirstTime(DateTime.Now);
+            Mex.AddMessage("Starting Application: " + Timer.GetTimestampPrecision(DateTime.Now), Mex.INFO);
+            //object test = Mex.ReadMessageType((int)Mex.INFO);
+            //Type tip = test.GetType();
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
