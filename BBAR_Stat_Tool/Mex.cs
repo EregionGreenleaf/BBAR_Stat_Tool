@@ -132,11 +132,16 @@ namespace BBAR_Stat_Tool
         }
 
        
-        public static object ReadMessageType(int type)
+        public static object GetMessageOfType(int type)
         {
-            List<MessageT> ll = new List<MessageT>();
-            ll = Messages.Where(x => x.Type == type).ToList();
-            return ll;
+            try
+            {
+                return Messages.Where(x => x.Type == type).ToList();
+            }
+            catch
+            {
+                return null;
+            }
         }
 
     }
