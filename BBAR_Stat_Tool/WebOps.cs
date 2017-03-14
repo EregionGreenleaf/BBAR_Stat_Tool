@@ -96,13 +96,29 @@ namespace BBAR_Stat_Tool
 
 
 
-        public static async void LoginAndDownload(int season, int type, string email, string password, int startPage = 0, int finishPage = 10000, int taskNumber = 1)
+        public static async void LoginAndDownload(int? season, int? type, string email, 
+                                                  string password, int? startPage = 0, int? finishPage = 10000, 
+                                                  int? taskNumber = 1, DownloadData dData = null)
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
                                                 | SecurityProtocolType.Tls11
                                                 | SecurityProtocolType.Tls12
                                                 | SecurityProtocolType.Ssl3;
-
+            if (dData != null)
+            {
+                if (dData.Season != null && season == null)
+                    season = dData.Season;
+                if (dData.Type != null && type == null)
+                    type = dData.Type;
+                if (dData.User != null && email == null)
+                    email = dData.User;
+                if (dData.Password != null && password == null)
+                    password = dData.Password;
+                if (dData.StartPage != null && startPage == null)
+                    startPage = dData.StartPage;
+                if (dData.TaskNumber != null && taskNumber == null)
+                    taskNumber = dData.TaskNumber;
+            }
             string typeStr = null;
             switch (type)
             {
@@ -156,7 +172,7 @@ namespace BBAR_Stat_Tool
                 string endPages = "<td colspan='10'>No results found";
                 string resp = null;
                 int lastPage = 0;
-                for (int page = startPage; page < finishPage; page++)
+                for (int page = (startPage==null?0:(int)startPage); page < (finishPage==null?10000:(int)finishPage); page++)
                 {
                     risposta = await client.GetAsync("https://mwomercs.com/profile/leaderboards?page=" + page.ToString() +"&type=" + type.ToString());
                     responseBodyAsText = await risposta.Content.ReadAsStringAsync();

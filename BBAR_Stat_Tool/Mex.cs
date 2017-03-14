@@ -16,6 +16,33 @@ namespace BBAR_Stat_Tool
         public static int? INFO = 2;
         public static int? MAX_TYPE = 2;
 
+        public static string TypeToString(int type)
+        {
+            string strType = string.Empty;
+            switch (type)
+            {
+                case 0:
+                    strType = "ERROR";
+                    break;
+                case 1:
+                    strType = "WARNING";
+                    break;
+                case 2:
+                    strType = "INFO";
+                    break;
+                default:
+                    strType = "ERROR";
+                    break;
+            }
+            return strType;
+        }
+
+        private static string FormatMessage(MessageT message, bool crlf = false)
+        {
+            return message.Time + " - " + TypeToString(message.Type) + ": " + 
+                    message.Message + (crlf? System.Environment.NewLine : string.Empty);
+        }
+
         /// <summary>
         /// Removes a Message at Index or Last
         /// </summary>
@@ -37,7 +64,7 @@ namespace BBAR_Stat_Tool
             }
             catch
             {
-                return true;
+                return false;
             }
         }
 
@@ -132,7 +159,24 @@ namespace BBAR_Stat_Tool
         }
 
        
-        public static object GetMessageOfType(int type)
+        public static MessageT GetMessageAtIndex(int index=-1)
+        {
+            MessageT message = new MessageT();
+            if (index != -1)
+            {
+                message = Messages[index];
+                RemoveMessage(index);
+                return message;
+            }
+            else
+            {
+                message = Messages[Messages.Count - 1];
+                RemoveMessage();
+            }
+            return message;
+        }
+
+        public static List<MessageT> GetMessageOfType(int type)
         {
             try
             {
@@ -144,5 +188,34 @@ namespace BBAR_Stat_Tool
             }
         }
 
+        public static string FormatMessageOfType(int type)
+        {
+            string fullMessages = string.Empty;
+            string strType = string.Empty;
+            foreach(MessageT message in GetMessageOfType(type))
+            {
+                fullMessages += FormatMessage(message, true);
+            }
+            return fullMessages;
+        }
+
+        public static string FormatMessageAtIndex(int index = -1)
+        {
+            return FormatMessage(GetMessageAtIndex(index), true);
+        }
+
+        public static bool PrintMessageInForm(string message)
+        {
+            try
+            {
+                frmPrintMessages frmMex = new frmPrintMessages(message);
+                frmMex.Show();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

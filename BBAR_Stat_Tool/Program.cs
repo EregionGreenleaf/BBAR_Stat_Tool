@@ -15,13 +15,13 @@ namespace BBAR_Stat_Tool
         static void Main()
         {
             Timer.SetFirstTime(DateTime.Now);
-            Mex.AddMessage("Starting Application: " + Timer.GetTimestampPrecision(DateTime.Now), Mex.INFO);
-            object test = Mex.GetMessageOfType((int)Mex.INFO);
-            Type tip = test.GetType();
-            
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            Mex.AddMessage("Starting Application: " + Timer.GetTimestampPrecision(DateTime.Now), Mex.INFO);
+            List<MessageT> test = Mex.GetMessageOfType((int)Mex.INFO);
+            Mex.PrintMessageInForm(Mex.FormatMessageAtIndex());
 
             ConfigFile.LoadConfig();
             frmMain firstMain = new frmMain();

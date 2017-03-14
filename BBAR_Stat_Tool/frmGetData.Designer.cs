@@ -586,6 +586,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "frmGetData";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "BBARST - Get Data";
             this.Load += new System.EventHandler(this.frmGetData_Load);
             this.panel1.ResumeLayout(false);

@@ -55,6 +55,14 @@ namespace BBAR_Stat_Tool
 
         private void btnTest_Click(object sender, EventArgs e)
         {
+            DownloadData data1 = new DownloadData(user: "eregiongreenleafthegray@yahoo.it",
+                                                  password: "chupa33",
+                                                  season: 1,
+                                                  type: 0,
+                                                  startPage: 1,
+                                                  endPage: 3500,
+                                                  taskNumber: 1);
+            DownloadData data2 = new DownloadData(dData: data1, type: 1);
             WebOps.LoginAndDownload(9, 0, "eregiongreenleafthegray@yahoo.it", "chupa33", 910, 3500);
             //WebOps.LoginAndDownload(9, 1, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
             //WebOps.LoginAndDownload(9, 2, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
@@ -138,7 +146,6 @@ namespace BBAR_Stat_Tool
             }
             //this.Opacity = 50;
             this.Hide();
-
         }
     }
 }
