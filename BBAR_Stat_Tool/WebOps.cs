@@ -96,14 +96,15 @@ namespace BBAR_Stat_Tool
 
 
 
-        public static async void LoginAndDownload(int? season, int? type, string email, 
-                                                  string password, int? startPage = 0, int? finishPage = 10000, 
-                                                  int? taskNumber = 1, DownloadData dData = null)
+        public static async void LoginAndDownload(int? season = null, int? type = null, string email = null, 
+                                                  string password = null, int? startPage = null, int? finishPage = null, 
+                                                  int? taskNumber = null, DownloadData dData = null)
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
                                                 | SecurityProtocolType.Tls11
                                                 | SecurityProtocolType.Tls12
                                                 | SecurityProtocolType.Ssl3;
+            // VALIDATION SECTION
             if (dData != null)
             {
                 if (dData.Season != null && season == null)
@@ -116,9 +117,35 @@ namespace BBAR_Stat_Tool
                     password = dData.Password;
                 if (dData.StartPage != null && startPage == null)
                     startPage = dData.StartPage;
+                if (dData.EndPage != null && finishPage == null)
+                    finishPage = dData.EndPage;
                 if (dData.TaskNumber != null && taskNumber == null)
                     taskNumber = dData.TaskNumber;
             }
+            if (season == null)
+                season = 1;
+            if (type == null)
+                type = 0;
+            if (startPage == null)
+                startPage = ConfigFile.START_PAGE;
+            if (finishPage == null)
+                finishPage = ConfigFile.END_PAGE;
+            if (taskNumber == null)
+            {
+                ConfigFile.ACTUAL_TASK++;
+                taskNumber = ConfigFile.ACTUAL_TASK;
+            }
+            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+            {
+                if(string.IsNullOrWhiteSpace(email))
+                    Mex.AddMessage("Task " + (taskNumber != null ? taskNumber : 0) + " is missing the user email. Skipping", Mex.ERROR);
+                if(string.IsNullOrWhiteSpace(password))
+                    Mex.AddMessage("Task " + (taskNumber != null ? taskNumber : 0) + " is missing the user password. Skipping", Mex.ERROR);
+                Mex.PrintErrorMessagesInForm();
+                return;
+            }
+            // END VALIDATION SECTION
+
             string typeStr = null;
             switch (type)
             {
@@ -193,6 +220,60 @@ namespace BBAR_Stat_Tool
             }
         }
         
+        public static async void FindLastSeason()
+        {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
+                                    | SecurityProtocolType.Tls11
+                                    | SecurityProtocolType.Tls12
+                                    | SecurityProtocolType.Ssl3;
+            List<int> seasonZ = new List<int>();
+            int? season = 1;
+            int? type = 0;
+            string email = "eregiongreenleafthegray@yahoo.it";
+            string password = "chupa33";
+            int? startPage = 0;
+            int? finishPage = 1;
+
+            season = season - 1; //adjust to 'base 0' web request
+            finishPage += 1; //adjust to include last page
+            string BaseAddress = "https://mwomercs.com/do/login";
+            var cookieContainer = new CookieContainer();
+            Uri uri = new Uri("https://mwomercs.com/profile/leaderboards");
+            var handler = new HttpClientHandler();
+            handler.CookieContainer = cookieContainer;
+            handler.CookieContainer.Add(uri, new System.Net.Cookie("leaderboard_season", season.ToString()));
+            using (var client = new HttpClient(handler) { BaseAddress = new Uri(BaseAddress) })
+            {
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/xml"));
+
+                HttpResponseMessage risposta = await client.PostAsync(BaseAddress, new FormUrlEncodedContent(
+                        new[]
+                        {
+                            new KeyValuePair<string,string> ("email", email),
+                            new KeyValuePair<string,string> ("password", password)
+                        })
+                    );
+                string responseBodyAsText = await risposta.Content.ReadAsStringAsync();
+
+                //Logger.PrintF(DirDestination + fileName, "** STARTING DOWNLOAD", true);
+                string ownRank = "<tr class=\"yourRankRow\">";
+                string endPages = "<td colspan='10'>No results found";
+                string resp = null;
+                int lastPage = 0;
+                for (int page = (startPage == null ? 0 : (int)startPage); page < (finishPage == null ? 10000 : (int)finishPage); page++)
+                {
+                    risposta = await client.GetAsync("https://mwomercs.com/profile/leaderboards?page=" + page.ToString() + "&type=" + type.ToString());
+                    responseBodyAsText = await risposta.Content.ReadAsStringAsync();
+                    resp = DataOps.ParseHTML(responseBodyAsText);
+                    if(resp.Length > 10)
+
+                }
+                //Logger.PrintF(DirDestination + fileName, "** FINISH DOWNLOADING", true);
+            }
+            return;
+        }
+
         /*public static void GetPage()
         {
             //Run selenium

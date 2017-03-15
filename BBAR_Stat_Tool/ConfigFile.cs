@@ -24,6 +24,7 @@ namespace BBAR_Stat_Tool
         public static int? LOG_LEVEL { get; set; }
         public static string SEPARATOR { get; set; }
         public static string FILE_OUTPUT { get; set; }
+        public static int? ACTUAL_TASK { get; set; } = 1;
         public static bool LoadConfig()
         {
             try

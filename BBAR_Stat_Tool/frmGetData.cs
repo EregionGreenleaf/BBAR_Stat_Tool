@@ -479,16 +479,99 @@ namespace BBAR_Stat_Tool
             int season = int.TryParse(cmbSeasonNumber.Text, out tempInt) ? tempInt : 0;
             string email = txtEMail.Text;
             string password = txtPassword.Text;
+            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+            {
+                if (string.IsNullOrWhiteSpace(email))
+                    Mex.AddMessage("Email field is not valid.", Mex.ERROR);
+                if (string.IsNullOrWhiteSpace(password))
+                    Mex.AddMessage("Password field is not valid.", Mex.ERROR);
+                Mex.AddMessage("Will not proceed.", Mex.WARNING);
+                Mex.PrintErrorMessagesInForm();
+                return;
+            }
+            DownloadData baseData = new DownloadData(user: email,
+                                                     password: password,
+                                                     season: season);
             if (chbGeneral.Checked)
-                WebOps.LoginAndDownload(season, 0, email, password );
+            {
+                int startGeneral;
+                int endGeneral;
+                if (chbFullGeneral.Checked)
+                {
+                    startGeneral = (int)ConfigFile.START_PAGE;
+                    endGeneral = ConfigFile.MAX_PAGES;
+                }
+                else
+                {
+                    startGeneral = int.TryParse(txtStartGeneral.Text, out tempInt) ? tempInt : (int)ConfigFile.START_PAGE;
+                    endGeneral = int.TryParse(txtEndGeneral.Text, out tempInt) ? tempInt : ConfigFile.MAX_PAGES;
+                }
+                WebOps.LoginAndDownload(dData: baseData, type: 0, startPage: startGeneral, finishPage: endGeneral);
+            }
             if (chbLight.Checked)
-                WebOps.LoginAndDownload(season, 1, email, password);
+            {
+                int startLight;
+                int endLight;
+                if (chbFullLight.Checked)
+                {
+                    startLight = (int)ConfigFile.START_PAGE;
+                    endLight = ConfigFile.MAX_PAGES;
+                }
+                else
+                {
+                    startLight = int.TryParse(txtStartLight.Text, out tempInt) ? tempInt : (int)ConfigFile.START_PAGE;
+                    endLight = int.TryParse(txtEndLight.Text, out tempInt) ? tempInt : ConfigFile.MAX_PAGES;
+                }
+                WebOps.LoginAndDownload(dData: baseData, type: 1, startPage: startLight, finishPage: endLight);
+            }
             if (chbMedium.Checked)
-                WebOps.LoginAndDownload(season, 2, email, password);
+            {
+                int startMedium;
+                int endMedium;
+                if (chbFullMedium.Checked)
+                {
+                    startMedium = (int)ConfigFile.START_PAGE;
+                    endMedium = ConfigFile.MAX_PAGES;
+                }
+                else
+                {
+                    startMedium = int.TryParse(txtStartMedium.Text, out tempInt) ? tempInt : (int)ConfigFile.START_PAGE;
+                    endMedium = int.TryParse(txtEndMedium.Text, out tempInt) ? tempInt : ConfigFile.MAX_PAGES;
+                }
+                WebOps.LoginAndDownload(dData: baseData, type: 2, startPage: startMedium, finishPage: endMedium);
+            }
             if (chbHeavy.Checked)
-                WebOps.LoginAndDownload(season, 3, email, password);
+            {
+                int startHeavy;
+                int endHeavy;
+                if (chbFullHeavy.Checked)
+                {
+                    startHeavy = (int)ConfigFile.START_PAGE;
+                    endHeavy = ConfigFile.MAX_PAGES;
+                }
+                else
+                {
+                    startHeavy = int.TryParse(txtStartHeavy.Text, out tempInt) ? tempInt : (int)ConfigFile.START_PAGE;
+                    endHeavy = int.TryParse(txtEndHeavy.Text, out tempInt) ? tempInt : ConfigFile.MAX_PAGES;
+                }
+                WebOps.LoginAndDownload(dData: baseData, type: 3, startPage: startHeavy, finishPage: endHeavy);
+            }
             if (chbAssault.Checked)
-                WebOps.LoginAndDownload(season, 4, email, password);
+            {
+                int startAssault;
+                int endAssault;
+                if (chbFullAssault.Checked)
+                {
+                    startAssault = (int)ConfigFile.START_PAGE;
+                    endAssault = ConfigFile.MAX_PAGES;
+                }
+                else
+                {
+                    startAssault = int.TryParse(txtStartAssault.Text, out tempInt) ? tempInt : (int)ConfigFile.START_PAGE;
+                    endAssault = int.TryParse(txtEndAssault.Text, out tempInt) ? tempInt : ConfigFile.MAX_PAGES;
+                }
+                WebOps.LoginAndDownload(dData: baseData, type: 4, startPage: startAssault, finishPage: endAssault);
+            }
         }
     }
 }

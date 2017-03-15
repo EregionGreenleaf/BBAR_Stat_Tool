@@ -217,5 +217,18 @@ namespace BBAR_Stat_Tool
                 return false;
             }
         }
+        public static bool PrintErrorMessagesInForm()
+        {
+            try
+            {
+                frmPrintMessages frmMex = new frmPrintMessages(FormatMessageOfType((int)ERROR));
+                frmMex.Show();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

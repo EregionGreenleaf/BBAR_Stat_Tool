@@ -57,13 +57,18 @@ namespace BBAR_Stat_Tool
         {
             DownloadData data1 = new DownloadData(user: "eregiongreenleafthegray@yahoo.it",
                                                   password: "chupa33",
-                                                  season: 1,
+                                                  season: 9,
                                                   type: 0,
-                                                  startPage: 1,
+                                                  startPage: 0,
                                                   endPage: 3500,
                                                   taskNumber: 1);
             DownloadData data2 = new DownloadData(dData: data1, type: 1);
-            WebOps.LoginAndDownload(9, 0, "eregiongreenleafthegray@yahoo.it", "chupa33", 910, 3500);
+            //WebOps.LoginAndDownload(9, 0, "", "", 910, 3500);
+            WebOps.LoginAndDownload(dData: data1);
+            WebOps.LoginAndDownload(dData: data1, type: 1);
+            WebOps.LoginAndDownload(dData: data1, type: 2);
+            WebOps.LoginAndDownload(dData: data1, type: 3);
+            WebOps.LoginAndDownload(dData: data1, type: 4);
             //WebOps.LoginAndDownload(9, 1, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
             //WebOps.LoginAndDownload(9, 2, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
             //WebOps.LoginAndDownload(9, 3, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
