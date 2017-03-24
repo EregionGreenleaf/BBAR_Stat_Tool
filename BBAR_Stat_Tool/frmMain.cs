@@ -138,19 +138,8 @@ namespace BBAR_Stat_Tool
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (ConfigFile.ACTUAL_GETDATASINGLE == null)
-            {
-                frmGetDataSingle newGetDataSingle = new frmGetDataSingle();
-                ConfigFile.ACTUAL_GETDATASINGLE = newGetDataSingle;
-                newGetDataSingle.Show();
-            }
-            else
-            {
-                frmGetDataSingle oldGetDataSingle = ConfigFile.ACTUAL_GETDATASINGLE;
-                oldGetDataSingle.Show();
-            }
-            //this.Opacity = 50;
-            this.Hide();
+            WebOps.FindLastSeason();
+            //this.Hide();
         }
     }
 }
