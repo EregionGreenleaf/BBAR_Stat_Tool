@@ -136,9 +136,9 @@ namespace BBAR_Stat_Tool
             this.Hide();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
-            WebOps.FindLastSeason();
+            await WebOps.FindLastSeason();
             //this.Hide();
         }
     }

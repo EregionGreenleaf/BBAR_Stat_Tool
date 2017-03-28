@@ -220,7 +220,7 @@ namespace BBAR_Stat_Tool
             }
         }
         
-        public static async void FindLastSeason()
+        public static async Task FindLastSeason()
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
                                     | SecurityProtocolType.Tls11
