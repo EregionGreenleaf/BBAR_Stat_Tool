@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +26,8 @@ namespace BBAR_Stat_Tool
         public static string SEPARATOR { get; set; }
         public static string FILE_OUTPUT { get; set; }
         public static int? ACTUAL_TASK { get; set; } = 1;
+        public static bool LAST_SEASON_CHECKED { get; set; } = false;
+        public static DirectoryInfo DIRECTORY_OUTPUT { get; set; }
         public static bool LoadConfig()
         {
             try
@@ -35,12 +38,35 @@ namespace BBAR_Stat_Tool
                 START_PAGE = int.TryParse(ConfigurationSettings.AppSettings["Start Page"], out tempInt) ? tempInt : 0;
                 END_PAGE = int.TryParse(ConfigurationSettings.AppSettings["End Page"], out tempInt) ? tempInt : 0;
                 SEPARATOR = ConfigurationSettings.AppSettings["Separator"];
-                FILE_OUTPUT = ConfigurationSettings.AppSettings["Output File"];
+                
                 SEASON_FIRST = int.TryParse(ConfigurationSettings.AppSettings["First Season"], out tempInt) ? tempInt : 1;
                 SEASON_LAST = int.TryParse(ConfigurationSettings.AppSettings["Last Season"], out tempInt) ? tempInt : 7;
                 MAX_PAGES = int.TryParse(ConfigurationSettings.AppSettings["Default Max Page"], out tempInt) ? tempInt : 3500;
                 MIN_PAGES = int.TryParse(ConfigurationSettings.AppSettings["Default Min Page"], out tempInt) ? tempInt : 0;
-
+                string directory = ConfigurationSettings.AppSettings["Output Folder"];
+                DirectoryInfo dirInfo = new DirectoryInfo(directory);
+                if (!dirInfo.Exists)
+                {
+                    Mex.AddMessage("'Output Folder' (in the configuration file) doesn't exist. Using the application folder instead.", Mex.ERROR);
+                    string BASE_PATH = System.Reflection.Assembly.GetExecutingAssembly().CodeBase;
+                    string APP_PATH = System.IO.Path.GetDirectoryName(BASE_PATH).Replace("file:\\", "");
+                    string output = Path.Combine(APP_PATH, "Output");
+                    DirectoryInfo tempInfo = Directory.CreateDirectory(output);
+                    if (tempInfo != null)
+                    {
+                        DIRECTORY_OUTPUT = tempInfo;
+                        FILE_OUTPUT = ConfigurationSettings.AppSettings["Output File"];
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    DIRECTORY_OUTPUT = dirInfo;
+                    FILE_OUTPUT = Path.Combine(DIRECTORY_OUTPUT.FullName, ConfigurationSettings.AppSettings["Output File"]);
+                }
                 GENERAL = false;
                 LIGHT = false;
                 MEDIUM = false;

@@ -52,7 +52,7 @@
             // btnOne
             // 
             this.btnOne.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnOne.Location = new System.Drawing.Point(12, 12);
+            this.btnOne.Location = new System.Drawing.Point(12, 79);
             this.btnOne.Name = "btnOne";
             this.btnOne.Size = new System.Drawing.Size(274, 28);
             this.btnOne.TabIndex = 1;
@@ -65,7 +65,7 @@
             // btnTest
             // 
             this.btnTest.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnTest.Location = new System.Drawing.Point(12, 46);
+            this.btnTest.Location = new System.Drawing.Point(12, 45);
             this.btnTest.Name = "btnTest";
             this.btnTest.Size = new System.Drawing.Size(274, 28);
             this.btnTest.TabIndex = 2;
@@ -78,7 +78,7 @@
             // btnGetSinglePlayer
             // 
             this.btnGetSinglePlayer.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnGetSinglePlayer.Location = new System.Drawing.Point(12, 80);
+            this.btnGetSinglePlayer.Location = new System.Drawing.Point(12, 113);
             this.btnGetSinglePlayer.Name = "btnGetSinglePlayer";
             this.btnGetSinglePlayer.Size = new System.Drawing.Size(274, 27);
             this.btnGetSinglePlayer.TabIndex = 3;
@@ -89,11 +89,11 @@
             // button1
             // 
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.button1.Location = new System.Drawing.Point(12, 167);
+            this.button1.Location = new System.Drawing.Point(12, 12);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(274, 27);
             this.button1.TabIndex = 4;
-            this.button1.Text = "Test Single Player Get";
+            this.button1.Text = "Determine last available Season";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 

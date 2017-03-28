@@ -498,12 +498,12 @@ namespace BBAR_Stat_Tool
                 int endGeneral;
                 if (chbFullGeneral.Checked)
                 {
-                    startGeneral = (int)ConfigFile.START_PAGE;
+                    startGeneral = (int)ConfigFile.START_PAGE-1;
                     endGeneral = ConfigFile.MAX_PAGES;
                 }
                 else
                 {
-                    startGeneral = int.TryParse(txtStartGeneral.Text, out tempInt) ? tempInt : (int)ConfigFile.START_PAGE;
+                    startGeneral = int.TryParse(txtStartGeneral.Text, out tempInt) ? tempInt-1 : (int)ConfigFile.START_PAGE;
                     endGeneral = int.TryParse(txtEndGeneral.Text, out tempInt) ? tempInt : ConfigFile.MAX_PAGES;
                 }
                 WebOps.LoginAndDownload(dData: baseData, type: 0, startPage: startGeneral, finishPage: endGeneral);
@@ -514,12 +514,12 @@ namespace BBAR_Stat_Tool
                 int endLight;
                 if (chbFullLight.Checked)
                 {
-                    startLight = (int)ConfigFile.START_PAGE;
+                    startLight = (int)ConfigFile.START_PAGE-1;
                     endLight = ConfigFile.MAX_PAGES;
                 }
                 else
                 {
-                    startLight = int.TryParse(txtStartLight.Text, out tempInt) ? tempInt : (int)ConfigFile.START_PAGE;
+                    startLight = int.TryParse(txtStartLight.Text, out tempInt) ? tempInt -1: (int)ConfigFile.START_PAGE;
                     endLight = int.TryParse(txtEndLight.Text, out tempInt) ? tempInt : ConfigFile.MAX_PAGES;
                 }
                 WebOps.LoginAndDownload(dData: baseData, type: 1, startPage: startLight, finishPage: endLight);
@@ -530,12 +530,12 @@ namespace BBAR_Stat_Tool
                 int endMedium;
                 if (chbFullMedium.Checked)
                 {
-                    startMedium = (int)ConfigFile.START_PAGE;
+                    startMedium = (int)ConfigFile.START_PAGE-1;
                     endMedium = ConfigFile.MAX_PAGES;
                 }
                 else
                 {
-                    startMedium = int.TryParse(txtStartMedium.Text, out tempInt) ? tempInt : (int)ConfigFile.START_PAGE;
+                    startMedium = int.TryParse(txtStartMedium.Text, out tempInt) ? tempInt -1: (int)ConfigFile.START_PAGE;
                     endMedium = int.TryParse(txtEndMedium.Text, out tempInt) ? tempInt : ConfigFile.MAX_PAGES;
                 }
                 WebOps.LoginAndDownload(dData: baseData, type: 2, startPage: startMedium, finishPage: endMedium);
@@ -546,12 +546,12 @@ namespace BBAR_Stat_Tool
                 int endHeavy;
                 if (chbFullHeavy.Checked)
                 {
-                    startHeavy = (int)ConfigFile.START_PAGE;
+                    startHeavy = (int)ConfigFile.START_PAGE-1;
                     endHeavy = ConfigFile.MAX_PAGES;
                 }
                 else
                 {
-                    startHeavy = int.TryParse(txtStartHeavy.Text, out tempInt) ? tempInt : (int)ConfigFile.START_PAGE;
+                    startHeavy = int.TryParse(txtStartHeavy.Text, out tempInt) ? tempInt -1: (int)ConfigFile.START_PAGE;
                     endHeavy = int.TryParse(txtEndHeavy.Text, out tempInt) ? tempInt : ConfigFile.MAX_PAGES;
                 }
                 WebOps.LoginAndDownload(dData: baseData, type: 3, startPage: startHeavy, finishPage: endHeavy);
@@ -562,16 +562,26 @@ namespace BBAR_Stat_Tool
                 int endAssault;
                 if (chbFullAssault.Checked)
                 {
-                    startAssault = (int)ConfigFile.START_PAGE;
+                    startAssault = (int)ConfigFile.START_PAGE-1;
                     endAssault = ConfigFile.MAX_PAGES;
                 }
                 else
                 {
-                    startAssault = int.TryParse(txtStartAssault.Text, out tempInt) ? tempInt : (int)ConfigFile.START_PAGE;
+                    startAssault = int.TryParse(txtStartAssault.Text, out tempInt) ? tempInt -1: (int)ConfigFile.START_PAGE;
                     endAssault = int.TryParse(txtEndAssault.Text, out tempInt) ? tempInt : ConfigFile.MAX_PAGES;
                 }
                 WebOps.LoginAndDownload(dData: baseData, type: 4, startPage: startAssault, finishPage: endAssault);
             }
+        }
+
+        private void frmGetData_VisibleChanged(object sender, EventArgs e)
+        {
+            cmbSeasonNumber.Items.Clear();
+            for (int i = ConfigFile.SEASON_FIRST; i <= ConfigFile.SEASON_LAST; i++)
+            {
+                cmbSeasonNumber.Items.Add(i.ToString());
+            }
+
         }
     }
 }

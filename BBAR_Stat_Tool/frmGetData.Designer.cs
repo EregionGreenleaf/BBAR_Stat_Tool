@@ -589,6 +589,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "BBARST - Get Data";
             this.Load += new System.EventHandler(this.frmGetData_Load);
+            this.VisibleChanged += new System.EventHandler(this.frmGetData_VisibleChanged);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);

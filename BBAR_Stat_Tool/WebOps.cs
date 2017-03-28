@@ -171,7 +171,8 @@ namespace BBAR_Stat_Tool
             else
                 fileName = "S" + season + "_" + typeStr + ".txt";
 
-            string DirDestination = @"C:\TEST\Output\";
+            //string DirDestination = @"C:\TEST\Output\";
+            string DirDestination = ConfigFile.DIRECTORY_OUTPUT.FullName;
             season = season - 1; //adjust to 'base 0' web request
             finishPage += 1; //adjust to include last page
             string BaseAddress = "https://mwomercs.com/do/login";
@@ -194,7 +195,7 @@ namespace BBAR_Stat_Tool
                     );
                 string responseBodyAsText = await risposta.Content.ReadAsStringAsync();
 
-                Logger.PrintF(DirDestination + fileName, "** STARTING DOWNLOAD", true);
+                Logger.PrintF(new FileInfo(Path.Combine(DirDestination, fileName)).FullName, "** STARTING DOWNLOAD", true);
                 string ownRank = "<tr class=\"yourRankRow\">";
                 string endPages = "<td colspan='10'>No results found";
                 string resp = null;
@@ -231,43 +232,58 @@ namespace BBAR_Stat_Tool
             string email = "eregiongreenleafthegray@yahoo.it";
             string password = "chupa33";
             string lastResp = string.Empty;
-
-            for (int seasonIndex = 0; seasonIndex < 200; seasonIndex++)
+            int lastSeason = 0;
+            try
             {
-                string BaseAddress = "https://mwomercs.com/do/login";
-                var cookieContainer = new CookieContainer();
-                Uri uri = new Uri("https://mwomercs.com/profile/leaderboards");
-                var handler = new HttpClientHandler();
-                handler.CookieContainer = cookieContainer;
-                handler.CookieContainer.Add(uri, new System.Net.Cookie("leaderboard_season", seasonIndex.ToString()));
-                using (var client = new HttpClient(handler) { BaseAddress = new Uri(BaseAddress) })
+                for (int seasonIndex = 0; seasonIndex < 200; seasonIndex++)
                 {
-                    client.DefaultRequestHeaders.Accept.Clear();
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/xml"));
-
-                    HttpResponseMessage risposta = await client.PostAsync(BaseAddress, new FormUrlEncodedContent(
-                            new[]
-                            {
-                            new KeyValuePair<string,string> ("email", email),
-                            new KeyValuePair<string,string> ("password", password)
-                            })
-                        );
-                    string responseBodyAsText = await risposta.Content.ReadAsStringAsync();
-
-                    string resp = null;
-                    risposta = await client.GetAsync("https://mwomercs.com/profile/leaderboards?page=1" + "&type=" + type.ToString());
-                    responseBodyAsText = await risposta.Content.ReadAsStringAsync();
-                    resp = DataOps.ParseHTML(responseBodyAsText);
-                    if(resp != lastResp)
+                    string BaseAddress = "https://mwomercs.com/do/login";
+                    var cookieContainer = new CookieContainer();
+                    Uri uri = new Uri("https://mwomercs.com/profile/leaderboards");
+                    var handler = new HttpClientHandler();
+                    handler.CookieContainer = cookieContainer;
+                    handler.CookieContainer.Add(uri, new System.Net.Cookie("leaderboard_season", seasonIndex.ToString()));
+                    using (var client = new HttpClient(handler) { BaseAddress = new Uri(BaseAddress) })
                     {
-                        lastResp = resp;
-                        ConfigFile.SEASON_LAST = seasonIndex+1;
-                    }
-                    else
-                    {
-                        seasonIndex = 200;
+                        client.DefaultRequestHeaders.Accept.Clear();
+                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/xml"));
+
+                        HttpResponseMessage risposta = await client.PostAsync(BaseAddress, new FormUrlEncodedContent(
+                                new[]
+                                {
+                        new KeyValuePair<string,string> ("email", email),
+                        new KeyValuePair<string,string> ("password", password)
+                                })
+                            );
+                        string responseBodyAsText = await risposta.Content.ReadAsStringAsync();
+
+                        string resp = null;
+                        risposta = await client.GetAsync("https://mwomercs.com/profile/leaderboards?page=1" + "&type=" + type.ToString());
+                        responseBodyAsText = await risposta.Content.ReadAsStringAsync();
+                        resp = DataOps.ParseHTML(responseBodyAsText);
+                        if (resp != lastResp)
+                        {
+                            lastResp = resp;
+                            //ConfigFile.SEASON_LAST = seasonIndex+1;
+                            lastSeason = seasonIndex + 1;
+                        }
+                        else
+                        {
+                            break;
+                            //seasonIndex = 200;
+                        }
                     }
                 }
+            }
+            catch
+            {
+                lastSeason = 0;
+                ConfigFile.LAST_SEASON_CHECKED = false;
+            }
+            if (lastSeason != 0)
+            {
+                ConfigFile.SEASON_LAST = lastSeason;
+                ConfigFile.LAST_SEASON_CHECKED = true;
             }
             return;
         }

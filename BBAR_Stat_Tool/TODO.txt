@@ -1,2 +1,4 @@
 ﻿- Creare il metodo per l'individuazione automatica dell'ultima stagione disponibile.
 - Aggiungere dove serve il sistema di messaggistica.
+- IMPORTANTE: nel metodo "LoginAndDownload" aggiungere le verifica dell'esistenza del file. 
+  Nel caso, rinominare in "_OLD.txt", nel caso esista anche l'"OLD", cancellare quest'ultimo per essere sostituito.

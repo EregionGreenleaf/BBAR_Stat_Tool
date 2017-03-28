@@ -37,12 +37,14 @@ namespace BBAR_Stat_Tool
             {
                 frmGetData newGetData = new frmGetData();
                 ConfigFile.ACTUAL_GETDATA = newGetData;
-                newGetData.Show();
+                //newGetData.Show();
+                newGetData.Visible = true;
             }
             else
             {
                 frmGetData oldGetData = ConfigFile.ACTUAL_GETDATA;
-                oldGetData.Show();
+                //oldGetData.Show();
+                oldGetData.Visible = true;
             }
             //this.Opacity = 50;
             this.Hide();
@@ -138,8 +140,15 @@ namespace BBAR_Stat_Tool
 
         private async void button1_Click(object sender, EventArgs e)
         {
+            this.Enabled = false;
             await WebOps.FindLastSeason();
-            //this.Hide();
+            if (ConfigFile.LAST_SEASON_CHECKED)
+            {
+                Mex.AddMessage("Last Season found: " + ConfigFile.SEASON_LAST, Mex.INFO);
+                //Mex.PrintMessageInForm("Last Season found: " + ConfigFile.SEASON_LAST);
+                Mex.PrintMessageInForm(Mex.FormatMessageAtIndex());
+            }
+            this.Enabled = true;
         }
     }
 }

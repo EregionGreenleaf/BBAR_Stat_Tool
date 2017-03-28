@@ -22,6 +22,7 @@ namespace BBAR_Stat_Tool
             Mex.AddMessage("Starting Application: " + Timer.GetTimestampPrecision(DateTime.Now), Mex.INFO);
             List<MessageT> test = Mex.GetMessageOfType((int)Mex.INFO);
             Mex.PrintMessageInForm(Mex.FormatMessageAtIndex());
+            Mex.RemoveAll();
 
             ConfigFile.LoadConfig();
             frmMain firstMain = new frmMain();
