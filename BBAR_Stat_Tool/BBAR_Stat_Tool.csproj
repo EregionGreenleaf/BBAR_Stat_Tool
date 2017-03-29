@@ -58,6 +58,7 @@
     <ApplicationIcon>Omicron.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -81,6 +82,7 @@
     <Compile Include="DataOps.cs" />
     <Compile Include="DataT\DownloadData.cs" />
     <Compile Include="DataT\MessageT.cs" />
+    <Compile Include="FileOps.cs" />
     <Compile Include="frmGetData.cs">
       <SubType>Form</SubType>
     </Compile>

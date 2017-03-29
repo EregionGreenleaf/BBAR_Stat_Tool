@@ -30,6 +30,11 @@ namespace BBAR_Stat_Tool
             string version = fvi.FileVersion;
             return version;
         }
+
+        /// <summary>
+        /// DEPRECATED
+        /// </summary>
+        /// <param name="frm"></param>
         public static void HideGetData(frmGetData frm)
         {
             frm.Hide();

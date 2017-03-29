@@ -4,6 +4,7 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BBAR_Stat_Tool
@@ -15,7 +16,10 @@ namespace BBAR_Stat_Tool
         public static frmGetData ACTUAL_GETDATA { get; set; } = null;
         public static frmGetDataSingle ACTUAL_GETDATASINGLE { get; set; } = null;
         public static List<PlayerStatT> GLOBAL_PLAYER { get; set; }
+        public static Semaphore _Global = new Semaphore(0, 1);
 
+        public static int GLOBAL_AWAIT_ACTUAL { get; set; }
+        public static int GLOBAL_AWAIT_OBJ { get; set; }
         public static string SAVE_PATH { get; set; }
         public static int SEASON_FIRST { get; set; }
         public static int SEASON_LAST { get; set; }

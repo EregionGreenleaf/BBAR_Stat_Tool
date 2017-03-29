@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.VisualBasic;
+using System.Threading;
 
 namespace BBAR_Stat_Tool
 {
@@ -123,19 +125,62 @@ namespace BBAR_Stat_Tool
 
         private async void btnTest2_Click(object sender, EventArgs e)
         {
-            if (ConfigFile.ACTUAL_GETDATASINGLE == null)
+            string playerName = Microsoft.VisualBasic.Interaction.InputBox("Insert Player Name to download:", "Download all data of Player", "PlayerName", -1, -1);
+            playerName = playerName.Trim();
+            if (!string.IsNullOrWhiteSpace(playerName))
             {
-                frmGetDataSingle newGetDataSingle = new frmGetDataSingle();
-                ConfigFile.ACTUAL_GETDATASINGLE = newGetDataSingle;
-                newGetDataSingle.Show();
+                ConfigFile._Global = new Semaphore(0, 1);
+                List<int> typeList = new List<int> { 0, 1, 2, 3, 4 };
+                List<int> seasonsList = new List<int>();
+                for (int i = 1; i <= ConfigFile.SEASON_LAST; i++)
+                    seasonsList.Add(i);
+
+                ConfigFile.GLOBAL_PLAYER = new List<PlayerStatT>();
+                ConfigFile.GLOBAL_AWAIT_OBJ = ConfigFile.SEASON_LAST * 4;
+                ConfigFile.GLOBAL_AWAIT_ACTUAL = 0;
+
+                List<int> actualSeason = new List<int> { 1 };
+                List<int> actualType = new List<int> { 1 };
+                WebOps.SearchPlayer(playerName, actualSeason, actualType, "eregiongreenleafthegray@yahoo.it", "chupa33");
+
+                //foreach (var season in seasonsList)
+                //{
+                //    foreach(var type in typeList)
+                //    {
+                //        List<int> actualSeason = new List<int> { season };
+                //        List<int> actualType = new List<int> { type };
+                //        WebOps.SearchPlayer(playerName, actualSeason, actualType, "eregiongreenleafthegray@yahoo.it", "chupa33");
+                //    }
+                //}
+                while(ConfigFile.GLOBAL_AWAIT_ACTUAL <= ConfigFile.GLOBAL_AWAIT_OBJ)
+                {
+
+                }
+
+                await WebOps.SearchPlayer(playerName, seasonsList, new List<int> { 0, 1, 2, 3, 4 }, "eregiongreenleafthegray@yahoo.it", "chupa33");
+                if(ConfigFile.GLOBAL_PLAYER.Count > 0)
+                {
+
+                }
+                else
+                {
+
+                }
             }
-            else
-            {
-                frmGetDataSingle oldGetDataSingle = ConfigFile.ACTUAL_GETDATASINGLE;
-                oldGetDataSingle.Show();
-            }
-            //this.Opacity = 50;
-            this.Hide();
+
+            //if (ConfigFile.ACTUAL_GETDATASINGLE == null)
+            //{
+            //    frmGetDataSingle newGetDataSingle = new frmGetDataSingle();
+            //    ConfigFile.ACTUAL_GETDATASINGLE = newGetDataSingle;
+            //    newGetDataSingle.Show();
+            //}
+            //else
+            //{
+            //    frmGetDataSingle oldGetDataSingle = ConfigFile.ACTUAL_GETDATASINGLE;
+            //    oldGetDataSingle.Show();
+            //}
+
+            //this.Hide();
         }
 
         private async void button1_Click(object sender, EventArgs e)
@@ -147,6 +192,7 @@ namespace BBAR_Stat_Tool
                 Mex.AddMessage("Last Season found: " + ConfigFile.SEASON_LAST, Mex.INFO);
                 //Mex.PrintMessageInForm("Last Season found: " + ConfigFile.SEASON_LAST);
                 Mex.PrintMessageInForm(Mex.FormatMessageAtIndex());
+                Mex.RemoveAll();
             }
             this.Enabled = true;
         }

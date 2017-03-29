@@ -33,6 +33,7 @@ namespace BBAR_Stat_Tool
             return s;
         }
 
+
         public static async Task SearchPlayer(string playerName, List<int> seasons, List<int> category, string email, string password)
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
@@ -66,7 +67,7 @@ namespace BBAR_Stat_Tool
                                 })
                             );
                     }
-                    catch(Exception exp)
+                    catch (Exception exp)
                     {
                         Logger.PrintC("Error: " + exp.Message);
                     }
@@ -88,7 +89,10 @@ namespace BBAR_Stat_Tool
                         actualPlayerStat.WebPage = -666;
                         actualPlayerStat.WebAddress = address;
 
+                        ConfigFile._Global.WaitOne();
                         ConfigFile.GLOBAL_PLAYER.Add(actualPlayerStat);
+                        ConfigFile.GLOBAL_AWAIT_ACTUAL++;
+                        ConfigFile._Global.Release();
                     }
                 }
             }
@@ -173,6 +177,10 @@ namespace BBAR_Stat_Tool
 
             //string DirDestination = @"C:\TEST\Output\";
             string DirDestination = ConfigFile.DIRECTORY_OUTPUT.FullName;
+
+            FileInfo fileOutput = new FileInfo(Path.Combine(DirDestination, fileName));
+            FileOps.CheckFile(fileOutput);
+
             season = season - 1; //adjust to 'base 0' web request
             finishPage += 1; //adjust to include last page
             string BaseAddress = "https://mwomercs.com/do/login";

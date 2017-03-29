@@ -64,6 +64,7 @@
             // 
             // btnTest
             // 
+            this.btnTest.Enabled = false;
             this.btnTest.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnTest.Location = new System.Drawing.Point(12, 45);
             this.btnTest.Name = "btnTest";
