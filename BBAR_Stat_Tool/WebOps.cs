@@ -33,8 +33,19 @@ namespace BBAR_Stat_Tool
             return s;
         }
 
+        public static async Task DoWorkSeason(int[][] seasonArray, int type, string playerName)
+        {
+            await Task.WhenAll(seasonArray.Select((i,y) => new { WebOps.SearchPlayer(playerName, new List<int> { 1 }, new List<int> { i }, ConfigFile.DEFAULT_USER, ConfigFile.DEFAULT_PASS)), });
+            return;
+        }
 
-        public static async Task SearchPlayer(string playerName, List<int> seasons, List<int> category, string email, string password)
+        public static async Task DoWorkType(int[] typeArray, int season, string playerName)
+        {
+            await Task.WhenAll(typeArray.Select(i => WebOps.SearchPlayer(playerName, new List<int> { season }, new List<int> { i }, ConfigFile.DEFAULT_USER, ConfigFile.DEFAULT_PASS)).ToArray());
+            return;
+        }
+
+        public static async Task<PlayerStatT> SearchPlayer(string playerName, List<int> seasons, List<int> category, string email, string password)
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
                                                 | SecurityProtocolType.Tls11
@@ -56,21 +67,14 @@ namespace BBAR_Stat_Tool
                 {
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/xml"));
-                    HttpResponseMessage risposta = new HttpResponseMessage();
-                    try
-                    {
-                        risposta = await client.PostAsync(BaseAddress, new FormUrlEncodedContent(
+                    //HttpResponseMessage risposta = new HttpResponseMessage();
+                    HttpResponseMessage risposta = await client.PostAsync(BaseAddress, new FormUrlEncodedContent(
                                 new[]
                                 {
-                            new KeyValuePair<string,string> ("email", email),
-                            new KeyValuePair<string,string> ("password", password)
+                                    new KeyValuePair<string,string> ("email", email),
+                                    new KeyValuePair<string,string> ("password", password)
                                 })
                             );
-                    }
-                    catch (Exception exp)
-                    {
-                        Logger.PrintC("Error: " + exp.Message);
-                    }
                     string responseBodyAsText = await risposta.Content.ReadAsStringAsync();
 
                     //Logger.PrintF(DirDestination + fileName, "** STARTING DOWNLOAD", true);
@@ -89,13 +93,14 @@ namespace BBAR_Stat_Tool
                         actualPlayerStat.WebPage = -666;
                         actualPlayerStat.WebAddress = address;
 
-                        ConfigFile._Global.WaitOne();
+                        //ConfigFile._Global.WaitOne();
                         ConfigFile.GLOBAL_PLAYER.Add(actualPlayerStat);
-                        ConfigFile.GLOBAL_AWAIT_ACTUAL++;
-                        ConfigFile._Global.Release();
+                        //ConfigFile.GLOBAL_AWAIT_ACTUAL++;
+                        //ConfigFile._Global.Release();
                     }
                 }
             }
+            return new PlayerStatT();
         }
 
 
@@ -193,7 +198,6 @@ namespace BBAR_Stat_Tool
             {
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/xml"));
-
                 HttpResponseMessage risposta = await client.PostAsync(BaseAddress, new FormUrlEncodedContent(
                         new[]
                         {

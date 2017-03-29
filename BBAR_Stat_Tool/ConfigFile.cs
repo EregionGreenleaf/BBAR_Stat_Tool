@@ -12,6 +12,9 @@ namespace BBAR_Stat_Tool
     class ConfigFile
     {
 
+        public static string DEFAULT_USER = "eregiongreenleafthegray@yahoo.it";
+        public static string DEFAULT_PASS = "chupa33";
+
         public static frmMain ACTUAL_MAIN { get; set; } = null;
         public static frmGetData ACTUAL_GETDATA { get; set; } = null;
         public static frmGetDataSingle ACTUAL_GETDATASINGLE { get; set; } = null;

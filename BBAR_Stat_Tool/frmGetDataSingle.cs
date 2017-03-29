@@ -37,11 +37,12 @@ namespace BBAR_Stat_Tool
         }
 
 
-        private async void frmGetDataSingle_Show(object sender, EventArgs e)
+        private void frmGetDataSingle_Show(object sender, EventArgs e)
         {
-            List<PlayerStatT> newPlayer = new List<PlayerStatT>();
-            await WebOps.SearchPlayer("Eregion", new List<int> { 1, 2, 3, 4, 5, 6, 7, 8 }, new List<int> { 0, 1, 2, 3, 4 }, "eregiongreenleafthegray@yahoo.it", "chupa33");
-            newPlayer = ConfigFile.GLOBAL_PLAYER;
+            //List<PlayerStatT> newPlayer = new List<PlayerStatT>();
+            //WebOps.SearchPlayer("Eregion", new List<int> { 1, 2, 3, 4, 5, 6, 7, 8 }, new List<int> { 0, 1, 2, 3, 4 }, "eregiongreenleafthegray@yahoo.it", "chupa33");
+            //newPlayer = ConfigFile.GLOBAL_PLAYER;
+
             //tlpDataTable.new
         }
 

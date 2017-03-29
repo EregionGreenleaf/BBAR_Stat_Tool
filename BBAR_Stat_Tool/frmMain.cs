@@ -141,26 +141,35 @@ namespace BBAR_Stat_Tool
 
                 List<int> actualSeason = new List<int> { 1 };
                 List<int> actualType = new List<int> { 1 };
-                WebOps.SearchPlayer(playerName, actualSeason, actualType, "eregiongreenleafthegray@yahoo.it", "chupa33");
+                //await WebOps.SearchPlayer(playerName, seasonsList, typeList, ConfigFile.DEFAULT_USER, ConfigFile.DEFAULT_PASS);
 
-                //foreach (var season in seasonsList)
+                int[] typeArray = typeList.ToArray();
+                int[] seasonArray = actualSeason.ToArray();
+                //Task.WhenAll(typeArray.Select(i => WebOps.SearchPlayer(playerName, new List<int> { 1 }, new List<int> { i }, ConfigFile.DEFAULT_USER, ConfigFile.DEFAULT_PASS)).ToArray());
+
+                await WebOps.DoWorkType(typeArray, 1, playerName);
+
+                //while(ConfigFile.GLOBAL_AWAIT_ACTUAL <= ConfigFile.GLOBAL_AWAIT_OBJ)
                 //{
-                //    foreach(var type in typeList)
-                //    {
-                //        List<int> actualSeason = new List<int> { season };
-                //        List<int> actualType = new List<int> { type };
-                //        WebOps.SearchPlayer(playerName, actualSeason, actualType, "eregiongreenleafthegray@yahoo.it", "chupa33");
-                //    }
+
                 //}
-                while(ConfigFile.GLOBAL_AWAIT_ACTUAL <= ConfigFile.GLOBAL_AWAIT_OBJ)
-                {
 
-                }
-
-                await WebOps.SearchPlayer(playerName, seasonsList, new List<int> { 0, 1, 2, 3, 4 }, "eregiongreenleafthegray@yahoo.it", "chupa33");
+                //WebOps.SearchPlayer(playerName, seasonsList, new List<int> { 0, 1, 2, 3, 4 }, "eregiongreenleafthegray@yahoo.it", "chupa33");
                 if(ConfigFile.GLOBAL_PLAYER.Count > 0)
                 {
-
+                    List<PlayerStatT> newList = new List<PlayerStatT>();
+                    for(int s = 1; s <= ConfigFile.SEASON_LAST; s++)
+                    {
+                        for(int t = 0; t <= 4; t++)
+                        {
+                            PlayerStatT[] arrayStat = ConfigFile.GLOBAL_PLAYER.Where(x => x.Season == s && x.Category == t).ToArray();
+                            if(arrayStat.Count() > 0)
+                            {
+                                newList.Add(arrayStat[0]);
+                            }
+                            
+                        }
+                    }
                 }
                 else
                 {
