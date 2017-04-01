@@ -19,9 +19,9 @@ namespace BBAR_Stat_Tool
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Mex.AddMessage("Starting Application: " + Timer.GetTimestampPrecision(DateTime.Now), Mex.INFO);
-            List<MessageT> test = Mex.GetMessageOfType((int)Mex.INFO);
-            Mex.PrintMessageInForm(Mex.FormatMessageAtIndex());
+            //Mex.AddMessage("Starting Application: " + Timer.GetTimestampPrecision(DateTime.Now), Mex.INFO);
+            //List<MessageT> test = Mex.GetMessageOfType((int)Mex.INFO);
+            //Mex.PrintMessageInForm(Mex.FormatMessageAtIndex());
             Mex.RemoveAll();
 
             ConfigFile.LoadConfig();

@@ -147,7 +147,7 @@ namespace BBAR_Stat_Tool
                 int[] seasonArray = actualSeason.ToArray();
                 //Task.WhenAll(typeArray.Select(i => WebOps.SearchPlayer(playerName, new List<int> { 1 }, new List<int> { i }, ConfigFile.DEFAULT_USER, ConfigFile.DEFAULT_PASS)).ToArray());
 
-                await WebOps.DoWorkType(typeArray, 1, playerName);
+                //await WebOps.DoWorkType(typeArray, 1, playerName);
 
                 //while(ConfigFile.GLOBAL_AWAIT_ACTUAL <= ConfigFile.GLOBAL_AWAIT_OBJ)
                 //{
