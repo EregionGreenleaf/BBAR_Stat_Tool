@@ -123,6 +123,7 @@
             this.lblLastSeason.AutoSize = true;
             this.lblLastSeason.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.lblLastSeason.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLastSeason.ForeColor = System.Drawing.Color.Red;
             this.lblLastSeason.Location = new System.Drawing.Point(91, 42);
             this.lblLastSeason.Name = "lblLastSeason";
             this.lblLastSeason.Size = new System.Drawing.Size(118, 16);

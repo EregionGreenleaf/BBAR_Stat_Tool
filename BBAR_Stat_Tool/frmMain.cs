@@ -166,6 +166,7 @@ namespace BBAR_Stat_Tool
             this.Enabled = false;
             await WebOps.FindLastSeason();
             lblLastSeason.Text = "Last Season: " + ConfigFile.SEASON_LAST.ToString();
+            lblLastSeason.ForeColor = Color.Green;
             if (ConfigFile.LAST_SEASON_CHECKED)
             {
                 Mex.AddMessage("Last Season found: " + ConfigFile.SEASON_LAST, Mex.INFO);
