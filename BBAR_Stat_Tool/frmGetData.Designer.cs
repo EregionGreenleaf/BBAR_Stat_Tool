@@ -33,7 +33,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmGetData));
             this.cmbSeasonNumber = new System.Windows.Forms.ComboBox();
             this.lblSeason = new System.Windows.Forms.Label();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label12 = new System.Windows.Forms.Label();
             this.chbFullAssault = new System.Windows.Forms.CheckBox();
@@ -71,6 +70,11 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.txtEMail = new System.Windows.Forms.TextBox();
+            this.prbPageProgressGeneral = new System.Windows.Forms.ProgressBar();
+            this.prbPageProgressLight = new System.Windows.Forms.ProgressBar();
+            this.prbPageProgressMedium = new System.Windows.Forms.ProgressBar();
+            this.prbPageProgressHeavy = new System.Windows.Forms.ProgressBar();
+            this.prbPageProgressAssault = new System.Windows.Forms.ProgressBar();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -99,18 +103,14 @@
             this.lblSeason.Text = "Season to download";
             this.lblSeason.Click += new System.EventHandler(this.label1_Click);
             // 
-            // progressBar1
-            // 
-            this.progressBar1.Location = new System.Drawing.Point(334, 400);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(189, 23);
-            this.progressBar1.Step = 1;
-            this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            this.progressBar1.TabIndex = 2;
-            // 
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.prbPageProgressAssault);
+            this.panel1.Controls.Add(this.prbPageProgressHeavy);
+            this.panel1.Controls.Add(this.prbPageProgressMedium);
+            this.panel1.Controls.Add(this.prbPageProgressLight);
+            this.panel1.Controls.Add(this.prbPageProgressGeneral);
             this.panel1.Controls.Add(this.label12);
             this.panel1.Controls.Add(this.chbFullAssault);
             this.panel1.Controls.Add(this.chbFullHeavy);
@@ -139,7 +139,7 @@
             this.panel1.Controls.Add(this.chbGeneral);
             this.panel1.Location = new System.Drawing.Point(16, 86);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(312, 231);
+            this.panel1.Size = new System.Drawing.Size(501, 231);
             this.panel1.TabIndex = 3;
             this.panel1.Leave += new System.EventHandler(this.panel1_Leave);
             // 
@@ -476,9 +476,9 @@
             this.label3.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(104, 5);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(96, 23);
+            this.label3.Size = new System.Drawing.Size(147, 23);
             this.label3.TabIndex = 1;
-            this.label3.Text = "Credentials";
+            this.label3.Text = "MWO Credentials";
             this.toolTip1.SetToolTip(this.label3, "Select which type of leaderboards you\r\nwhant to download. Consider each\r\noption w" +
         "ill take approximately 2 hours\r\nto complete, based on your internet\r\nconnection " +
         "speed.");
@@ -510,9 +510,9 @@
             this.btnCancel.BackColor = System.Drawing.Color.Black;
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnCancel.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancel.Location = new System.Drawing.Point(368, 308);
+            this.btnCancel.Location = new System.Drawing.Point(347, 341);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(129, 35);
+            this.btnCancel.Size = new System.Drawing.Size(166, 35);
             this.btnCancel.TabIndex = 10;
             this.btnCancel.Text = "Cancel";
             this.toolTip1.SetToolTip(this.btnCancel, "Returns back");
@@ -524,9 +524,9 @@
             this.btnDownload.BackColor = System.Drawing.Color.Black;
             this.btnDownload.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnDownload.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDownload.Location = new System.Drawing.Point(368, 349);
+            this.btnDownload.Location = new System.Drawing.Point(347, 382);
             this.btnDownload.Name = "btnDownload";
-            this.btnDownload.Size = new System.Drawing.Size(129, 35);
+            this.btnDownload.Size = new System.Drawing.Size(166, 35);
             this.btnDownload.TabIndex = 11;
             this.btnDownload.Text = "Start Download";
             this.toolTip1.SetToolTip(this.btnDownload, "Returns back");
@@ -567,6 +567,51 @@
             this.txtEMail.Size = new System.Drawing.Size(210, 15);
             this.txtEMail.TabIndex = 3;
             // 
+            // prbPageProgressGeneral
+            // 
+            this.prbPageProgressGeneral.Location = new System.Drawing.Point(306, 63);
+            this.prbPageProgressGeneral.Name = "prbPageProgressGeneral";
+            this.prbPageProgressGeneral.Size = new System.Drawing.Size(190, 23);
+            this.prbPageProgressGeneral.Step = 1;
+            this.prbPageProgressGeneral.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.prbPageProgressGeneral.TabIndex = 27;
+            // 
+            // prbPageProgressLight
+            // 
+            this.prbPageProgressLight.Location = new System.Drawing.Point(306, 91);
+            this.prbPageProgressLight.Name = "prbPageProgressLight";
+            this.prbPageProgressLight.Size = new System.Drawing.Size(190, 23);
+            this.prbPageProgressLight.Step = 1;
+            this.prbPageProgressLight.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.prbPageProgressLight.TabIndex = 28;
+            // 
+            // prbPageProgressMedium
+            // 
+            this.prbPageProgressMedium.Location = new System.Drawing.Point(306, 119);
+            this.prbPageProgressMedium.Name = "prbPageProgressMedium";
+            this.prbPageProgressMedium.Size = new System.Drawing.Size(190, 23);
+            this.prbPageProgressMedium.Step = 1;
+            this.prbPageProgressMedium.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.prbPageProgressMedium.TabIndex = 29;
+            // 
+            // prbPageProgressHeavy
+            // 
+            this.prbPageProgressHeavy.Location = new System.Drawing.Point(306, 147);
+            this.prbPageProgressHeavy.Name = "prbPageProgressHeavy";
+            this.prbPageProgressHeavy.Size = new System.Drawing.Size(190, 23);
+            this.prbPageProgressHeavy.Step = 1;
+            this.prbPageProgressHeavy.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.prbPageProgressHeavy.TabIndex = 30;
+            // 
+            // prbPageProgressAssault
+            // 
+            this.prbPageProgressAssault.Location = new System.Drawing.Point(306, 176);
+            this.prbPageProgressAssault.Name = "prbPageProgressAssault";
+            this.prbPageProgressAssault.Size = new System.Drawing.Size(190, 23);
+            this.prbPageProgressAssault.Step = 1;
+            this.prbPageProgressAssault.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.prbPageProgressAssault.TabIndex = 31;
+            // 
             // frmGetData
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -578,7 +623,6 @@
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.lblDescription);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.lblSeason);
             this.Controls.Add(this.cmbSeasonNumber);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
@@ -603,7 +647,6 @@
 
         private System.Windows.Forms.ComboBox cmbSeasonNumber;
         private System.Windows.Forms.Label lblSeason;
-        private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label lblDescription;
         private System.Windows.Forms.CheckBox chbGeneral;
@@ -641,5 +684,10 @@
         private System.Windows.Forms.CheckBox chbFullHeavy;
         private System.Windows.Forms.CheckBox chbFullMedium;
         private System.Windows.Forms.Button btnDownload;
+        private System.Windows.Forms.ProgressBar prbPageProgressGeneral;
+        private System.Windows.Forms.ProgressBar prbPageProgressAssault;
+        private System.Windows.Forms.ProgressBar prbPageProgressHeavy;
+        private System.Windows.Forms.ProgressBar prbPageProgressMedium;
+        private System.Windows.Forms.ProgressBar prbPageProgressLight;
     }
 }

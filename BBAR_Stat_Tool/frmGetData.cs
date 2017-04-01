@@ -42,6 +42,13 @@ namespace BBAR_Stat_Tool
             chbFullHeavy.Enabled = false;
             chbFullMedium.Enabled = false;
             chbFullLight.Enabled = false;
+
+            prbPageProgressGeneral.Value = 0;
+            prbPageProgressLight.Value = 0;
+            prbPageProgressMedium.Value = 0;
+            prbPageProgressHeavy.Value = 0;
+            prbPageProgressAssault.Value = 0;
+
         }
 
         /// <summary>
@@ -93,12 +100,16 @@ namespace BBAR_Stat_Tool
                     txtEndGeneral.Enabled = true;
                 }
                 chbFullGeneral.Enabled = true;
+                prbPageProgressGeneral.Enabled = true;
+                prbPageProgressGeneral.Value = 0;
             }
             else
             {
                 txtStartGeneral.Enabled = false;
                 txtEndGeneral.Enabled = false;
                 chbFullGeneral.Enabled = false;
+                prbPageProgressGeneral.Enabled = false;
+                prbPageProgressGeneral.Value = 0;
             }
             
             RefreshTimerCount(ConfigFile.GENERAL);
@@ -120,12 +131,16 @@ namespace BBAR_Stat_Tool
                     txtEndLight.Enabled = true;
                 }
                 chbFullLight.Enabled = true;
+                prbPageProgressLight.Enabled = true;
+                prbPageProgressLight.Value = 0;
             }
             else
             {
                 txtStartLight.Enabled = false;
                 txtEndLight.Enabled = false;
                 chbFullLight.Enabled = false;
+                prbPageProgressLight.Enabled = false;
+                prbPageProgressLight.Value = 0;
             }
             RefreshTimerCount(ConfigFile.LIGHT);
         }
@@ -146,12 +161,16 @@ namespace BBAR_Stat_Tool
                     txtEndMedium.Enabled = true;
                 }
                 chbFullMedium.Enabled = true;
+                prbPageProgressMedium.Enabled = true;
+                prbPageProgressMedium.Value = 0;
             }
             else
             {
                 txtStartMedium.Enabled = false;
                 txtEndMedium.Enabled = false;
                 chbFullMedium.Enabled = false;
+                prbPageProgressMedium.Enabled = false;
+                prbPageProgressMedium.Value = 0;
             }
             RefreshTimerCount(ConfigFile.MEDIUM);
         }
@@ -172,12 +191,16 @@ namespace BBAR_Stat_Tool
                     txtEndHeavy.Enabled = true;
                 }
                 chbFullHeavy.Enabled = true;
+                prbPageProgressHeavy.Enabled = true;
+                prbPageProgressHeavy.Value = 0;
             }
             else
             {
                 txtStartHeavy.Enabled = false;
                 txtEndHeavy.Enabled = false;
                 chbFullHeavy.Enabled = false;
+                prbPageProgressHeavy.Enabled = false;
+                prbPageProgressHeavy.Value = 0;
             }
             RefreshTimerCount(ConfigFile.HEAVY);
         }
@@ -198,12 +221,16 @@ namespace BBAR_Stat_Tool
                     txtEndAssault.Enabled = true;
                 }
                 chbFullAssault.Enabled = true;
+                prbPageProgressAssault.Enabled = true;
+                prbPageProgressAssault.Value = 0;
             }
             else
             {
                 txtStartAssault.Enabled = false;
                 txtEndAssault.Enabled = false;
                 chbFullAssault.Enabled = false;
+                prbPageProgressAssault.Enabled = false;
+                prbPageProgressAssault.Value = 0;
             }
             RefreshTimerCount(ConfigFile.ASSAULT);
         }
@@ -473,12 +500,33 @@ namespace BBAR_Stat_Tool
             (sender as TextBox).SelectAll();
         }
 
-        private void btnDownload_Click(object sender, EventArgs e)
+        private async void btnDownload_Click(object sender, EventArgs e)
         {
-            int tempInt = 0;
-            int season = int.TryParse(cmbSeasonNumber.Text, out tempInt) ? tempInt : 0;
             string email = txtEMail.Text;
             string password = txtPassword.Text;
+            //Task<int> response = await WebOps.CheckCredentials(email, password);
+            int response = await WebOps.CheckCredentials(email, password);
+
+            switch (response)
+            {
+                case 1:
+                    MessageBox.Show("You must enter an email.", "MWO Credential Error", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+                    return;
+                case 2:
+                    MessageBox.Show("You must enter a password.", "MWO Credential Error", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+                    return;
+                case 3:
+                    MessageBox.Show("Your MWO Credentials are invalid." + Environment.NewLine + "Check your eMail and Password and try again.", "MWO Credential Error", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+                    return;
+                case 4:
+                    break;
+                case 5:
+                    MessageBox.Show("There has been an error while trying to connect." + Environment.NewLine + "Check your connection and try again.", "MWO Credential Error", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+                    return;
+            }
+
+            int tempInt = 0;
+            int season = int.TryParse(cmbSeasonNumber.Text, out tempInt) ? tempInt : ConfigFile.SEASON_LAST;
             if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
             {
                 if (string.IsNullOrWhiteSpace(email))
@@ -504,9 +552,9 @@ namespace BBAR_Stat_Tool
                 else
                 {
                     startGeneral = int.TryParse(txtStartGeneral.Text, out tempInt) ? tempInt-1 : (int)ConfigFile.START_PAGE;
-                    endGeneral = int.TryParse(txtEndGeneral.Text, out tempInt) ? tempInt : ConfigFile.MAX_PAGES;
+                    endGeneral = int.TryParse(txtEndGeneral.Text, out tempInt) ? tempInt-1 : ConfigFile.MAX_PAGES;
                 }
-                WebOps.LoginAndDownload(dData: baseData, type: 0, startPage: startGeneral, finishPage: endGeneral);
+                WebOps.LoginAndDownload(dData: baseData, type: 0, startPage: startGeneral, finishPage: endGeneral, bar: prbPageProgressGeneral);
             }
             if (chbLight.Checked)
             {
@@ -520,9 +568,9 @@ namespace BBAR_Stat_Tool
                 else
                 {
                     startLight = int.TryParse(txtStartLight.Text, out tempInt) ? tempInt -1: (int)ConfigFile.START_PAGE;
-                    endLight = int.TryParse(txtEndLight.Text, out tempInt) ? tempInt : ConfigFile.MAX_PAGES;
+                    endLight = int.TryParse(txtEndLight.Text, out tempInt) ? tempInt-1 : ConfigFile.MAX_PAGES;
                 }
-                WebOps.LoginAndDownload(dData: baseData, type: 1, startPage: startLight, finishPage: endLight);
+                WebOps.LoginAndDownload(dData: baseData, type: 1, startPage: startLight, finishPage: endLight, bar: prbPageProgressLight);
             }
             if (chbMedium.Checked)
             {
@@ -536,9 +584,9 @@ namespace BBAR_Stat_Tool
                 else
                 {
                     startMedium = int.TryParse(txtStartMedium.Text, out tempInt) ? tempInt -1: (int)ConfigFile.START_PAGE;
-                    endMedium = int.TryParse(txtEndMedium.Text, out tempInt) ? tempInt : ConfigFile.MAX_PAGES;
+                    endMedium = int.TryParse(txtEndMedium.Text, out tempInt) ? tempInt-1 : ConfigFile.MAX_PAGES;
                 }
-                WebOps.LoginAndDownload(dData: baseData, type: 2, startPage: startMedium, finishPage: endMedium);
+                WebOps.LoginAndDownload(dData: baseData, type: 2, startPage: startMedium, finishPage: endMedium, bar: prbPageProgressMedium);
             }
             if (chbHeavy.Checked)
             {
@@ -552,9 +600,9 @@ namespace BBAR_Stat_Tool
                 else
                 {
                     startHeavy = int.TryParse(txtStartHeavy.Text, out tempInt) ? tempInt -1: (int)ConfigFile.START_PAGE;
-                    endHeavy = int.TryParse(txtEndHeavy.Text, out tempInt) ? tempInt : ConfigFile.MAX_PAGES;
+                    endHeavy = int.TryParse(txtEndHeavy.Text, out tempInt) ? tempInt-1 : ConfigFile.MAX_PAGES;
                 }
-                WebOps.LoginAndDownload(dData: baseData, type: 3, startPage: startHeavy, finishPage: endHeavy);
+                WebOps.LoginAndDownload(dData: baseData, type: 3, startPage: startHeavy, finishPage: endHeavy, bar: prbPageProgressHeavy);
             }
             if (chbAssault.Checked)
             {
@@ -568,9 +616,9 @@ namespace BBAR_Stat_Tool
                 else
                 {
                     startAssault = int.TryParse(txtStartAssault.Text, out tempInt) ? tempInt -1: (int)ConfigFile.START_PAGE;
-                    endAssault = int.TryParse(txtEndAssault.Text, out tempInt) ? tempInt : ConfigFile.MAX_PAGES;
+                    endAssault = int.TryParse(txtEndAssault.Text, out tempInt) ? tempInt-1 : ConfigFile.MAX_PAGES;
                 }
-                WebOps.LoginAndDownload(dData: baseData, type: 4, startPage: startAssault, finishPage: endAssault);
+                WebOps.LoginAndDownload(dData: baseData, type: 4, startPage: startAssault, finishPage: endAssault, bar: prbPageProgressAssault);
             }
         }
 
@@ -581,6 +629,11 @@ namespace BBAR_Stat_Tool
             {
                 cmbSeasonNumber.Items.Add(i.ToString());
             }
+
+        }
+
+        private void prbPageProgress_Click(object sender, EventArgs e)
+        {
 
         }
     }

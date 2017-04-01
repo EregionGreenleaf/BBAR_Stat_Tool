@@ -35,6 +35,22 @@ namespace BBAR_Stat_Tool
         public static int? ACTUAL_TASK { get; set; } = 1;
         public static bool LAST_SEASON_CHECKED { get; set; } = false;
         public static DirectoryInfo DIRECTORY_OUTPUT { get; set; }
+
+
+        /// SEZIONE GET_DATA GLOBALE
+        public static bool GENERAL { get; set; }
+        public static bool LIGHT { get; set; }
+        public static bool MEDIUM { get; set; }
+        public static bool HEAVY { get; set; }
+        public static bool ASSAULT { get; set; }
+
+        public static double EXPECTED_TIME { get; set; }
+        public static double ACTUAL_TIME { get; set; }
+        public static int TOTAL_PAGES { get; set; }
+        public static int MAX_PAGES = 1700;
+        public static int MIN_PAGES = 0;
+
+
         public static bool LoadConfig()
         {
             try
@@ -90,7 +106,7 @@ namespace BBAR_Stat_Tool
                 END_PAGE = 200;
                 SEASON_FIRST = 1;
                 SEASON_LAST = 7;
-                MAX_PAGES = 3500;
+                MAX_PAGES = 1700;
                 MIN_PAGES = 0;
 
                 GENERAL = false;
@@ -103,18 +119,6 @@ namespace BBAR_Stat_Tool
             }
         }
 
-        /// SEZIONE GET_DATA GLOBALE
-        public static bool GENERAL { get; set; }
-        public static bool LIGHT { get; set; }
-        public static bool MEDIUM { get; set; }
-        public static bool HEAVY { get; set; }
-        public static bool ASSAULT { get; set; }
-
-        public static double EXPECTED_TIME { get; set; }
-        public static double ACTUAL_TIME { get; set; }
-        public static int TOTAL_PAGES { get; set; }
-        public static int MAX_PAGES = 3500;
-        public static int MIN_PAGES = 0;
         
 
     }
