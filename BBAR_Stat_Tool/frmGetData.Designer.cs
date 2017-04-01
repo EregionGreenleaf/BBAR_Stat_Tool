@@ -370,6 +370,7 @@
             this.lblTimer.Name = "lblTimer";
             this.lblTimer.Size = new System.Drawing.Size(100, 19);
             this.lblTimer.TabIndex = 26;
+            this.lblTimer.Click += new System.EventHandler(this.lblTimer_Click);
             // 
             // lblTime
             // 
@@ -515,7 +516,7 @@
             this.btnCancel.Size = new System.Drawing.Size(166, 35);
             this.btnCancel.TabIndex = 10;
             this.btnCancel.Text = "Cancel";
-            this.toolTip1.SetToolTip(this.btnCancel, "Returns back");
+            this.toolTip1.SetToolTip(this.btnCancel, "Returns to the Main menu");
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
+using System.Windows.Forms;
 
 namespace BBAR_Stat_Tool
 {
@@ -94,6 +95,90 @@ namespace BBAR_Stat_Tool
                 }
             }
             return sw.ToString();
+        }
+
+        public static bool PlayerDataToFile(List<PlayerStatT> playerDataList)
+        {
+            List<PlayerStatT> orderedList = new List<PlayerStatT>();
+
+            FileInfo file = new FileInfo(Path.Combine(ConfigFile.DIRECTORY_OUTPUT.FullName, playerDataList.First().Name + ".txt"));
+            if (file.Exists)
+            {
+                FileInfo fileOld = new FileInfo(Path.Combine(Path.GetDirectoryName(file.FullName), Path.GetFileNameWithoutExtension(file.FullName) + "_OLD.txt").ToString());
+                if (fileOld.Exists)
+                {
+                    try
+                    {
+                        fileOld.Delete();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Cannot delete file: " + file.FullName + "." + Environment.NewLine +
+                                        "File could be open or used by another application." + Environment.NewLine +
+                                        "Player's Data will be appended to the existing one.",
+                                        "File Error", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+                    }
+                }
+                File.Copy(file.FullName, fileOld.FullName);
+                file.IsReadOnly = false;
+                try
+                {
+                    File.Delete(file.FullName);
+                }
+                catch
+                {
+                    MessageBox.Show("Cannot delete file: " + file.FullName + "." + Environment.NewLine + 
+                                    "File could be open or used by another application." + Environment.NewLine + 
+                                    "Player's Data will be appended to the existing one.", 
+                                    "File Error", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+                }
+            }
+
+            for(int season = 0; season <= ConfigFile.SEASON_LAST; season++)
+            {
+                for(int type = 0; type <= 5; type++)
+                {
+                    List<PlayerStatT> last = playerDataList.Where(x => x.Season == season && x.Category == type).ToList();
+                    if (last.Count != 0)
+                    {
+                        orderedList.Add(last.Last());
+                        string typeStr = null;
+                        switch (orderedList.Last().Category)
+                        {
+                            case 0:
+                                typeStr = "GENERAL";
+                                break;
+                            case 1:
+                                typeStr = "LIGHT";
+                                break;
+                            case 2:
+                                typeStr = "MEDIUM";
+                                break;
+                            case 3:
+                                typeStr = "HEAVY";
+                                break;
+                            case 4:
+                                typeStr = "ASSAULT";
+                                break;
+                        }
+                        
+                        string text = "S" + orderedList.Last().Season +
+                                      "_" + typeStr +
+                                      ";" + orderedList.Last().Rank +
+                                      ";" + orderedList.Last().Name +
+                                      ";" + orderedList.Last().Wins +
+                                      ";" + orderedList.Last().Losses +
+                                      ";" + orderedList.Last().WLr.ToString().Replace(',', '.') +
+                                      ";" + orderedList.Last().Kills +
+                                      ";" + orderedList.Last().Deaths +
+                                      ";" + orderedList.Last().KDr.ToString().Replace(',', '.') +
+                                      ";" + orderedList.Last().GamesPlayed +
+                                      ";" + orderedList.Last().AvarageMatchScore;
+                        Logger.PrintF(file.FullName, text, false);
+                    }
+                }
+            }
+            return false;
         }
     }
 }

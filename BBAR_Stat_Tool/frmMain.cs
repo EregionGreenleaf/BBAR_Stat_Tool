@@ -54,7 +54,9 @@ namespace BBAR_Stat_Tool
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            
+            prbSinglePlayer.Enabled = false;
+            prbSinglePlayer.Maximum = ConfigFile.SEASON_LAST;
+            prbSinglePlayer.Value = 0;
         }
 
         private void btnTest_Click(object sender, EventArgs e)
@@ -125,11 +127,12 @@ namespace BBAR_Stat_Tool
 
         private async void btnTest2_Click(object sender, EventArgs e)
         {
+            this.Enabled = false;
             string playerName = Microsoft.VisualBasic.Interaction.InputBox("Insert Player Name to download:", "Download all data of Player", "PlayerName", -1, -1);
             playerName = playerName.Trim();
             if (!string.IsNullOrWhiteSpace(playerName))
             {
-                ConfigFile._Global = new Semaphore(0, 1);
+                ConfigFile._Global = new Semaphore(1, 1);
                 List<int> typeList = new List<int> { 0, 1, 2, 3, 4 };
                 List<int> seasonsList = new List<int>();
                 for (int i = 1; i <= ConfigFile.SEASON_LAST; i++)
@@ -141,55 +144,20 @@ namespace BBAR_Stat_Tool
 
                 List<int> actualSeason = new List<int> { 1 };
                 List<int> actualType = new List<int> { 1 };
-                //await WebOps.SearchPlayer(playerName, seasonsList, typeList, ConfigFile.DEFAULT_USER, ConfigFile.DEFAULT_PASS);
+
+                prbSinglePlayer.Maximum = 5;
+                prbSinglePlayer.Enabled = true;
+                prbSinglePlayer.Value = 0;
 
                 int[] typeArray = typeList.ToArray();
                 int[] seasonArray = actualSeason.ToArray();
-                //Task.WhenAll(typeArray.Select(i => WebOps.SearchPlayer(playerName, new List<int> { 1 }, new List<int> { i }, ConfigFile.DEFAULT_USER, ConfigFile.DEFAULT_PASS)).ToArray());
-
-                //await WebOps.DoWorkType(typeArray, 1, playerName);
-
-                //while(ConfigFile.GLOBAL_AWAIT_ACTUAL <= ConfigFile.GLOBAL_AWAIT_OBJ)
-                //{
-
-                //}
-
-                //WebOps.SearchPlayer(playerName, seasonsList, new List<int> { 0, 1, 2, 3, 4 }, "eregiongreenleafthegray@yahoo.it", "chupa33");
-                if(ConfigFile.GLOBAL_PLAYER.Count > 0)
-                {
-                    List<PlayerStatT> newList = new List<PlayerStatT>();
-                    for(int s = 1; s <= ConfigFile.SEASON_LAST; s++)
-                    {
-                        for(int t = 0; t <= 4; t++)
-                        {
-                            PlayerStatT[] arrayStat = ConfigFile.GLOBAL_PLAYER.Where(x => x.Season == s && x.Category == t).ToArray();
-                            if(arrayStat.Count() > 0)
-                            {
-                                newList.Add(arrayStat[0]);
-                            }
-                            
-                        }
-                    }
+                for (int typeCat = 0; typeCat <= 4; typeCat++) {
+                    await Task.WhenAll(seasonsList.Select(i => WebOps.SearchPlayer(playerName, new List<int> { i }, new List<int> { typeCat }, ConfigFile.DEFAULT_USER, ConfigFile.DEFAULT_PASS)).ToArray());
+                    prbSinglePlayer.Value = typeCat + 1;
                 }
-                else
-                {
-
-                }
+                DataOps.PlayerDataToFile(ConfigFile.GLOBAL_PLAYER);
             }
-
-            //if (ConfigFile.ACTUAL_GETDATASINGLE == null)
-            //{
-            //    frmGetDataSingle newGetDataSingle = new frmGetDataSingle();
-            //    ConfigFile.ACTUAL_GETDATASINGLE = newGetDataSingle;
-            //    newGetDataSingle.Show();
-            //}
-            //else
-            //{
-            //    frmGetDataSingle oldGetDataSingle = ConfigFile.ACTUAL_GETDATASINGLE;
-            //    oldGetDataSingle.Show();
-            //}
-
-            //this.Hide();
+            this.Enabled = true;
         }
 
         private async void button1_Click(object sender, EventArgs e)
@@ -204,6 +172,11 @@ namespace BBAR_Stat_Tool
                 Mex.RemoveAll();
             }
             this.Enabled = true;
+        }
+
+        private void lblCopyright_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -636,5 +636,10 @@ namespace BBAR_Stat_Tool
         {
 
         }
+
+        private void lblTimer_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

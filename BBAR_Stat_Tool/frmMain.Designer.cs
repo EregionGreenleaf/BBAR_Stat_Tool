@@ -36,6 +36,7 @@
             this.btnTest = new System.Windows.Forms.Button();
             this.btnGetSinglePlayer = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.prbSinglePlayer = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
             // lblCopyright
@@ -48,15 +49,17 @@
             this.lblCopyright.TabIndex = 0;
             this.lblCopyright.Text = "©2017 BBARUnit. BBAR Stat Tool v.";
             this.lblCopyright.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblCopyright.Click += new System.EventHandler(this.lblCopyright_Click);
             // 
             // btnOne
             // 
             this.btnOne.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnOne.Location = new System.Drawing.Point(12, 79);
+            this.btnOne.Font = new System.Drawing.Font("Eurostile", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnOne.Location = new System.Drawing.Point(12, 106);
             this.btnOne.Name = "btnOne";
             this.btnOne.Size = new System.Drawing.Size(274, 28);
             this.btnOne.TabIndex = 1;
-            this.btnOne.Text = "Get Data";
+            this.btnOne.Text = "Download Seasonal Data";
             this.ttBtnOne.SetToolTip(this.btnOne, "Configure the Data you want from the MWO Leaderboards and download them.");
             this.btnOne.UseCompatibleTextRendering = true;
             this.btnOne.UseVisualStyleBackColor = true;
@@ -66,7 +69,8 @@
             // 
             this.btnTest.Enabled = false;
             this.btnTest.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnTest.Location = new System.Drawing.Point(12, 45);
+            this.btnTest.Font = new System.Drawing.Font("Eurostile", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTest.Location = new System.Drawing.Point(12, 72);
             this.btnTest.Name = "btnTest";
             this.btnTest.Size = new System.Drawing.Size(274, 28);
             this.btnTest.TabIndex = 2;
@@ -79,17 +83,21 @@
             // btnGetSinglePlayer
             // 
             this.btnGetSinglePlayer.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnGetSinglePlayer.Location = new System.Drawing.Point(12, 113);
+            this.btnGetSinglePlayer.Font = new System.Drawing.Font("Eurostile", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGetSinglePlayer.Location = new System.Drawing.Point(12, 274);
             this.btnGetSinglePlayer.Name = "btnGetSinglePlayer";
             this.btnGetSinglePlayer.Size = new System.Drawing.Size(274, 27);
             this.btnGetSinglePlayer.TabIndex = 3;
-            this.btnGetSinglePlayer.Text = "Test Single Player Get";
+            this.btnGetSinglePlayer.Text = "Single Player Data";
+            this.ttBtnOne.SetToolTip(this.btnGetSinglePlayer, "Download all available Data of a single Player.\r\nOutput will be set in a file wit" +
+        "h the name of the Player.");
             this.btnGetSinglePlayer.UseVisualStyleBackColor = true;
             this.btnGetSinglePlayer.Click += new System.EventHandler(this.btnTest2_Click);
             // 
             // button1
             // 
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.button1.Font = new System.Drawing.Font("Eurostile", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.Location = new System.Drawing.Point(12, 12);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(274, 27);
@@ -98,12 +106,21 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // prbSinglePlayer
+            // 
+            this.prbSinglePlayer.Location = new System.Drawing.Point(14, 307);
+            this.prbSinglePlayer.Name = "prbSinglePlayer";
+            this.prbSinglePlayer.Size = new System.Drawing.Size(272, 23);
+            this.prbSinglePlayer.TabIndex = 5;
+            this.ttBtnOne.SetToolTip(this.prbSinglePlayer, "State of the \'Single Player Data\' download process.");
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(298, 361);
+            this.Controls.Add(this.prbSinglePlayer);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnGetSinglePlayer);
             this.Controls.Add(this.btnTest);
@@ -130,6 +147,7 @@
         private System.Windows.Forms.Button btnTest;
         private System.Windows.Forms.Button btnGetSinglePlayer;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ProgressBar prbSinglePlayer;
     }
 }
 
