@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("BBAR Stat Tool")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Greenleaf's Alpha&Omega")]
+[assembly: AssemblyCompany("Alpha&Omega Strike")]
 [assembly: AssemblyProduct("BBAR Stat Tool")]
 [assembly: AssemblyCopyright("Copyright © BBARUnit 2017")]
 [assembly: AssemblyTrademark("")]
@@ -33,4 +33,4 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("0.1.1.5")]
-[assembly: AssemblyFileVersion("0.1.1.7")]
+[assembly: AssemblyFileVersion("0.1.1.9")]

@@ -34,6 +34,11 @@
             this.cmbSeasonNumber = new System.Windows.Forms.ComboBox();
             this.lblSeason = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.prbPageProgressAssault = new System.Windows.Forms.ProgressBar();
+            this.prbPageProgressHeavy = new System.Windows.Forms.ProgressBar();
+            this.prbPageProgressMedium = new System.Windows.Forms.ProgressBar();
+            this.prbPageProgressLight = new System.Windows.Forms.ProgressBar();
+            this.prbPageProgressGeneral = new System.Windows.Forms.ProgressBar();
             this.label12 = new System.Windows.Forms.Label();
             this.chbFullAssault = new System.Windows.Forms.CheckBox();
             this.chbFullHeavy = new System.Windows.Forms.CheckBox();
@@ -70,11 +75,6 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.txtEMail = new System.Windows.Forms.TextBox();
-            this.prbPageProgressGeneral = new System.Windows.Forms.ProgressBar();
-            this.prbPageProgressLight = new System.Windows.Forms.ProgressBar();
-            this.prbPageProgressMedium = new System.Windows.Forms.ProgressBar();
-            this.prbPageProgressHeavy = new System.Windows.Forms.ProgressBar();
-            this.prbPageProgressAssault = new System.Windows.Forms.ProgressBar();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -142,6 +142,51 @@
             this.panel1.Size = new System.Drawing.Size(501, 231);
             this.panel1.TabIndex = 3;
             this.panel1.Leave += new System.EventHandler(this.panel1_Leave);
+            // 
+            // prbPageProgressAssault
+            // 
+            this.prbPageProgressAssault.Location = new System.Drawing.Point(306, 176);
+            this.prbPageProgressAssault.Name = "prbPageProgressAssault";
+            this.prbPageProgressAssault.Size = new System.Drawing.Size(190, 23);
+            this.prbPageProgressAssault.Step = 1;
+            this.prbPageProgressAssault.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.prbPageProgressAssault.TabIndex = 31;
+            // 
+            // prbPageProgressHeavy
+            // 
+            this.prbPageProgressHeavy.Location = new System.Drawing.Point(306, 147);
+            this.prbPageProgressHeavy.Name = "prbPageProgressHeavy";
+            this.prbPageProgressHeavy.Size = new System.Drawing.Size(190, 23);
+            this.prbPageProgressHeavy.Step = 1;
+            this.prbPageProgressHeavy.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.prbPageProgressHeavy.TabIndex = 30;
+            // 
+            // prbPageProgressMedium
+            // 
+            this.prbPageProgressMedium.Location = new System.Drawing.Point(306, 119);
+            this.prbPageProgressMedium.Name = "prbPageProgressMedium";
+            this.prbPageProgressMedium.Size = new System.Drawing.Size(190, 23);
+            this.prbPageProgressMedium.Step = 1;
+            this.prbPageProgressMedium.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.prbPageProgressMedium.TabIndex = 29;
+            // 
+            // prbPageProgressLight
+            // 
+            this.prbPageProgressLight.Location = new System.Drawing.Point(306, 91);
+            this.prbPageProgressLight.Name = "prbPageProgressLight";
+            this.prbPageProgressLight.Size = new System.Drawing.Size(190, 23);
+            this.prbPageProgressLight.Step = 1;
+            this.prbPageProgressLight.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.prbPageProgressLight.TabIndex = 28;
+            // 
+            // prbPageProgressGeneral
+            // 
+            this.prbPageProgressGeneral.Location = new System.Drawing.Point(306, 63);
+            this.prbPageProgressGeneral.Name = "prbPageProgressGeneral";
+            this.prbPageProgressGeneral.Size = new System.Drawing.Size(190, 23);
+            this.prbPageProgressGeneral.Step = 1;
+            this.prbPageProgressGeneral.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.prbPageProgressGeneral.TabIndex = 27;
             // 
             // label12
             // 
@@ -438,7 +483,7 @@
             // 
             this.lblTypeDescription.AutoSize = true;
             this.lblTypeDescription.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTypeDescription.Location = new System.Drawing.Point(93, 0);
+            this.lblTypeDescription.Location = new System.Drawing.Point(200, 0);
             this.lblTypeDescription.Name = "lblTypeDescription";
             this.lblTypeDescription.Size = new System.Drawing.Size(124, 23);
             this.lblTypeDescription.TabIndex = 1;
@@ -567,51 +612,6 @@
             this.txtEMail.Name = "txtEMail";
             this.txtEMail.Size = new System.Drawing.Size(210, 15);
             this.txtEMail.TabIndex = 3;
-            // 
-            // prbPageProgressGeneral
-            // 
-            this.prbPageProgressGeneral.Location = new System.Drawing.Point(306, 63);
-            this.prbPageProgressGeneral.Name = "prbPageProgressGeneral";
-            this.prbPageProgressGeneral.Size = new System.Drawing.Size(190, 23);
-            this.prbPageProgressGeneral.Step = 1;
-            this.prbPageProgressGeneral.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            this.prbPageProgressGeneral.TabIndex = 27;
-            // 
-            // prbPageProgressLight
-            // 
-            this.prbPageProgressLight.Location = new System.Drawing.Point(306, 91);
-            this.prbPageProgressLight.Name = "prbPageProgressLight";
-            this.prbPageProgressLight.Size = new System.Drawing.Size(190, 23);
-            this.prbPageProgressLight.Step = 1;
-            this.prbPageProgressLight.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            this.prbPageProgressLight.TabIndex = 28;
-            // 
-            // prbPageProgressMedium
-            // 
-            this.prbPageProgressMedium.Location = new System.Drawing.Point(306, 119);
-            this.prbPageProgressMedium.Name = "prbPageProgressMedium";
-            this.prbPageProgressMedium.Size = new System.Drawing.Size(190, 23);
-            this.prbPageProgressMedium.Step = 1;
-            this.prbPageProgressMedium.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            this.prbPageProgressMedium.TabIndex = 29;
-            // 
-            // prbPageProgressHeavy
-            // 
-            this.prbPageProgressHeavy.Location = new System.Drawing.Point(306, 147);
-            this.prbPageProgressHeavy.Name = "prbPageProgressHeavy";
-            this.prbPageProgressHeavy.Size = new System.Drawing.Size(190, 23);
-            this.prbPageProgressHeavy.Step = 1;
-            this.prbPageProgressHeavy.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            this.prbPageProgressHeavy.TabIndex = 30;
-            // 
-            // prbPageProgressAssault
-            // 
-            this.prbPageProgressAssault.Location = new System.Drawing.Point(306, 176);
-            this.prbPageProgressAssault.Name = "prbPageProgressAssault";
-            this.prbPageProgressAssault.Size = new System.Drawing.Size(190, 23);
-            this.prbPageProgressAssault.Step = 1;
-            this.prbPageProgressAssault.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            this.prbPageProgressAssault.TabIndex = 31;
             // 
             // frmGetData
             // 

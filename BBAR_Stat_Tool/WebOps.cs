@@ -334,7 +334,7 @@ namespace BBAR_Stat_Tool
             int lastSeason = 0;
             try
             {
-                for (int seasonIndex = 0; seasonIndex < 200; seasonIndex++)
+                for (int seasonIndex = 8; seasonIndex < 200; seasonIndex++)
                 {
                     string BaseAddress = "https://mwomercs.com/do/login";
                     var cookieContainer = new CookieContainer();

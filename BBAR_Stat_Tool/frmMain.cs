@@ -57,6 +57,7 @@ namespace BBAR_Stat_Tool
             prbSinglePlayer.Enabled = false;
             prbSinglePlayer.Maximum = ConfigFile.SEASON_LAST;
             prbSinglePlayer.Value = 0;
+            lblLastSeason.Text = "Last Season: " + ConfigFile.SEASON_LAST;
         }
 
         private void btnTest_Click(object sender, EventArgs e)
@@ -164,6 +165,7 @@ namespace BBAR_Stat_Tool
         {
             this.Enabled = false;
             await WebOps.FindLastSeason();
+            lblLastSeason.Text = "Last Season: " + ConfigFile.SEASON_LAST.ToString();
             if (ConfigFile.LAST_SEASON_CHECKED)
             {
                 Mex.AddMessage("Last Season found: " + ConfigFile.SEASON_LAST, Mex.INFO);

@@ -37,11 +37,13 @@
             this.btnGetSinglePlayer = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.prbSinglePlayer = new System.Windows.Forms.ProgressBar();
+            this.lblLastSeason = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblCopyright
             // 
             this.lblCopyright.AutoSize = true;
+            this.lblCopyright.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.lblCopyright.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCopyright.Location = new System.Drawing.Point(12, 340);
             this.lblCopyright.Name = "lblCopyright";
@@ -103,6 +105,8 @@
             this.button1.Size = new System.Drawing.Size(274, 27);
             this.button1.TabIndex = 4;
             this.button1.Text = "Determine last available Season";
+            this.ttBtnOne.SetToolTip(this.button1, "Determine the last season available on the MWO Leaderboard site.\r\nIt could take s" +
+        "ome time, based on connection speed and the number of seasons available.");
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -114,12 +118,25 @@
             this.prbSinglePlayer.TabIndex = 5;
             this.ttBtnOne.SetToolTip(this.prbSinglePlayer, "State of the \'Single Player Data\' download process.");
             // 
+            // lblLastSeason
+            // 
+            this.lblLastSeason.AutoSize = true;
+            this.lblLastSeason.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.lblLastSeason.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLastSeason.Location = new System.Drawing.Point(91, 42);
+            this.lblLastSeason.Name = "lblLastSeason";
+            this.lblLastSeason.Size = new System.Drawing.Size(118, 16);
+            this.lblLastSeason.TabIndex = 6;
+            this.lblLastSeason.Text = "Last Season: 10";
+            this.lblLastSeason.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(298, 361);
+            this.Controls.Add(this.lblLastSeason);
             this.Controls.Add(this.prbSinglePlayer);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnGetSinglePlayer);
@@ -148,6 +165,7 @@
         private System.Windows.Forms.Button btnGetSinglePlayer;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ProgressBar prbSinglePlayer;
+        private System.Windows.Forms.Label lblLastSeason;
     }
 }
 
