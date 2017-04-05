@@ -60,70 +60,26 @@ namespace BBAR_Stat_Tool
             lblLastSeason.Text = "Last Season: " + ConfigFile.SEASON_LAST;
         }
 
-        private void btnTest_Click(object sender, EventArgs e)
+        private async void btnTest_Click(object sender, EventArgs e)
         {
-            DownloadData data1 = new DownloadData(user: "eregiongreenleafthegray@yahoo.it",
-                                                  password: "chupa33",
-                                                  season: 9,
-                                                  type: 0,
-                                                  startPage: 0,
-                                                  endPage: 3500,
-                                                  taskNumber: 1);
-            DownloadData data2 = new DownloadData(dData: data1, type: 1);
-            //WebOps.LoginAndDownload(9, 0, "", "", 910, 3500);
-            WebOps.LoginAndDownload(dData: data1);
-            WebOps.LoginAndDownload(dData: data1, type: 1);
-            WebOps.LoginAndDownload(dData: data1, type: 2);
-            WebOps.LoginAndDownload(dData: data1, type: 3);
-            WebOps.LoginAndDownload(dData: data1, type: 4);
-            //WebOps.LoginAndDownload(9, 1, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            //WebOps.LoginAndDownload(9, 2, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            //WebOps.LoginAndDownload(9, 3, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            //WebOps.LoginAndDownload(9, 4, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
+            double time = await WebOps.TestSpeed();
+            if(time != 0)
+            {
 
-            //WebOps.LoginAndDownload(7, 0, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            //WebOps.LoginAndDownload(7, 1, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            //WebOps.LoginAndDownload(7, 2, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            //WebOps.LoginAndDownload(7, 3, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            //WebOps.LoginAndDownload(7, 4, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-
-            //WebOps.LoginAndDownload(6, 0, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            //WebOps.LoginAndDownload(6, 1, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            //WebOps.LoginAndDownload(6, 2, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            //WebOps.LoginAndDownload(6, 3, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            //WebOps.LoginAndDownload(6, 4, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-
-            //WebOps.LoginAndDownload(5, 0, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            //WebOps.LoginAndDownload(5, 1, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            //WebOps.LoginAndDownload(5, 2, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            //WebOps.LoginAndDownload(5, 3, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            //WebOps.LoginAndDownload(5, 4, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-
-            //WebOps.LoginAndDownload(4, 0, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            //WebOps.LoginAndDownload(4, 1, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            //WebOps.LoginAndDownload(4, 2, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            //WebOps.LoginAndDownload(4, 3, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            //WebOps.LoginAndDownload(4, 4, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-
-            //WebOps.LoginAndDownload(3, 0, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            //WebOps.LoginAndDownload(3, 1, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            //WebOps.LoginAndDownload(3, 2, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            //WebOps.LoginAndDownload(3, 3, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            //WebOps.LoginAndDownload(3, 4, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-
-            //WebOps.LoginAndDownload(2, 0, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            //WebOps.LoginAndDownload(2, 1, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            //WebOps.LoginAndDownload(2, 2, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            //WebOps.LoginAndDownload(2, 3, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            //WebOps.LoginAndDownload(2, 4, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-
-            //WebOps.LoginAndDownload(1, 0, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            //WebOps.LoginAndDownload(1, 1, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            //WebOps.LoginAndDownload(1, 2, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            //WebOps.LoginAndDownload(1, 3, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-            //WebOps.LoginAndDownload(1, 4, "eregiongreenleafthegray@yahoo.it", "chupa33", 0, 3500);
-
-            //WebOps.LoginAndDownload(1,0,);
+            }
+            //DownloadData data1 = new DownloadData(user: "eregiongreenleafthegray@yahoo.it",
+            //                                      password: "chupa33",
+            //                                      season: 9,
+            //                                      type: 0,
+            //                                      startPage: 0,
+            //                                      endPage: 3500,
+            //                                      taskNumber: 1);
+            //DownloadData data2 = new DownloadData(dData: data1, type: 1);
+            //WebOps.LoginAndDownload(dData: data1);
+            //WebOps.LoginAndDownload(dData: data1, type: 1);
+            //WebOps.LoginAndDownload(dData: data1, type: 2);
+            //WebOps.LoginAndDownload(dData: data1, type: 3);
+            //WebOps.LoginAndDownload(dData: data1, type: 4);
         }
 
         private async void btnTest2_Click(object sender, EventArgs e)
@@ -170,7 +126,6 @@ namespace BBAR_Stat_Tool
             if (ConfigFile.LAST_SEASON_CHECKED)
             {
                 Mex.AddMessage("Last Season found: " + ConfigFile.SEASON_LAST, Mex.INFO);
-                //Mex.PrintMessageInForm("Last Season found: " + ConfigFile.SEASON_LAST);
                 Mex.PrintMessageInForm(Mex.FormatMessageAtIndex());
                 Mex.RemoveAll();
             }

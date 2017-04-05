@@ -46,6 +46,13 @@ namespace BBAR_Stat_Tool
             }
         }
 
+        public static double GetTimeLapseTotalMilliseconds(DateTime first, DateTime second)
+        {
+            TimeSpan ts = GetTimeLapse(first, second);
+            return ts.TotalMilliseconds;
+        }
+
+
         public static string GetTimeLapseFormatted(DateTime first, DateTime second)
         {
             TimeSpan ts = GetTimeLapse(first, second);

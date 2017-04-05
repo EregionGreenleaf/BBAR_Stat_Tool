@@ -56,7 +56,7 @@
             // btnOne
             // 
             this.btnOne.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnOne.Font = new System.Drawing.Font("Eurostile", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnOne.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnOne.Location = new System.Drawing.Point(12, 106);
             this.btnOne.Name = "btnOne";
             this.btnOne.Size = new System.Drawing.Size(274, 28);
@@ -69,9 +69,8 @@
             // 
             // btnTest
             // 
-            this.btnTest.Enabled = false;
             this.btnTest.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnTest.Font = new System.Drawing.Font("Eurostile", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTest.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnTest.Location = new System.Drawing.Point(12, 72);
             this.btnTest.Name = "btnTest";
             this.btnTest.Size = new System.Drawing.Size(274, 28);
@@ -85,7 +84,7 @@
             // btnGetSinglePlayer
             // 
             this.btnGetSinglePlayer.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnGetSinglePlayer.Font = new System.Drawing.Font("Eurostile", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGetSinglePlayer.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnGetSinglePlayer.Location = new System.Drawing.Point(12, 274);
             this.btnGetSinglePlayer.Name = "btnGetSinglePlayer";
             this.btnGetSinglePlayer.Size = new System.Drawing.Size(274, 27);
@@ -99,7 +98,7 @@
             // button1
             // 
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.button1.Font = new System.Drawing.Font("Eurostile", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.Location = new System.Drawing.Point(12, 12);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(274, 27);

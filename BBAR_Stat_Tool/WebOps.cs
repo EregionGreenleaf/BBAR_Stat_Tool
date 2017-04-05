@@ -45,6 +45,81 @@ namespace BBAR_Stat_Tool
         //    return;
         //}
 
+        public static async Task<double> TestSpeed()
+        {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
+                                                | SecurityProtocolType.Tls11
+                                                | SecurityProtocolType.Tls12
+                                                | SecurityProtocolType.Ssl3;
+            double test = 0;
+            int season = 1;
+            string BaseAddress = "https://mwomercs.com/do/login";
+            var cookieContainer = new CookieContainer();
+            Uri uri = new Uri("https://mwomercs.com/profile/leaderboards");
+            var handler = new HttpClientHandler();
+            handler.CookieContainer = cookieContainer;
+            handler.CookieContainer.Add(uri, new System.Net.Cookie("leaderboard_season", season.ToString()));
+            using (var client = new HttpClient(handler) { BaseAddress = new Uri(BaseAddress) })
+            {
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/xml"));
+                HttpResponseMessage risposta = await client.PostAsync(BaseAddress, new FormUrlEncodedContent(
+                            new[]
+                            {
+                                    new KeyValuePair<string,string> ("email", ConfigFile.DEFAULT_USER),
+                                    new KeyValuePair<string,string> ("password", ConfigFile.DEFAULT_PASS)
+                            })
+                        );
+                string responseBodyAsText = await risposta.Content.ReadAsStringAsync();
+                string resp = null;
+                int lastPage = 0;
+                DirectoryInfo outputDir = new DirectoryInfo(ConfigFile.APP_PATH + "\\Output");
+                if (!outputDir.Exists)
+                {
+                    Directory.CreateDirectory(outputDir.FullName);
+                }
+                FileInfo testSpeed = new FileInfo(Path.Combine(outputDir.FullName, "TestSpeed.txt"));
+                if (testSpeed.Exists)
+                {
+                    testSpeed.IsReadOnly = false;
+                    try
+                    {
+                        testSpeed.Delete();
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                Timer.SetFirstTime(DateTime.Now);
+                for (int page = 0; page < 10; page++)
+                {
+                    string ownRank = "<tr class=\"yourRankRow\">";
+                    string endPages = "<td colspan='10'>No results found";
+                    string address = "https://mwomercs.com/profile/leaderboards?page=" + page.ToString() + "&type=0";
+                    risposta = await client.GetAsync(address);
+                    responseBodyAsText = risposta.Content.ReadAsStringAsync().Result;
+                    resp = DataOps.ParseHTML(responseBodyAsText);
+                    string statString = DataOps.SearchPlayerData(resp);
+                    resp = DataOps.ParseHTML(responseBodyAsText);
+                    if (resp.Contains(ownRank))
+                        resp = resp.Replace(ownRank, string.Empty);
+
+                    if (resp.Contains(endPages))
+                    {
+                        lastPage = page;
+                        resp = resp.Replace(endPages, string.Empty);
+                        Logger.PrintF(Path.Combine(testSpeed.FullName, "TestSpeed.txt"), resp, false);
+                        break;
+                    }
+                    Logger.PrintF(testSpeed.FullName, resp, false);
+                }
+                Timer.SetSecondTime(DateTime.Now);
+                test = Timer.GetTimeLapseTotalMilliseconds(Timer.GetFirstTime(), Timer.GetSecondTime());
+            }
+            return test;
+        }
+
         public static async Task<PlayerStatT> SearchPlayer(string playerName, List<int> seasons, List<int> category, string email, string password)
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
@@ -56,8 +131,6 @@ namespace BBAR_Stat_Tool
             FileInfo fileName = new FileInfo(Path.Combine(ConfigFile.DIRECTORY_OUTPUT.FullName, fileNameA));
 
             List<PlayerStatT> ThisPlayer = new List<PlayerStatT>();
-            //ConfigFile.GLOBAL_PLAYER = new List<PlayerStatT>();
-
             foreach (int thisSeason in seasons)
             {
 
@@ -72,7 +145,6 @@ namespace BBAR_Stat_Tool
                 {
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/xml"));
-                    //HttpResponseMessage risposta = new HttpResponseMessage();
                     HttpResponseMessage risposta = await client.PostAsync(BaseAddress, new FormUrlEncodedContent(
                                 new[]
                                 {
@@ -81,8 +153,6 @@ namespace BBAR_Stat_Tool
                                 })
                             );
                     string responseBodyAsText = await risposta.Content.ReadAsStringAsync();
-
-                    //Logger.PrintF(DirDestination + fileName, "** STARTING DOWNLOAD", true);
                     string resp = null;
                     int lastPage = 0;
                     foreach (int thisCategory in category)
@@ -98,33 +168,8 @@ namespace BBAR_Stat_Tool
                         actualPlayerStat.WebPage = -666;
                         actualPlayerStat.WebAddress = address;
 
-                        //string typeStr = null;
-                        //switch (thisCategory)
-                        //{
-                        //    case 0:
-                        //        typeStr = "GENERAL";
-                        //        break;
-                        //    case 1:
-                        //        typeStr = "LIGHT";
-                        //        break;
-                        //    case 2:
-                        //        typeStr = "MEDIUM";
-                        //        break;
-                        //    case 3:
-                        //        typeStr = "HEAVY";
-                        //        break;
-                        //    case 4:
-                        //        typeStr = "ASSAULT";
-                        //        break;
-                        //}
-                        //Logger.PrintF(fileName.FullName,
-                        //              "S" + thisSeason +
-                        //              "_" + typeStr +
-                        //              ";" + (statString.Contains("ults found")?"None":statString) );
-
                         ConfigFile._Global.WaitOne();
                         ConfigFile.GLOBAL_PLAYER.Add(actualPlayerStat);
-                        //ConfigFile.GLOBAL_AWAIT_ACTUAL++;
                         ConfigFile._Global.Release();
                     }
                 }
@@ -226,6 +271,7 @@ namespace BBAR_Stat_Tool
                 if(string.IsNullOrWhiteSpace(password))
                     Mex.AddMessage("Task " + (taskNumber != null ? taskNumber : 0) + " is missing the user password. Skipping", Mex.ERROR);
                 Mex.PrintErrorMessagesInForm();
+                Mex.RemoveAll();
                 return;
             }
             // END VALIDATION SECTION
@@ -363,13 +409,11 @@ namespace BBAR_Stat_Tool
                         if (resp != lastResp)
                         {
                             lastResp = resp;
-                            //ConfigFile.SEASON_LAST = seasonIndex+1;
                             lastSeason = seasonIndex + 1;
                         }
                         else
                         {
                             break;
-                            //seasonIndex = 200;
                         }
                     }
                 }

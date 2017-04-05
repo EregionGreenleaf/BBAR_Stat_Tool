@@ -535,6 +535,7 @@ namespace BBAR_Stat_Tool
                     Mex.AddMessage("Password field is not valid.", Mex.ERROR);
                 Mex.AddMessage("Will not proceed.", Mex.WARNING);
                 Mex.PrintErrorMessagesInForm();
+                Mex.RemoveAll();
                 return;
             }
             DownloadData baseData = new DownloadData(user: email,

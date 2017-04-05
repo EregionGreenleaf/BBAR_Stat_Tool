@@ -12,6 +12,10 @@ namespace BBAR_Stat_Tool
     class ConfigFile
     {
 
+        private static string BASE_PATH = System.Reflection.Assembly.GetExecutingAssembly().CodeBase;
+        public static string APP_PATH = System.IO.Path.GetDirectoryName(BASE_PATH).Replace("file:\\", "");
+
+
         public static string DEFAULT_USER = "eregiongreenleafthegray@yahoo.it";
         public static string DEFAULT_PASS = "chupa33";
 
@@ -34,6 +38,8 @@ namespace BBAR_Stat_Tool
         public static string FILE_OUTPUT { get; set; }
         public static int? ACTUAL_TASK { get; set; } = 1;
         public static bool LAST_SEASON_CHECKED { get; set; } = false;
+        // First Season used to search the last Season available. Hardcoded.
+        public static int FIRST_SEASON_TO_SEARCH { get; set; } = 9;
         public static DirectoryInfo DIRECTORY_OUTPUT { get; set; }
 
 
@@ -44,6 +50,7 @@ namespace BBAR_Stat_Tool
         public static bool HEAVY { get; set; }
         public static bool ASSAULT { get; set; }
 
+        public static double TIME_PAGE { get; set; } = 15000.00;
         public static double EXPECTED_TIME { get; set; }
         public static double ACTUAL_TIME { get; set; }
         public static int TOTAL_PAGES { get; set; }
@@ -71,8 +78,7 @@ namespace BBAR_Stat_Tool
                 if (!dirInfo.Exists)
                 {
                     Mex.AddMessage("'Output Folder' (in the configuration file) doesn't exist. Using the application folder instead.", Mex.ERROR);
-                    string BASE_PATH = System.Reflection.Assembly.GetExecutingAssembly().CodeBase;
-                    string APP_PATH = System.IO.Path.GetDirectoryName(BASE_PATH).Replace("file:\\", "");
+                    ////
                     string output = Path.Combine(APP_PATH, "Output");
                     DirectoryInfo tempInfo = Directory.CreateDirectory(output);
                     if (tempInfo != null)
