@@ -21,6 +21,18 @@ namespace BBAR_Stat_Tool
             this.MinimumSize = this.Size;
         }
 
+        public string lblActiveTasksText
+        {
+            get
+            {
+                return this.lblActiveTasks.Text.Replace("Active Tasks: ", string.Empty);
+            }
+            set
+            {
+                this.lblActiveTasks.Text = "Active Tasks: " + value.ToString();
+            }
+        }
+
         public string lblCopyrightText
         {
             get
@@ -45,7 +57,6 @@ namespace BBAR_Stat_Tool
             else
             {
                 frmGetData oldGetData = ConfigFile.ACTUAL_GETDATA;
-                //oldGetData.Show();
                 oldGetData.Visible = true;
             }
             //this.Opacity = 50;
@@ -60,32 +71,17 @@ namespace BBAR_Stat_Tool
             lblLastSeason.Text = "Last Season: " + ConfigFile.SEASON_LAST;
         }
 
-        private async void btnTest_Click(object sender, EventArgs e)
+        private void btnTest_Click(object sender, EventArgs e)
         {
-            double time = await WebOps.TestSpeed();
-            if(time != 0)
-            {
-
-            }
-            //DownloadData data1 = new DownloadData(user: "eregiongreenleafthegray@yahoo.it",
-            //                                      password: "chupa33",
-            //                                      season: 9,
-            //                                      type: 0,
-            //                                      startPage: 0,
-            //                                      endPage: 3500,
-            //                                      taskNumber: 1);
-            //DownloadData data2 = new DownloadData(dData: data1, type: 1);
-            //WebOps.LoginAndDownload(dData: data1);
-            //WebOps.LoginAndDownload(dData: data1, type: 1);
-            //WebOps.LoginAndDownload(dData: data1, type: 2);
-            //WebOps.LoginAndDownload(dData: data1, type: 3);
-            //WebOps.LoginAndDownload(dData: data1, type: 4);
+            this.Enabled = false;
+            GeneralOps.RefreshDownloadTime();
+            this.Enabled = true;
         }
 
         private async void btnTest2_Click(object sender, EventArgs e)
         {
             this.Enabled = false;
-            string playerName = Microsoft.VisualBasic.Interaction.InputBox("Insert Player Name to download:", "Download all data of Player", "PlayerName", -1, -1);
+            string playerName = Interaction.InputBox("Insert Player Name to download:", "Download all data of Player", "PlayerName", -1, -1);
             playerName = playerName.Trim();
             if (!string.IsNullOrWhiteSpace(playerName))
             {
@@ -96,8 +92,6 @@ namespace BBAR_Stat_Tool
                     seasonsList.Add(i);
 
                 ConfigFile.GLOBAL_PLAYER = new List<PlayerStatT>();
-                ConfigFile.GLOBAL_AWAIT_OBJ = ConfigFile.SEASON_LAST * 4;
-                ConfigFile.GLOBAL_AWAIT_ACTUAL = 0;
 
                 List<int> actualSeason = new List<int> { 1 };
                 List<int> actualType = new List<int> { 1 };
@@ -108,7 +102,8 @@ namespace BBAR_Stat_Tool
 
                 int[] typeArray = typeList.ToArray();
                 int[] seasonArray = actualSeason.ToArray();
-                for (int typeCat = 0; typeCat <= 4; typeCat++) {
+                for (int typeCat = 0; typeCat <= 4; typeCat++)
+                {
                     await Task.WhenAll(seasonsList.Select(i => WebOps.SearchPlayer(playerName, new List<int> { i }, new List<int> { typeCat }, ConfigFile.DEFAULT_USER, ConfigFile.DEFAULT_PASS)).ToArray());
                     prbSinglePlayer.Value = typeCat + 1;
                 }

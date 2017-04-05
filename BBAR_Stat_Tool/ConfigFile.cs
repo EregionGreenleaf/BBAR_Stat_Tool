@@ -25,8 +25,6 @@ namespace BBAR_Stat_Tool
         public static List<PlayerStatT> GLOBAL_PLAYER { get; set; }
         public static Semaphore _Global = new Semaphore(0, 1);
 
-        public static int GLOBAL_AWAIT_ACTUAL { get; set; }
-        public static int GLOBAL_AWAIT_OBJ { get; set; }
         public static string SAVE_PATH { get; set; }
         public static int SEASON_FIRST { get; set; }
         public static int SEASON_LAST { get; set; }
@@ -36,7 +34,8 @@ namespace BBAR_Stat_Tool
         public static int? LOG_LEVEL { get; set; }
         public static string SEPARATOR { get; set; }
         public static string FILE_OUTPUT { get; set; }
-        public static int? ACTUAL_TASK { get; set; } = 1;
+        private static int TASK_STARTED { get; set; } = 0;
+        private static int TASK_FINISHED { get; set; } = 0;
         public static bool LAST_SEASON_CHECKED { get; set; } = false;
         // First Season used to search the last Season available. Hardcoded.
         public static int FIRST_SEASON_TO_SEARCH { get; set; } = 9;
@@ -50,11 +49,11 @@ namespace BBAR_Stat_Tool
         public static bool HEAVY { get; set; }
         public static bool ASSAULT { get; set; }
 
-        public static double TIME_PAGE { get; set; } = 15000.00;
+        public static double TIME_PAGE { get; set; } = 1500.00;
         public static double EXPECTED_TIME { get; set; }
         public static double ACTUAL_TIME { get; set; }
         public static int TOTAL_PAGES { get; set; }
-        public static int MAX_PAGES = 1700;
+        public static int MAX_PAGES = 3500;
         public static int MIN_PAGES = 0;
 
 
@@ -71,7 +70,7 @@ namespace BBAR_Stat_Tool
                 
                 SEASON_FIRST = int.TryParse(ConfigurationSettings.AppSettings["First Season"], out tempInt) ? tempInt : 1;
                 SEASON_LAST = int.TryParse(ConfigurationSettings.AppSettings["Last Season"], out tempInt) ? tempInt : 7;
-                MAX_PAGES = int.TryParse(ConfigurationSettings.AppSettings["Default Max Page"], out tempInt) ? tempInt : 3500;
+                MAX_PAGES = int.TryParse(ConfigurationSettings.AppSettings["Default Max Page"], out tempInt) ? tempInt : 4000;
                 MIN_PAGES = int.TryParse(ConfigurationSettings.AppSettings["Default Min Page"], out tempInt) ? tempInt : 0;
                 string directory = ConfigurationSettings.AppSettings["Output Folder"];
                 DirectoryInfo dirInfo = new DirectoryInfo(directory);
@@ -125,7 +124,39 @@ namespace BBAR_Stat_Tool
             }
         }
 
-        
+
+        public static void IncrementTaskStarted(bool refreshMain = true)
+        {
+            TASK_STARTED++;
+            RefreshMain(refreshMain);
+        }
+        public static void IncrementTaskFinished(bool refreshMain = true)
+        {
+            TASK_FINISHED++;
+            RefreshMain(refreshMain);
+        }
+        private static void RefreshMain(bool refreshMain)
+        {
+            bool enabled = ACTUAL_MAIN.Enabled;
+            if (refreshMain)
+            {
+                ACTUAL_MAIN.lblActiveTasksText = (GetTaskStarted() - GetTaskFinished()).ToString();
+            }
+            if (enabled)
+                ACTUAL_MAIN.Enabled = enabled;
+        }
+        public static int GetTaskStarted()
+        {
+            return TASK_STARTED;
+        }
+        public static int GetTaskFinished()
+        {
+            return TASK_FINISHED;
+        }
+        public static int GetActiveTasks()
+        {
+            return GetTaskStarted() - GetTaskFinished();
+        }
 
     }
 }

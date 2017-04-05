@@ -35,9 +35,10 @@
             this.ttBtnOne = new System.Windows.Forms.ToolTip(this.components);
             this.btnTest = new System.Windows.Forms.Button();
             this.btnGetSinglePlayer = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnLastSeason = new System.Windows.Forms.Button();
             this.prbSinglePlayer = new System.Windows.Forms.ProgressBar();
             this.lblLastSeason = new System.Windows.Forms.Label();
+            this.lblActiveTasks = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblCopyright
@@ -85,7 +86,7 @@
             // 
             this.btnGetSinglePlayer.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnGetSinglePlayer.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGetSinglePlayer.Location = new System.Drawing.Point(12, 274);
+            this.btnGetSinglePlayer.Location = new System.Drawing.Point(12, 244);
             this.btnGetSinglePlayer.Name = "btnGetSinglePlayer";
             this.btnGetSinglePlayer.Size = new System.Drawing.Size(274, 27);
             this.btnGetSinglePlayer.TabIndex = 3;
@@ -95,23 +96,23 @@
             this.btnGetSinglePlayer.UseVisualStyleBackColor = true;
             this.btnGetSinglePlayer.Click += new System.EventHandler(this.btnTest2_Click);
             // 
-            // button1
+            // btnLastSeason
             // 
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(12, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(274, 27);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "Determine last available Season";
-            this.ttBtnOne.SetToolTip(this.button1, "Determine the last season available on the MWO Leaderboard site.\r\nIt could take s" +
+            this.btnLastSeason.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnLastSeason.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLastSeason.Location = new System.Drawing.Point(12, 12);
+            this.btnLastSeason.Name = "btnLastSeason";
+            this.btnLastSeason.Size = new System.Drawing.Size(274, 27);
+            this.btnLastSeason.TabIndex = 4;
+            this.btnLastSeason.Text = "Determine last available Season";
+            this.ttBtnOne.SetToolTip(this.btnLastSeason, "Determine the last season available on the MWO Leaderboard site.\r\nIt could take s" +
         "ome time, based on connection speed and the number of seasons available.");
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnLastSeason.UseVisualStyleBackColor = true;
+            this.btnLastSeason.Click += new System.EventHandler(this.button1_Click);
             // 
             // prbSinglePlayer
             // 
-            this.prbSinglePlayer.Location = new System.Drawing.Point(14, 307);
+            this.prbSinglePlayer.Location = new System.Drawing.Point(14, 277);
             this.prbSinglePlayer.Name = "prbSinglePlayer";
             this.prbSinglePlayer.Size = new System.Drawing.Size(272, 23);
             this.prbSinglePlayer.TabIndex = 5;
@@ -130,15 +131,28 @@
             this.lblLastSeason.Text = "Last Season: 10";
             this.lblLastSeason.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // lblActiveTasks
+            // 
+            this.lblActiveTasks.AutoSize = true;
+            this.lblActiveTasks.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.lblActiveTasks.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblActiveTasks.ForeColor = System.Drawing.Color.Yellow;
+            this.lblActiveTasks.Location = new System.Drawing.Point(12, 312);
+            this.lblActiveTasks.Name = "lblActiveTasks";
+            this.lblActiveTasks.Size = new System.Drawing.Size(106, 16);
+            this.lblActiveTasks.TabIndex = 7;
+            this.lblActiveTasks.Text = "Active Tasks: ";
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(298, 361);
+            this.Controls.Add(this.lblActiveTasks);
             this.Controls.Add(this.lblLastSeason);
             this.Controls.Add(this.prbSinglePlayer);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnLastSeason);
             this.Controls.Add(this.btnGetSinglePlayer);
             this.Controls.Add(this.btnTest);
             this.Controls.Add(this.btnOne);
@@ -163,9 +177,10 @@
         private System.Windows.Forms.ToolTip ttBtnOne;
         private System.Windows.Forms.Button btnTest;
         private System.Windows.Forms.Button btnGetSinglePlayer;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnLastSeason;
         private System.Windows.Forms.ProgressBar prbSinglePlayer;
         private System.Windows.Forms.Label lblLastSeason;
+        private System.Windows.Forms.Label lblActiveTasks;
     }
 }
 

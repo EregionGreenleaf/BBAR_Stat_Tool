@@ -241,41 +241,103 @@ namespace BBAR_Stat_Tool
         /// <param name="stat"></param>
         public void RefreshTimerCount(bool stat)
         {
+            double timeMultiplier = 0.025;
+            int pagesGeneral = 0;
+            int pagesLight = 0;
+            int pagesMedium = 0;
+            int pagesHeavy = 0;
+            int pagesAssault = 0;
             double tempDouble = 0;
             double expected = 0.0;
             double time;
             int check = 0;
+
             if (chbAssault.Checked)
             {
-
-            }
-                
-            if (chbHeavy.Checked)
-                check += 1;
-            if (chbMedium.Checked)
-                check += 1;
-            if (chbLight.Checked)
-                check += 1;
-            if (chbGeneral.Checked)
-                check += 1;
-
-            if (ConfigFile.TOTAL_PAGES > 0)
-            {
-                if (stat)
+                if (chbFullAssault.Checked)
                 {
-                    ConfigFile.ACTUAL_TIME += ConfigFile.TOTAL_PAGES * ConfigFile.EXPECTED_TIME;
+                    pagesAssault = (int)ConfigFile.MAX_PAGES - (int)ConfigFile.MIN_PAGES;
                 }
                 else
                 {
-                    ConfigFile.ACTUAL_TIME -= ConfigFile.TOTAL_PAGES * ConfigFile.EXPECTED_TIME;
+                    int temp = 0;
+                    int start = int.TryParse(txtStartAssault.Text, out temp) ? temp : ConfigFile.MIN_PAGES;
+                    int end = int.TryParse(txtEndAssault.Text, out temp) ? temp : ConfigFile.MAX_PAGES;
+                    pagesAssault = end - start;
                 }
+                check++;
             }
-            else
+
+            if (chbHeavy.Checked)
             {
-                time = 0.0;
+                if (chbFullHeavy.Checked)
+                {
+                    pagesHeavy = (int)ConfigFile.MAX_PAGES - (int)ConfigFile.MIN_PAGES;
+                }
+                else
+                {
+                    int temp = 0;
+                    int start = int.TryParse(txtStartHeavy.Text, out temp) ? temp : ConfigFile.MIN_PAGES;
+                    int end = int.TryParse(txtEndHeavy.Text, out temp) ? temp : ConfigFile.MAX_PAGES;
+                    pagesHeavy = end - start;
+                }
+                check++;
             }
-            expected = (ConfigFile.ACTUAL_TIME / 60) / 60;
-            lblTimer.Text = expected.ToString("#.##") + " h";
+            if (chbMedium.Checked)
+            {
+                if (chbFullMedium.Checked)
+                {
+                    pagesMedium = (int)ConfigFile.MAX_PAGES - (int)ConfigFile.MIN_PAGES;
+                }
+                else
+                {
+                    int temp = 0;
+                    int start = int.TryParse(txtStartMedium.Text, out temp) ? temp : ConfigFile.MIN_PAGES;
+                    int end = int.TryParse(txtEndMedium.Text, out temp) ? temp : ConfigFile.MAX_PAGES;
+                    pagesMedium = end - start;
+                }
+                check++;
+            }
+            if (chbLight.Checked)
+            {
+                if (chbFullLight.Checked)
+                {
+                    pagesLight = (int)ConfigFile.MAX_PAGES - (int)ConfigFile.MIN_PAGES;
+                }
+                else
+                {
+                    int temp = 0;
+                    int start = int.TryParse(txtStartLight.Text, out temp) ? temp : ConfigFile.MIN_PAGES;
+                    int end = int.TryParse(txtEndLight.Text, out temp) ? temp : ConfigFile.MAX_PAGES;
+                    pagesLight = end - start;
+                }
+                check++;
+            }
+            if (chbGeneral.Checked)
+            {
+                if (chbFullGeneral.Checked)
+                {
+                    pagesGeneral = (int)ConfigFile.MAX_PAGES - (int)ConfigFile.MIN_PAGES;
+                }
+                else
+                {
+                    int temp = 0;
+                    int start = int.TryParse(txtStartGeneral.Text, out temp) ? temp : ConfigFile.MIN_PAGES;
+                    int end = int.TryParse(txtEndGeneral.Text, out temp) ? temp : ConfigFile.MAX_PAGES;
+                    pagesGeneral = end - start;
+                }
+                check++;
+            }
+
+            int greatest = Math.Max(Math.Max(Math.Max(Math.Max(pagesLight, pagesMedium), pagesHeavy), pagesAssault),pagesGeneral)+1;
+            double greatestTime = (greatest * (1 + (timeMultiplier * (check > 1 ? check : 0.0)))) * ConfigFile.TIME_PAGE;
+            TimeSpan final = new TimeSpan((long)greatestTime * 10000);
+            expected = greatest * ConfigFile.TIME_PAGE;
+            lblTimer.Text = string.Format("{0:D2}h:{1:D2}m:{2:D2}s:{3:D3}ms",
+                                    final.Hours,
+                                    final.Minutes,
+                                    final.Seconds,
+                                    final.Milliseconds);
         }
 
         private void CheckPage(TextBox sender)
@@ -304,6 +366,7 @@ namespace BBAR_Stat_Tool
                 MessageBox.Show("Value must be an integer number.", "Input pages Error", MessageBoxButtons.OK);
                 return;
             }
+            RefreshTimerCount(true);
         }
         
         /*
@@ -367,32 +430,37 @@ namespace BBAR_Stat_Tool
 
         private void chbFullGeneral_CheckedChanged(object sender, EventArgs e)
         {
-                txtStartGeneral.Enabled = !chbFullGeneral.Checked;
-                txtEndGeneral.Enabled = !chbFullGeneral.Checked;
+            txtStartGeneral.Enabled = !chbFullGeneral.Checked;
+            txtEndGeneral.Enabled = !chbFullGeneral.Checked;
+            RefreshTimerCount(true);
         }
 
         private void chbFullLight_CheckedChanged(object sender, EventArgs e)
         {
             txtStartLight.Enabled = !chbFullLight.Checked;
             txtEndLight.Enabled = !chbFullLight.Checked;
+            RefreshTimerCount(true);
         }
 
         private void chbFullMedium_CheckedChanged(object sender, EventArgs e)
         {
             txtStartMedium.Enabled = !chbFullMedium.Checked;
             txtEndMedium.Enabled = !chbFullMedium.Checked;
+            RefreshTimerCount(true);
         }
 
         private void chbFullHeavy_CheckedChanged(object sender, EventArgs e)
         {
             txtStartHeavy.Enabled = !chbFullHeavy.Checked;
             txtEndHeavy.Enabled = !chbFullHeavy.Checked;
+            RefreshTimerCount(true);
         }
 
         private void chbFullAssault_CheckedChanged(object sender, EventArgs e)
         {
             txtStartAssault.Enabled = !chbFullAssault.Checked;
             txtEndAssault.Enabled = !chbFullAssault.Checked;
+            RefreshTimerCount(true);
         }
         
         private void txtGENERIC_Leave(object sender, EventArgs e)
@@ -547,12 +615,12 @@ namespace BBAR_Stat_Tool
                 int endGeneral;
                 if (chbFullGeneral.Checked)
                 {
-                    startGeneral = (int)ConfigFile.START_PAGE-1;
+                    startGeneral = (int)ConfigFile.MIN_PAGES - 1;
                     endGeneral = ConfigFile.MAX_PAGES;
                 }
                 else
                 {
-                    startGeneral = int.TryParse(txtStartGeneral.Text, out tempInt) ? tempInt-1 : (int)ConfigFile.START_PAGE;
+                    startGeneral = int.TryParse(txtStartGeneral.Text, out tempInt) ? tempInt-1 : (int)ConfigFile.MIN_PAGES;
                     endGeneral = int.TryParse(txtEndGeneral.Text, out tempInt) ? tempInt-1 : ConfigFile.MAX_PAGES;
                 }
                 WebOps.LoginAndDownload(dData: baseData, type: 0, startPage: startGeneral, finishPage: endGeneral, bar: prbPageProgressGeneral);
@@ -563,12 +631,12 @@ namespace BBAR_Stat_Tool
                 int endLight;
                 if (chbFullLight.Checked)
                 {
-                    startLight = (int)ConfigFile.START_PAGE-1;
+                    startLight = (int)ConfigFile.MIN_PAGES - 1;
                     endLight = ConfigFile.MAX_PAGES;
                 }
                 else
                 {
-                    startLight = int.TryParse(txtStartLight.Text, out tempInt) ? tempInt -1: (int)ConfigFile.START_PAGE;
+                    startLight = int.TryParse(txtStartLight.Text, out tempInt) ? tempInt -1: (int)ConfigFile.MIN_PAGES;
                     endLight = int.TryParse(txtEndLight.Text, out tempInt) ? tempInt-1 : ConfigFile.MAX_PAGES;
                 }
                 WebOps.LoginAndDownload(dData: baseData, type: 1, startPage: startLight, finishPage: endLight, bar: prbPageProgressLight);
@@ -579,12 +647,12 @@ namespace BBAR_Stat_Tool
                 int endMedium;
                 if (chbFullMedium.Checked)
                 {
-                    startMedium = (int)ConfigFile.START_PAGE-1;
+                    startMedium = (int)ConfigFile.MIN_PAGES - 1;
                     endMedium = ConfigFile.MAX_PAGES;
                 }
                 else
                 {
-                    startMedium = int.TryParse(txtStartMedium.Text, out tempInt) ? tempInt -1: (int)ConfigFile.START_PAGE;
+                    startMedium = int.TryParse(txtStartMedium.Text, out tempInt) ? tempInt -1: (int)ConfigFile.MIN_PAGES;
                     endMedium = int.TryParse(txtEndMedium.Text, out tempInt) ? tempInt-1 : ConfigFile.MAX_PAGES;
                 }
                 WebOps.LoginAndDownload(dData: baseData, type: 2, startPage: startMedium, finishPage: endMedium, bar: prbPageProgressMedium);
@@ -595,12 +663,12 @@ namespace BBAR_Stat_Tool
                 int endHeavy;
                 if (chbFullHeavy.Checked)
                 {
-                    startHeavy = (int)ConfigFile.START_PAGE-1;
+                    startHeavy = (int)ConfigFile.MIN_PAGES - 1;
                     endHeavy = ConfigFile.MAX_PAGES;
                 }
                 else
                 {
-                    startHeavy = int.TryParse(txtStartHeavy.Text, out tempInt) ? tempInt -1: (int)ConfigFile.START_PAGE;
+                    startHeavy = int.TryParse(txtStartHeavy.Text, out tempInt) ? tempInt -1: (int)ConfigFile.MIN_PAGES;
                     endHeavy = int.TryParse(txtEndHeavy.Text, out tempInt) ? tempInt-1 : ConfigFile.MAX_PAGES;
                 }
                 WebOps.LoginAndDownload(dData: baseData, type: 3, startPage: startHeavy, finishPage: endHeavy, bar: prbPageProgressHeavy);
@@ -611,12 +679,12 @@ namespace BBAR_Stat_Tool
                 int endAssault;
                 if (chbFullAssault.Checked)
                 {
-                    startAssault = (int)ConfigFile.START_PAGE-1;
+                    startAssault = (int)ConfigFile.MIN_PAGES - 1;
                     endAssault = ConfigFile.MAX_PAGES;
                 }
                 else
                 {
-                    startAssault = int.TryParse(txtStartAssault.Text, out tempInt) ? tempInt -1: (int)ConfigFile.START_PAGE;
+                    startAssault = int.TryParse(txtStartAssault.Text, out tempInt) ? tempInt -1: (int)ConfigFile.MIN_PAGES;
                     endAssault = int.TryParse(txtEndAssault.Text, out tempInt) ? tempInt-1 : ConfigFile.MAX_PAGES;
                 }
                 WebOps.LoginAndDownload(dData: baseData, type: 4, startPage: startAssault, finishPage: endAssault, bar: prbPageProgressAssault);
@@ -630,7 +698,7 @@ namespace BBAR_Stat_Tool
             {
                 cmbSeasonNumber.Items.Add(i.ToString());
             }
-
+            RefreshTimerCount(true);
         }
 
         private void prbPageProgress_Click(object sender, EventArgs e)

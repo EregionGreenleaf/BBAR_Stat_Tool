@@ -39,5 +39,11 @@ namespace BBAR_Stat_Tool
         {
             frm.Hide();
         }
+
+        public static async void RefreshDownloadTime()
+        {
+            double time = await WebOps.TestSpeed();
+            ConfigFile.TIME_PAGE = time > 0 ? (time / 10000) * 1001 : 0;
+        }
     }
 }

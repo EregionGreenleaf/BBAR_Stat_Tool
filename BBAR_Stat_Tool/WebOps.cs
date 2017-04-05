@@ -51,6 +51,7 @@ namespace BBAR_Stat_Tool
                                                 | SecurityProtocolType.Tls11
                                                 | SecurityProtocolType.Tls12
                                                 | SecurityProtocolType.Ssl3;
+            ConfigFile.IncrementTaskStarted();
             double test = 0;
             int season = 1;
             string BaseAddress = "https://mwomercs.com/do/login";
@@ -115,9 +116,9 @@ namespace BBAR_Stat_Tool
                     Logger.PrintF(testSpeed.FullName, resp, false);
                 }
                 Timer.SetSecondTime(DateTime.Now);
-                test = Timer.GetTimeLapseTotalMilliseconds(Timer.GetFirstTime(), Timer.GetSecondTime());
             }
-            return test;
+            ConfigFile.IncrementTaskFinished();
+            return Timer.GetTimeLapseTotalMilliseconds(Timer.GetFirstTime(), Timer.GetSecondTime()); ;
         }
 
         public static async Task<PlayerStatT> SearchPlayer(string playerName, List<int> seasons, List<int> category, string email, string password)
@@ -126,7 +127,7 @@ namespace BBAR_Stat_Tool
                                                 | SecurityProtocolType.Tls11
                                                 | SecurityProtocolType.Tls12
                                                 | SecurityProtocolType.Ssl3;
-
+            ConfigFile.IncrementTaskStarted();
             string fileNameA = playerName + ".txt";
             FileInfo fileName = new FileInfo(Path.Combine(ConfigFile.DIRECTORY_OUTPUT.FullName, fileNameA));
 
@@ -174,6 +175,7 @@ namespace BBAR_Stat_Tool
                     }
                 }
             }
+            ConfigFile.IncrementTaskFinished();
             return new PlayerStatT();
         }
 
@@ -183,12 +185,19 @@ namespace BBAR_Stat_Tool
                                     | SecurityProtocolType.Tls11
                                     | SecurityProtocolType.Tls12
                                     | SecurityProtocolType.Ssl3;
+            ConfigFile.IncrementTaskStarted();
             if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
             {
                 if (string.IsNullOrWhiteSpace(email))
+                {
+                    ConfigFile.IncrementTaskFinished();
                     return 1;
+                }
                 if (string.IsNullOrWhiteSpace(password))
+                {
+                    ConfigFile.IncrementTaskFinished();
                     return 2;
+                }
             }
             try
             {
@@ -212,20 +221,36 @@ namespace BBAR_Stat_Tool
                     string responseBodyAsText = await risposta.Content.ReadAsStringAsync();
                     if (responseBodyAsText.Contains("<title>MWO: Login</title>"))
                     {
+                        ConfigFile.IncrementTaskFinished();
                         return 3;
                     }
                     else
                     {
+                        ConfigFile.IncrementTaskFinished();
                         return 4;
                     }
                 }
             }
             catch
             {
+                ConfigFile.IncrementTaskFinished();
                 return 5;
             }
         }
 
+        /// <summary>
+        /// Downloads all data inside a range determined by
+        /// parameters.
+        /// </summary>
+        /// <param name="season"></param>
+        /// <param name="type"></param>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <param name="startPage"></param>
+        /// <param name="finishPage"></param>
+        /// <param name="taskNumber"></param>
+        /// <param name="dData"></param>
+        /// <param name="bar"></param>
         public static async void LoginAndDownload(int? season = null, int? type = null, string email = null, 
                                                   string password = null, int? startPage = null, int? finishPage = null, 
                                                   int? taskNumber = null, DownloadData dData = null, ProgressBar bar = null)
@@ -234,6 +259,7 @@ namespace BBAR_Stat_Tool
                                                 | SecurityProtocolType.Tls11
                                                 | SecurityProtocolType.Tls12
                                                 | SecurityProtocolType.Ssl3;
+            ConfigFile.IncrementTaskStarted();
             if (dData != null)
             {
                 if (dData.Season != null && season == null)
@@ -251,19 +277,18 @@ namespace BBAR_Stat_Tool
                 if (dData.TaskNumber != null && taskNumber == null)
                     taskNumber = dData.TaskNumber;
             }
+            if (string.IsNullOrWhiteSpace(email))
+                email = ConfigFile.DEFAULT_USER;
+            if (string.IsNullOrWhiteSpace(password))
+                password = ConfigFile.DEFAULT_PASS;
             if (season == null)
                 season = 1;
             if (type == null)
                 type = 0;
             if (startPage == null)
-                startPage = ConfigFile.START_PAGE;
+                startPage = ConfigFile.MIN_PAGES;
             if (finishPage == null)
-                finishPage = ConfigFile.END_PAGE;
-            if (taskNumber == null)
-            {
-                ConfigFile.ACTUAL_TASK++;
-                taskNumber = ConfigFile.ACTUAL_TASK;
-            }
+                finishPage = ConfigFile.MAX_PAGES;
             if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
             {
                 if(string.IsNullOrWhiteSpace(email))
@@ -364,10 +389,16 @@ namespace BBAR_Stat_Tool
                 }
                 Logger.PrintF(Path.Combine(DirDestination, fileName), "** FINISH DOWNLOADING", true);
             }
+            ConfigFile.IncrementTaskFinished();
         }
         
+        /// <summary>
+        /// Searches for the last Season available to operate on.
+        /// </summary>
+        /// <returns></returns>
         public static async Task FindLastSeason()
         {
+            ConfigFile.IncrementTaskStarted();
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
                                     | SecurityProtocolType.Tls11
                                     | SecurityProtocolType.Tls12
@@ -428,109 +459,17 @@ namespace BBAR_Stat_Tool
                 ConfigFile.SEASON_LAST = lastSeason;
                 ConfigFile.LAST_SEASON_CHECKED = true;
             }
+            ConfigFile.IncrementTaskFinished();
             return;
         }
 
-        /*public static void GetPage()
-        {
-            //Run selenium
-            //ChromeDriver cd = new ChromeDriver(@"chromedriver_win32");
-
-            FirefoxDriver cd = new FirefoxDriver();
-            cd.Url = @"https://mwomercs.com/login";
-            cd.Navigate();
-            IWebElement e = cd.FindElementById("email");
-
-            e.SendKeys("eregiongreenleafthegray@yahoo.it");
-            e = cd.FindElementById("password");
-            e.SendKeys("chupa33");
-            e = cd.FindElementByCssSelector("button.btn");
-            //e = cd.FindElementByXPath(@"//a[contains(text(), 'Sign in') or contains(text(), 'sign in')]");
-            //e = cd.FindElementByXPath(@"//*[@id=""main""]/div/div/div[2]/table/tbody/tr/td[1]/div/form/fieldset/table/tbody/tr[6]/td/button");
-            e.Click();
-
-            List<PlayerStatT> players = new List<PlayerStatT>();
-
-            long tempLong = 0;
-            int tempInt = 0;
-            double tempDouble = 0;
-
-
-            for (int? page = ConfigFile.START_PAGE; page < ConfigFile.END_PAGE; page++)
-            {
-                cd.Url = @"https://mwomercs.com/profile/leaderboards?page=" + page + "&type=0";
-                cd.Navigate();
-                for (int x = 1; x < 21; x++)
-                {
-                    PlayerStatT player = new PlayerStatT();
-                    e = cd.FindElementByCssSelector(".table > tbody:nth-child(2) > tr:nth-child(" + x + ") > td:nth-child(1)");
-                    long.TryParse(e.Text, out tempLong);
-                    player.Rank = tempLong;
-
-                    e = cd.FindElementByCssSelector(".table > tbody:nth-child(2) > tr:nth-child(" + x + ") > td:nth-child(2)");
-                    player.Name = e.Text;
-
-                    e = cd.FindElementByCssSelector(".table > tbody:nth-child(2) > tr:nth-child(" + x + ") > td:nth-child(3)");
-                    int.TryParse(e.Text, out tempInt);
-                    player.Wins = tempInt;
-
-                    e = cd.FindElementByCssSelector(".table > tbody:nth-child(2) > tr:nth-child(" + x + ") > td:nth-child(4)");
-                    int.TryParse(e.Text, out tempInt);
-                    player.Losses = tempInt;
-
-                    e = cd.FindElementByCssSelector(".table > tbody:nth-child(2) > tr:nth-child(" + x + ") > td:nth-child(5)");
-                    double.TryParse(e.Text.Replace(".", ","), out tempDouble);
-                    player.WLr = tempDouble;
-
-                    e = cd.FindElementByCssSelector(".table > tbody:nth-child(2) > tr:nth-child(" + x + ") > td:nth-child(6)");
-                    int.TryParse(e.Text, out tempInt);
-                    player.Kills = tempInt;
-
-                    e = cd.FindElementByCssSelector(".table > tbody:nth-child(2) > tr:nth-child(" + x + ") > td:nth-child(7)");
-                    int.TryParse(e.Text, out tempInt);
-                    player.Deaths = tempInt;
-
-                    e = cd.FindElementByCssSelector(".table > tbody:nth-child(2) > tr:nth-child(" + x + ") > td:nth-child(8)");
-                    double.TryParse(e.Text.Replace(".", ","), out tempDouble);
-                    player.KDr = tempDouble;
-
-                    e = cd.FindElementByCssSelector(".table > tbody:nth-child(2) > tr:nth-child(" + x + ") > td:nth-child(9)");
-                    int.TryParse(e.Text, out tempInt);
-                    player.GamesPlayed = tempInt;
-
-                    e = cd.FindElementByCssSelector(".table > tbody:nth-child(2) > tr:nth-child(" + x + ") > td:nth-child(10)");
-                    int.TryParse(e.Text, out tempInt);
-                    player.AvarageMatchScore = tempInt;
-                    WriteLine(player);
-                    players.Add(player);
-                }
-            }
-
-
-
-            //Get the cookies
-            foreach (OpenQA.Selenium.Cookie c in cd.Manage().Cookies.AllCookies)
-            {
-                string name = c.Name;
-                string value = c.Value;
-
-                //cd.Add(new System.Net.Cookie(name, value, c.Path, c.Domain));
-            }
-
-            //Fire off the request
-            HttpWebRequest hwr = (HttpWebRequest)HttpWebRequest.Create("https://fif.com/components/com_fif/tools/capacity/values/");
-            //hwr.CookieContainer = cc;
-            hwr.Method = "POST";
-            hwr.ContentType = "application/x-www-form-urlencoded";
-            StreamWriter swr = new StreamWriter(hwr.GetRequestStream());
-            swr.Write("feeds=35");
-            swr.Close();
-
-            WebResponse wr = hwr.GetResponse();
-            string s = new System.IO.StreamReader(wr.GetResponseStream()).ReadToEnd();
-        }
-        */
-
+        /// <summary>
+        /// ** DEPRECATED **
+        /// Writes a single line of data on a file
+        /// (determined in the ConfigFile)
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns></returns>
         public static bool WriteLine(PlayerStatT player)
         {
             string valore = player.Rank + ConfigFile.SEPARATOR +
