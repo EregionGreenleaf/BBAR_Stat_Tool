@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 namespace BBAR_Stat_Tool
 {
@@ -39,6 +40,85 @@ namespace BBAR_Stat_Tool
             return final;
         }
 
+
+        public static bool WriteToDB(FileInfo fileInfo, int season, int type)
+        {
+            string line;
+            StreamReader file = new StreamReader(fileInfo.FullName);
+            while ((line = file.ReadLine()) != null)
+            {
+                string[] data = line.Split(';');
+                PlayerStatT actualPlayer = ParsePlayerStat(line);
+                actualPlayer.Season = season;
+                actualPlayer.Category = type;
+                if(actualPlayer.Rank > 0)
+                {
+                    InsertPlayerDataInDB(actualPlayer);
+                }
+            }
+            return true;
+        }
+
+
+        public static bool InsertPlayerDataInDB(PlayerStatT actualPlayer)
+        {
+            //SQL SIDE
+            //using (SqlConnection con = new SqlConnection("Data Source=" + ConfigFile.DB_NAME +
+            //                                             ";Initial Catalog=" + ConfigFile.TABLE_NAME +
+            //                                             ";" + ConfigFile.DB_CREDENTIALS))
+            using (SqlConnection con = new SqlConnection("Data Source=WEPLUS19\\SQLEXPRESS;Initial Catalog=LEAD_DATA;Integrated Security=SSPI"))
+
+            {
+                con.Open();
+                try
+                {
+                    using (SqlCommand command = new SqlCommand(
+                        "INSERT INTO SEASONED VALUES(@season, @type, @name, @rank, @w, @l, @wlr, @k, @d, @kdr, @played, @avms)", con))
+                    {
+                        command.Parameters.Add(new SqlParameter("season", (int)actualPlayer.Season));
+                        command.Parameters.Add(new SqlParameter("type", (int)actualPlayer.Category));
+                        command.Parameters.Add(new SqlParameter("name", actualPlayer.Name));
+                        command.Parameters.Add(new SqlParameter("rank", (long)actualPlayer.Rank));
+                        command.Parameters.Add(new SqlParameter("w", (int)actualPlayer.Wins));
+                        command.Parameters.Add(new SqlParameter("l", (int)actualPlayer.Losses));
+                        command.Parameters.Add(new SqlParameter("wlr", (double)actualPlayer.WLr));
+                        command.Parameters.Add(new SqlParameter("k", (int)actualPlayer.Kills));
+                        command.Parameters.Add(new SqlParameter("d", (int)actualPlayer.Deaths));
+                        command.Parameters.Add(new SqlParameter("kdr", (double)actualPlayer.KDr));
+                        command.Parameters.Add(new SqlParameter("played", (int)actualPlayer.GamesPlayed));
+                        command.Parameters.Add(new SqlParameter("avms", (int)actualPlayer.AvarageMatchScore));
+                        command.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception exp)
+                {
+                    Console.WriteLine("Could not insert.");
+                }
+            }
+            //##############
+            return true;
+        }
+
+
+        //public static List<string> DividePlayerData(string full)
+        //{
+        //    bool exit = false;
+        //    List<string> finalList = new List<string>();
+        //    int pos = 0;
+        //    int oldPos = 1;
+        //    while (!exit)
+        //    {
+        //        pos = full.IndexOf("\r\n", pos + 4);
+        //        if (pos == oldPos)
+        //            break;
+        //        else
+        //            oldPos = pos;
+        //        string[] fullPlayerArray = full.Split(';');
+        //        string[] singlePlayerArray = fullPlayerArray.Take(1).ToArray();
+        //    }
+        //    return new List<string>();
+        //}
+
         public static string SearchPlayerData(string full)
         {
             int index = full.IndexOf("<tr class=");
@@ -53,7 +133,7 @@ namespace BBAR_Stat_Tool
         {
             PlayerStatT playerStat = new PlayerStatT();
             string[] partial = stat.Split(';');
-            if (partial.Length == 10)
+            if (partial.Length > 9)
             {
                 int tempI;
                 double tempD;
@@ -134,7 +214,7 @@ namespace BBAR_Stat_Tool
                 }
             }
 
-            for(int season = 0; season <= ConfigFile.SEASON_LAST; season++)
+            for(int season = 1; season <= ConfigFile.SEASON_LAST; season++)
             {
                 for(int type = 0; type <= 5; type++)
                 {
@@ -175,10 +255,12 @@ namespace BBAR_Stat_Tool
                                       ";" + orderedList.Last().GamesPlayed +
                                       ";" + orderedList.Last().AvarageMatchScore;
                         Logger.PrintF(file.FullName, text, false);
+
                     }
                 }
             }
             return false;
         }
+
     }
 }

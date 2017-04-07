@@ -24,6 +24,7 @@ namespace BBAR_Stat_Tool
         public static frmGetDataSingle ACTUAL_GETDATASINGLE { get; set; } = null;
         public static List<PlayerStatT> GLOBAL_PLAYER { get; set; }
         public static Semaphore _Global = new Semaphore(0, 1);
+        public static Semaphore _GlobalDB = new Semaphore(0, 1);
 
         public static string SAVE_PATH { get; set; }
         public static int SEASON_FIRST { get; set; }
@@ -55,6 +56,12 @@ namespace BBAR_Stat_Tool
         public static int TOTAL_PAGES { get; set; }
         public static int MAX_PAGES = 3500;
         public static int MIN_PAGES = 0;
+
+
+        /// SEZIONE DB
+        public static string DB_NAME { get; set; } = "WEPLUS19\\SQLEXPRESS";
+        public static string TABLE_NAME { get; set; } = "LEAD_DATA";
+        public static string DB_CREDENTIALS { get; set; } = "Integrated Security=SSPI";
 
 
         public static bool LoadConfig()

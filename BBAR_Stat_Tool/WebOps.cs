@@ -3,6 +3,7 @@
 //using OpenQA.Selenium.Firefox;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -251,9 +252,11 @@ namespace BBAR_Stat_Tool
         /// <param name="taskNumber"></param>
         /// <param name="dData"></param>
         /// <param name="bar"></param>
+        /// <param name="writeDB"></param>
         public static async void LoginAndDownload(int? season = null, int? type = null, string email = null, 
                                                   string password = null, int? startPage = null, int? finishPage = null, 
-                                                  int? taskNumber = null, DownloadData dData = null, ProgressBar bar = null)
+                                                  int? taskNumber = null, DownloadData dData = null, ProgressBar bar = null,
+                                                  bool writeDB = false)
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
                                                 | SecurityProtocolType.Tls11
@@ -388,6 +391,10 @@ namespace BBAR_Stat_Tool
                     }
                 }
                 Logger.PrintF(Path.Combine(DirDestination, fileName), "** FINISH DOWNLOADING", true);
+            }
+            if (writeDB)
+            {
+                //DataOps.WriteToDB(new FileInfo(Path.Combine(DirDestination, fileName).ToString()), (int)season + 1, (int)type);
             }
             ConfigFile.IncrementTaskFinished();
         }

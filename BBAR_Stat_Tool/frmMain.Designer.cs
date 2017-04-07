@@ -39,6 +39,7 @@
             this.prbSinglePlayer = new System.Windows.Forms.ProgressBar();
             this.lblLastSeason = new System.Windows.Forms.Label();
             this.lblActiveTasks = new System.Windows.Forms.Label();
+            this.btnSQL = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblCopyright
@@ -143,12 +144,24 @@
             this.lblActiveTasks.TabIndex = 7;
             this.lblActiveTasks.Text = "Active Tasks: ";
             // 
+            // btnSQL
+            // 
+            this.btnSQL.ForeColor = System.Drawing.Color.Black;
+            this.btnSQL.Location = new System.Drawing.Point(28, 161);
+            this.btnSQL.Name = "btnSQL";
+            this.btnSQL.Size = new System.Drawing.Size(231, 61);
+            this.btnSQL.TabIndex = 8;
+            this.btnSQL.Text = "Test SQL";
+            this.btnSQL.UseVisualStyleBackColor = true;
+            this.btnSQL.Click += new System.EventHandler(this.btnSQL_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(298, 361);
+            this.Controls.Add(this.btnSQL);
             this.Controls.Add(this.lblActiveTasks);
             this.Controls.Add(this.lblLastSeason);
             this.Controls.Add(this.prbSinglePlayer);
@@ -181,6 +194,7 @@
         private System.Windows.Forms.ProgressBar prbSinglePlayer;
         private System.Windows.Forms.Label lblLastSeason;
         private System.Windows.Forms.Label lblActiveTasks;
+        private System.Windows.Forms.Button btnSQL;
     }
 }
 

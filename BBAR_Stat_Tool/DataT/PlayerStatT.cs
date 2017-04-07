@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BBAR_Stat_Tool
 {
-    class PlayerStatT
+    public class PlayerStatT
     {
         public long? Rank { get; set; }
         public string Name { get; set; }

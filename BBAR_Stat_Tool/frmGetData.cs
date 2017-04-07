@@ -623,7 +623,7 @@ namespace BBAR_Stat_Tool
                     startGeneral = int.TryParse(txtStartGeneral.Text, out tempInt) ? tempInt-1 : (int)ConfigFile.MIN_PAGES;
                     endGeneral = int.TryParse(txtEndGeneral.Text, out tempInt) ? tempInt-1 : ConfigFile.MAX_PAGES;
                 }
-                WebOps.LoginAndDownload(dData: baseData, type: 0, startPage: startGeneral, finishPage: endGeneral, bar: prbPageProgressGeneral);
+                WebOps.LoginAndDownload(dData: baseData, type: 0, startPage: startGeneral, finishPage: endGeneral, bar: prbPageProgressGeneral, writeDB: true);
             }
             if (chbLight.Checked)
             {
@@ -707,6 +707,11 @@ namespace BBAR_Stat_Tool
         }
 
         private void lblTimer_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void chart1_Click(object sender, EventArgs e)
         {
 
         }
