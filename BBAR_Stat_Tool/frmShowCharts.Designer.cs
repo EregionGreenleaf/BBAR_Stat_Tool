@@ -44,9 +44,13 @@
             this.crtKDWKr = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.crtKDpM = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.crtAvMS = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.pnlImageContainer = new System.Windows.Forms.Panel();
+            this.pcbStats = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.crtKDWKr)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.crtKDpM)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.crtAvMS)).BeginInit();
+            this.pnlImageContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pcbStats)).BeginInit();
             this.SuspendLayout();
             // 
             // crtKDWKr
@@ -138,12 +142,32 @@
             this.crtAvMS.Text = "chart1";
             this.crtAvMS.Click += new System.EventHandler(this.crtAvMS_Click);
             // 
+            // pnlImageContainer
+            // 
+            this.pnlImageContainer.AutoScroll = true;
+            this.pnlImageContainer.Controls.Add(this.pcbStats);
+            this.pnlImageContainer.Location = new System.Drawing.Point(587, 12);
+            this.pnlImageContainer.Name = "pnlImageContainer";
+            this.pnlImageContainer.Size = new System.Drawing.Size(638, 531);
+            this.pnlImageContainer.TabIndex = 4;
+            // 
+            // pcbStats
+            // 
+            this.pcbStats.Location = new System.Drawing.Point(16, 0);
+            this.pcbStats.Name = "pcbStats";
+            this.pcbStats.Size = new System.Drawing.Size(596, 531);
+            this.pcbStats.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pcbStats.TabIndex = 4;
+            this.pcbStats.TabStop = false;
+            this.pcbStats.WaitOnLoad = true;
+            // 
             // frmShowCharts
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(593, 561);
+            this.ClientSize = new System.Drawing.Size(1235, 554);
+            this.Controls.Add(this.pnlImageContainer);
             this.Controls.Add(this.crtAvMS);
             this.Controls.Add(this.crtKDpM);
             this.Controls.Add(this.crtKDWKr);
@@ -154,6 +178,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.crtKDWKr)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.crtKDpM)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.crtAvMS)).EndInit();
+            this.pnlImageContainer.ResumeLayout(false);
+            this.pnlImageContainer.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pcbStats)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -163,5 +190,7 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart crtKDWKr;
         private System.Windows.Forms.DataVisualization.Charting.Chart crtKDpM;
         private System.Windows.Forms.DataVisualization.Charting.Chart crtAvMS;
+        private System.Windows.Forms.Panel pnlImageContainer;
+        private System.Windows.Forms.PictureBox pcbStats;
     }
 }

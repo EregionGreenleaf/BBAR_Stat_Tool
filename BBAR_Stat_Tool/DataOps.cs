@@ -177,7 +177,7 @@ namespace BBAR_Stat_Tool
             return sw.ToString();
         }
 
-        public static bool PlayerDataToFile(List<PlayerStatT> playerDataList)
+        public static FileInfo PlayerDataToFile(List<PlayerStatT> playerDataList)
         {
             List<PlayerStatT> orderedList = new List<PlayerStatT>();
 
@@ -255,11 +255,10 @@ namespace BBAR_Stat_Tool
                                       ";" + orderedList.Last().GamesPlayed +
                                       ";" + orderedList.Last().AvarageMatchScore;
                         Logger.PrintF(file.FullName, text, false);
-
                     }
                 }
             }
-            return false;
+            return file;
         }
 
     }

@@ -111,9 +111,9 @@ namespace BBAR_Stat_Tool
                     await Task.WhenAll(seasonsList.Select(i => WebOps.SearchPlayer(playerName, new List<int> { i }, new List<int> { typeCat }, ConfigFile.DEFAULT_USER, ConfigFile.DEFAULT_PASS)).ToArray());
                     prbSinglePlayer.Value = typeCat + 1;
                 }
-                DataOps.PlayerDataToFile(ConfigFile.GLOBAL_PLAYER);
+                FileInfo textFile = DataOps.PlayerDataToFile(ConfigFile.GLOBAL_PLAYER);
                 frmShowCharts newChart = new frmShowCharts();
-                newChart.Elaborate(ConfigFile.GLOBAL_PLAYER, playerName);
+                newChart.Elaborate(ConfigFile.GLOBAL_PLAYER, playerName, textFile);
                 newChart.Visible = true;
             }
             this.Enabled = true;

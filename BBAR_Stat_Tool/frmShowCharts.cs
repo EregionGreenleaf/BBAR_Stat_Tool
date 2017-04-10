@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,8 +23,9 @@ namespace BBAR_Stat_Tool
 
         }
 
-        public void Elaborate(List<PlayerStatT> playerGlobal, string playerName)
+        public void Elaborate(List<PlayerStatT> playerGlobal, string playerName, FileInfo textFile = null)
         {
+            this.Text = "BBARST - Live Charts - " + playerName;
             //K/D ratio & W/L ratio SECTION
             double[] KDr;
             double[] WLr;
@@ -114,6 +116,8 @@ namespace BBAR_Stat_Tool
             }
             AvMS = listAvMS.ToArray();
             GraphOps.DrawChartAvMS(crtAvMS, AvMS, listPlayedG.ToArray());
+            Bitmap textImage = GraphOps.CreateBitmapImage(textFile.FullName);
+            pcbStats.Image = textImage;
         }
 
         private void crtAvMS_Click(object sender, EventArgs e)
