@@ -125,6 +125,7 @@
     <Compile Include="frmPrintMessages.Designer.cs">
       <DependentUpon>frmPrintMessages.cs</DependentUpon>
     </Compile>
+    <Compile Include="PdfOps.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Timer.cs" />
