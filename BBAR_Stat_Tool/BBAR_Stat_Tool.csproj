@@ -207,9 +207,10 @@
   <ItemGroup>
     <Content Include="BBARST.ico" />
     <Content Include="Omicron.ico" />
-    <None Include="Resources\Jade_Falcon_Theme.wav" />
-    <None Include="Resources\BBARST_ICO.ico" />
     <Content Include="TODO.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
