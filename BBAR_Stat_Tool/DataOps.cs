@@ -379,8 +379,8 @@ namespace BBAR_Stat_Tool
                     globalListAvMSAssault.Add(0);
             }
 
-            globalGeneral.WLr = Math.Round((double)globalGeneral.Wins / (double)globalGeneral.Losses, 2);
-            globalGeneral.KDr = Math.Round((double)globalGeneral.Kills / (double)globalGeneral.Deaths, 2);
+            globalGeneral.WLr = double.IsNaN(Math.Round((double)globalGeneral.Wins / (double)globalGeneral.Losses, 2)) ? 0 : Math.Round((double)globalGeneral.Wins / (double)globalGeneral.Losses, 2);
+            globalGeneral.KDr = double.IsNaN(Math.Round((double)globalGeneral.Kills / (double)globalGeneral.Deaths, 2)) ? 0 : Math.Round((double)globalGeneral.Kills / (double)globalGeneral.Deaths, 2);
             globalListPlayedGeneral.ForEach(x => globalGeneral.GamesPlayed += x);
             globalGeneral.AvarageMatchScore = Convert.ToInt32(DataOps.WeightedAvarage(globalListAvMSGeneral, globalListPlayedGeneral));
             globalGeneral.Season = 0;
@@ -388,8 +388,8 @@ namespace BBAR_Stat_Tool
             globalGeneral.Name = playerName;
             playerGlobal.Add(globalGeneral);
 
-            globalLight.WLr = Math.Round((double)globalLight.Wins / (double)globalLight.Losses, 2);
-            globalLight.KDr = Math.Round((double)globalLight.Kills / (double)globalLight.Deaths, 2);
+            globalLight.WLr = double.IsNaN(Math.Round((double)globalLight.Wins / (double)globalLight.Losses, 2)) ? 0 : Math.Round((double)globalLight.Wins / (double)globalLight.Losses, 2);
+            globalLight.KDr = double.IsNaN(Math.Round((double)globalLight.Kills / (double)globalLight.Deaths, 2)) ? 0 : Math.Round((double)globalLight.Kills / (double)globalLight.Deaths, 2);
             globalListPlayedLight.ForEach(x => globalLight.GamesPlayed += x);
             globalLight.AvarageMatchScore = Convert.ToInt32(DataOps.WeightedAvarage(globalListAvMSLight, globalListPlayedLight));
             globalLight.Season = 0;
@@ -397,8 +397,8 @@ namespace BBAR_Stat_Tool
             globalLight.Name = playerName;
             playerGlobal.Add(globalLight);
 
-            globalMedium.WLr = Math.Round((double)globalMedium.Wins / (double)globalMedium.Losses, 2);
-            globalMedium.KDr = Math.Round((double)globalMedium.Kills / (double)globalMedium.Deaths, 2);
+            globalMedium.WLr = double.IsNaN(Math.Round((double)globalMedium.Wins / (double)globalMedium.Losses, 2)) ? 0 : Math.Round((double)globalMedium.Wins / (double)globalMedium.Losses, 2);
+            globalMedium.KDr = double.IsNaN(Math.Round((double)globalMedium.Kills / (double)globalMedium.Deaths, 2)) ? 0 : Math.Round((double)globalMedium.Kills / (double)globalMedium.Deaths, 2);
             globalListPlayedMedium.ForEach(x => globalMedium.GamesPlayed += x);
             globalMedium.AvarageMatchScore = Convert.ToInt32(DataOps.WeightedAvarage(globalListAvMSMedium, globalListPlayedMedium));
             globalMedium.Season = 0;
@@ -406,8 +406,8 @@ namespace BBAR_Stat_Tool
             globalMedium.Name = playerName;
             playerGlobal.Add(globalMedium);
 
-            globalHeavy.WLr = Math.Round((double)globalHeavy.Wins / (double)globalHeavy.Losses, 2);
-            globalHeavy.KDr = Math.Round((double)globalHeavy.Kills / (double)globalHeavy.Deaths, 2);
+            globalHeavy.WLr = double.IsNaN(Math.Round((double)globalHeavy.Wins / (double)globalHeavy.Losses, 2)) ? 0 : Math.Round((double)globalHeavy.Wins / (double)globalHeavy.Losses, 2);
+            globalHeavy.KDr = double.IsNaN(Math.Round((double)globalHeavy.Kills / (double)globalHeavy.Deaths, 2)) ? 0 : Math.Round((double)globalHeavy.Kills / (double)globalHeavy.Deaths, 2);
             globalListPlayedHeavy.ForEach(x => globalHeavy.GamesPlayed += x);
             globalHeavy.AvarageMatchScore = Convert.ToInt32(DataOps.WeightedAvarage(globalListAvMSHeavy, globalListPlayedHeavy));
             globalHeavy.Season = 0;
@@ -415,8 +415,8 @@ namespace BBAR_Stat_Tool
             globalHeavy.Name = playerName;
             playerGlobal.Add(globalHeavy);
 
-            globalAssault.WLr = Math.Round((double)globalAssault.Wins / (double)globalAssault.Losses, 2);
-            globalAssault.KDr = Math.Round((double)globalAssault.Kills / (double)globalAssault.Deaths, 2);
+            globalAssault.WLr = double.IsNaN(Math.Round((double)globalAssault.Wins / (double)globalAssault.Losses, 2)) ? 0 : Math.Round((double)globalAssault.Wins / (double)globalAssault.Losses, 2);
+            globalAssault.KDr = double.IsNaN(Math.Round((double)globalAssault.Kills / (double)globalAssault.Deaths, 2)) ? 0 : Math.Round((double)globalAssault.Kills / (double)globalAssault.Deaths, 2);
             globalListPlayedAssault.ForEach(x => globalAssault.GamesPlayed += x);
             globalAssault.AvarageMatchScore = Convert.ToInt32(DataOps.WeightedAvarage(globalListAvMSAssault, globalListPlayedAssault));
             globalAssault.Season = 0;
@@ -442,9 +442,12 @@ namespace BBAR_Stat_Tool
                     Operand += aA[i] * aB[i];
                 }
                 b.ForEach(x => Operator += x);
-                return Operand / Operator;
+                if (Operator < 1)
+                    return 0.0d;
+                else
+                    return Operand / Operator;
             }
-            return 0.0f;
+            return 0.0d;
         }
 
         public static double WeightedAvarage(List<int> a, List<int> b)

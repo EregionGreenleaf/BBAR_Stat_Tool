@@ -59,14 +59,5 @@ namespace BBAR_Stat_Tool.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
-        /// </summary>
-        internal static System.IO.UnmanagedMemoryStream Jade_Falcon_Theme {
-            get {
-                return ResourceManager.GetStream("Jade_Falcon_Theme", resourceCulture);
-            }
-        }
     }
 }
