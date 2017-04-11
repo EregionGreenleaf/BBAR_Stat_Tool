@@ -1,5 +1,4 @@
-﻿using Spire.Pdf;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -15,37 +14,25 @@ namespace BBAR_Stat_Tool
     public class GraphOps
     {
 
-        public static void DrawChartKDWLr(Chart chart1, double[] data1, double[] data2 )
+        public static void DrawChartKDWLr(Chart chart1, double[] data1, double[] data2, double avgKDr, double avgWLr)
         {
             chart1.Series["KDr"].Points.Clear();
             chart1.Series["WLr"].Points.Clear();
             chart1.Series["KDr"].LegendText = "KDr";
             chart1.Series["WLr"].LegendText = "WLr";
-            Random rdn = new Random();
-            int[] first = new int[] { rdn.Next(100,410) , rdn.Next(100, 410), rdn.Next(100, 410), rdn.Next(100, 410), rdn.Next(100, 410), rdn.Next(100, 410),
-                                        rdn.Next(100,410), rdn.Next(100,410), rdn.Next(100,410), rdn.Next(100,410) };
-            int[] second = new int[] { rdn.Next(100,410) , rdn.Next(100, 410), rdn.Next(100, 410), rdn.Next(100, 410), rdn.Next(100, 410), rdn.Next(100, 410),
-                                        rdn.Next(100,410), rdn.Next(100,410), rdn.Next(100,410), rdn.Next(100,410) };
             for (int i = 0; i < ConfigFile.SEASON_LAST; i++)
             {
                 chart1.Series["KDr"].Points.AddXY
                                 ((i + 1) * 1, data1[i]);
                 chart1.Series["WLr"].Points.AddXY
                                 ((i + 1) * 1, data2[i]);
+                chart1.Series["Av KDr"].Points.AddXY((i + 1) * 1, avgKDr);
+                chart1.Series["Av WLr"].Points.AddXY((i + 1) * 1, avgWLr);
             }
             chart1.SaveImage(Path.Combine(ConfigFile.DIRECTORY_OUTPUT.FullName, "chart.png"), ChartImageFormat.Png);
-
-            //PdfDocument 
-            //chart1.Series["test1"].ChartType =
-            //                    SeriesChartType.FastLine;
-            //chart1.Series["test1"].Color = Color.Red;
-
-            //chart1.Series["test2"].ChartType =
-            //                    SeriesChartType.FastLine;
-            //chart1.Series["test2"].Color = Color.Blue;
         }
 
-        public static void DrawChartKDpM(Chart chart1, double[] data1, double[] data2)
+        public static void DrawChartKDpM(Chart chart1, double[] data1, double[] data2, double avgKpM, double avgDpM)
         {
             chart1.Series["KpM"].Points.Clear();
             chart1.Series["DpM"].Points.Clear();
@@ -57,11 +44,13 @@ namespace BBAR_Stat_Tool
                                 ((i + 1) * 1, data1[i]);
                 chart1.Series["DpM"].Points.AddXY
                                 ((i + 1) * 1, data2[i]);
+                chart1.Series["Av KpM"].Points.AddXY((i + 1) * 1, avgKpM);
+                chart1.Series["Av DpM"].Points.AddXY((i + 1) * 1, avgDpM);
             }
             chart1.SaveImage(Path.Combine(ConfigFile.DIRECTORY_OUTPUT.FullName, "chart2.png"), ChartImageFormat.Png);
         }
 
-        public static void DrawChartAvMS(Chart chart1, int[] data1, int[] data2)
+        public static void DrawChartAvMS(Chart chart1, int[] data1, int[] data2, double avgMS, double avgPlayed)
         {
             chart1.Series["AvMS"].Points.Clear();
             chart1.Series["AvMS"].LegendText = "AvMS";
@@ -91,6 +80,8 @@ namespace BBAR_Stat_Tool
                                 ((i + 1) * 1, data1[i]);
                 chart1.Series["Played"].Points.AddXY
                                 ((i + 1) * 1, data2[i]);
+                chart1.Series["Av MS"].Points.AddXY((i + 1) * 1, avgMS);
+                chart1.Series["Av MS"].Points.AddXY((i + 1) * 1, avgPlayed);
             }
             chart1.SaveImage(Path.Combine(ConfigFile.DIRECTORY_OUTPUT.FullName, "chart3.png"), ChartImageFormat.Png);
         }
@@ -101,13 +92,13 @@ namespace BBAR_Stat_Tool
             //sImageText = System.IO.File.ReadAllText(sImageText);
             string final = string.Empty;
             string[] lines = System.IO.File.ReadAllLines(sImageText);
-            string[] type = new string[] { "   GENERAL: ", "   LIGHTS:  ", "   MEDIUMS: ", "   HEAVIES: ", "   ASSAULTS:" };
+            string[] type = new string[] {"   GENERAL: ", "   LIGHTS:  ", "   MEDIUMS: ", "   HEAVIES: ", "   ASSAULTS:" };
             int counter = 0;
-            int season = 1;
+            int season = 0;
             final += String.Format("{0,-5} {1,-7} {2,-7} {3,-7} {4,-7} {5,-7} {6,-7} {7,-7} {8,-7}",
                                 "   TYPE     ", "WINS", "LOSSES", "W/Lr", "KILLS", "DEATHS", "K/Dr", "GAMES", "AV.MS")
                                 + Environment.NewLine +
-                                "SEASON 01:" + Environment.NewLine;
+                                "ABSOLUTE:" + Environment.NewLine;
             foreach (string line in lines)
             {
                 string[] result = line.Split(';');

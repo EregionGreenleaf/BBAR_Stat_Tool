@@ -44,5 +44,23 @@ namespace BBAR_Stat_Tool
             Category = category;
             WebAddress = webAddress;
         }
+
+        public void Initialize()
+        {
+            Rank = 0;
+            Name = string.Empty;
+            Wins = 0;
+            Losses = 0;
+            WLr = 0;
+            Kills = 0;
+            Deaths = 0;
+            KDr = 0;
+            GamesPlayed = 0;
+            AvarageMatchScore = 0;
+            WebPage = 0;
+            Season = 0;
+            Category = 0;
+            WebAddress = string.Empty;
+        }
     }
 }

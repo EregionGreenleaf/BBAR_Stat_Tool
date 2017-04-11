@@ -13,6 +13,7 @@ namespace BBAR_Stat_Tool
 {
     public partial class frmShowCharts : Form
     {
+
         public frmShowCharts()
         {
             InitializeComponent();
@@ -26,6 +27,7 @@ namespace BBAR_Stat_Tool
         public void Elaborate(List<PlayerStatT> playerGlobal, string playerName, FileInfo textFile = null)
         {
             this.Text = "BBARST - Live Charts - " + playerName;
+
             //K/D ratio & W/L ratio SECTION
             double[] KDr;
             double[] WLr;
@@ -53,7 +55,9 @@ namespace BBAR_Stat_Tool
             }
             KDr = listKDr.ToArray();
             WLr = listWLr.ToArray();
-            GraphOps.DrawChartKDWLr(crtKDWKr, KDr, WLr);
+            GraphOps.DrawChartKDWLr(crtKDWKr, KDr, WLr,
+                                    (double)playerGlobal.Where(x => x.Season == 0 && x.Category == 0).First().KDr,
+                                    (double)playerGlobal.Where(x => x.Season == 0 && x.Category == 0).First().WLr);
 
             // Kills per Match & Deaths per Match SECTION
             double[] KpM;
@@ -94,7 +98,10 @@ namespace BBAR_Stat_Tool
             }
             KpM = listKpM.ToArray();
             DpM = listDpM.ToArray();
-            GraphOps.DrawChartKDpM(crtKDpM, KpM, DpM);
+            PlayerStatT tempPlayer = playerGlobal.Where(x => x.Season == 0 && x.Category == 0).First();
+            GraphOps.DrawChartKDpM(crtKDpM, KpM, DpM, 
+                                    Math.Round((double)tempPlayer.Kills / (double)tempPlayer.GamesPlayed, 2),
+                                    Math.Round((double)tempPlayer.Deaths / (double)tempPlayer.GamesPlayed, 2));
 
             // Avarage MS SECTION
             int[] AvMS;
@@ -115,7 +122,7 @@ namespace BBAR_Stat_Tool
                 }
             }
             AvMS = listAvMS.ToArray();
-            GraphOps.DrawChartAvMS(crtAvMS, AvMS, listPlayedG.ToArray());
+            GraphOps.DrawChartAvMS(crtAvMS, AvMS, listPlayedG.ToArray(), 100, 150);
             Bitmap textImage = GraphOps.CreateBitmapImage(textFile.FullName);
             pcbStats.Image = textImage;
         }

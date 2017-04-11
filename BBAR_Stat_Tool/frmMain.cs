@@ -111,6 +111,8 @@ namespace BBAR_Stat_Tool
                     await Task.WhenAll(seasonsList.Select(i => WebOps.SearchPlayer(playerName, new List<int> { i }, new List<int> { typeCat }, ConfigFile.DEFAULT_USER, ConfigFile.DEFAULT_PASS)).ToArray());
                     prbSinglePlayer.Value = typeCat + 1;
                 }
+                // Code 00
+                ConfigFile.GLOBAL_PLAYER = DataOps.AddAbsoluteSeason(ConfigFile.GLOBAL_PLAYER, playerName);
                 FileInfo textFile = DataOps.PlayerDataToFile(ConfigFile.GLOBAL_PLAYER);
                 frmShowCharts newChart = new frmShowCharts();
                 newChart.Elaborate(ConfigFile.GLOBAL_PLAYER, playerName, textFile);
