@@ -13,6 +13,9 @@ namespace BBAR_Stat_Tool
 {
     public partial class frmShowCharts : Form
     {
+        public string plName = string.Empty;
+        public string txtFile = string.Empty;
+        Bitmap txtImage = null;
 
         public frmShowCharts()
         {
@@ -24,8 +27,10 @@ namespace BBAR_Stat_Tool
 
         }
 
-        public void Elaborate(List<PlayerStatT> playerGlobal, string playerName, FileInfo textFile = null)
+        public void Elaborate(List<PlayerStatT> playerGlobal, string playerName, FileInfo textFile = null, bool toPDF = false)
         {
+            plName = playerName;
+            txtFile = textFile.FullName;
             this.Text = "BBARST - Live Charts - " + playerName;
 
             //K/D ratio & W/L ratio SECTION
@@ -122,14 +127,27 @@ namespace BBAR_Stat_Tool
                 }
             }
             AvMS = listAvMS.ToArray();
-            GraphOps.DrawChartAvMS(crtAvMS, AvMS, listPlayedG.ToArray(), 100, 150);
-            Bitmap textImage = GraphOps.CreateBitmapImage(textFile.FullName);
-            pcbStats.Image = textImage;
+            GraphOps.DrawChartAvMS(crtAvMS, AvMS, listPlayedG.ToArray(), 
+                                   (double)playerGlobal.Where(x => x.Season == 0 && x.Category == 0).First().AvarageMatchScore,
+                                   Math.Round((double)playerGlobal.Where(x => x.Season == 0 && x.Category == 0).First().GamesPlayed / (double)ConfigFile.SEASON_LAST, 2));
+            Bitmap textImage = GraphOps.CreateBitmapImage(textFile.FullName, toPDF);
+            if(toPDF)
+                txtImage = textImage;
+            else
+                pcbStats.Image = textImage;
+            
         }
 
         private void crtAvMS_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnPrintCharts_Click(object sender, EventArgs e)
+        {
+            Bitmap textImage = GraphOps.CreateBitmapImage(txtFile, true);
+            PdfOps pdfOp = new PdfOps();
+            pdfOp.DrawStats(plName, textImage);
         }
     }
 }

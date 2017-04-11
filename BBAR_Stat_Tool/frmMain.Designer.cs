@@ -146,6 +146,7 @@
             // 
             // btnSQL
             // 
+            this.btnSQL.Enabled = false;
             this.btnSQL.ForeColor = System.Drawing.Color.Black;
             this.btnSQL.Location = new System.Drawing.Point(28, 161);
             this.btnSQL.Name = "btnSQL";

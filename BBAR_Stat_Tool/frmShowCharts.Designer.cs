@@ -45,12 +45,14 @@
             System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series12 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmShowCharts));
             this.crtKDWKr = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.crtKDpM = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.crtAvMS = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.pnlImageContainer = new System.Windows.Forms.Panel();
             this.pcbStats = new System.Windows.Forms.PictureBox();
+            this.btnPrintCharts = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.crtKDWKr)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.crtKDpM)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.crtAvMS)).BeginInit();
@@ -171,12 +173,23 @@
             series11.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
             series11.ChartArea = "ChartArea1";
             series11.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series11.Color = System.Drawing.Color.Green;
+            series11.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
             series11.Legend = "Legend1";
-            series11.Name = "Avg";
+            series11.Name = "Av MS";
+            series11.ShadowColor = System.Drawing.Color.Black;
+            series11.ShadowOffset = 1;
+            series12.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
+            series12.ChartArea = "ChartArea1";
+            series12.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series12.Color = System.Drawing.Color.Blue;
+            series12.Legend = "Legend1";
+            series12.Name = "Av Played";
+            series12.ShadowColor = System.Drawing.Color.Black;
+            series12.ShadowOffset = 1;
             this.crtAvMS.Series.Add(series9);
             this.crtAvMS.Series.Add(series10);
             this.crtAvMS.Series.Add(series11);
+            this.crtAvMS.Series.Add(series12);
             this.crtAvMS.Size = new System.Drawing.Size(700, 220);
             this.crtAvMS.TabIndex = 2;
             this.crtAvMS.Text = "chart1";
@@ -201,12 +214,26 @@
             this.pcbStats.TabStop = false;
             this.pcbStats.WaitOnLoad = true;
             // 
+            // btnPrintCharts
+            // 
+            this.btnPrintCharts.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnPrintCharts.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPrintCharts.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnPrintCharts.Location = new System.Drawing.Point(591, 642);
+            this.btnPrintCharts.Name = "btnPrintCharts";
+            this.btnPrintCharts.Size = new System.Drawing.Size(118, 39);
+            this.btnPrintCharts.TabIndex = 6;
+            this.btnPrintCharts.Text = "Print Data to PDF";
+            this.btnPrintCharts.UseVisualStyleBackColor = true;
+            this.btnPrintCharts.Click += new System.EventHandler(this.btnPrintCharts_Click);
+            // 
             // frmShowCharts
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(1442, 696);
+            this.ClientSize = new System.Drawing.Size(1366, 693);
+            this.Controls.Add(this.btnPrintCharts);
             this.Controls.Add(this.pnlImageContainer);
             this.Controls.Add(this.crtAvMS);
             this.Controls.Add(this.crtKDpM);
@@ -232,5 +259,6 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart crtAvMS;
         private System.Windows.Forms.Panel pnlImageContainer;
         private System.Windows.Forms.PictureBox pcbStats;
+        private System.Windows.Forms.Button btnPrintCharts;
     }
 }

@@ -72,7 +72,9 @@ namespace BBAR_Stat_Tool
                 {
                     data2[y] = (int)(data2[y] / 2);
                 }
-                chart1.Series["Played"].LegendText = "Play" + Environment.NewLine + " div. 2";
+                avgPlayed /= 2;
+                chart1.Series["Played"].LegendText = "Matches" + Environment.NewLine + "div. 2";
+                chart1.Series["Av Played"].LegendText ="Av Mat." + Environment.NewLine + "div. 2";
             }
             for (int i = 0; i < ConfigFile.SEASON_LAST; i++)
             {
@@ -81,13 +83,13 @@ namespace BBAR_Stat_Tool
                 chart1.Series["Played"].Points.AddXY
                                 ((i + 1) * 1, data2[i]);
                 chart1.Series["Av MS"].Points.AddXY((i + 1) * 1, avgMS);
-                chart1.Series["Av MS"].Points.AddXY((i + 1) * 1, avgPlayed);
+                chart1.Series["Av Played"].Points.AddXY((i + 1) * 1, avgPlayed);
             }
             chart1.SaveImage(Path.Combine(ConfigFile.DIRECTORY_OUTPUT.FullName, "chart3.png"), ChartImageFormat.Png);
         }
 
 
-        public static Bitmap CreateBitmapImage(string sImageText)
+        public static Bitmap CreateBitmapImage(string sImageText, bool toPDF = false)
         {
             //sImageText = System.IO.File.ReadAllText(sImageText);
             string final = string.Empty;
@@ -117,9 +119,7 @@ namespace BBAR_Stat_Tool
                 }
             }
             sImageText = final.Remove(final.TrimEnd().LastIndexOf(Environment.NewLine)); ;
-
-
-
+            
             Bitmap objBmpImage = new Bitmap(1, 1);
             int intWidth = 0;
             int intHeight = 0;
@@ -137,10 +137,15 @@ namespace BBAR_Stat_Tool
             // Set Background color
             //objGraphics.Clear(Color.White);
             objGraphics.Clear(Color.Black);
+            if (toPDF)
+                objGraphics.Clear(Color.White);
             objGraphics.SmoothingMode = SmoothingMode.AntiAlias;
             objGraphics.TextRenderingHint = TextRenderingHint.AntiAlias;
             //objGraphics.DrawString(sImageText, objFont, new SolidBrush(Color.FromArgb(102, 102, 102)), 0, 0);
-            objGraphics.DrawString(sImageText, objFont, new SolidBrush(Color.FromArgb(234, 234, 234)), 0, 0);
+            if(toPDF)
+                objGraphics.DrawString(sImageText, objFont, new SolidBrush(Color.Black), 0, 0);
+            else
+                objGraphics.DrawString(sImageText, objFont, new SolidBrush(Color.FromArgb(234, 234, 234)), 0, 0);
             objGraphics.Flush();
             return (objBmpImage);
         }

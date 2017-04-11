@@ -129,8 +129,8 @@ namespace BBAR_Stat_Tool
             lblLastSeason.ForeColor = Color.Green;
             if (ConfigFile.LAST_SEASON_CHECKED)
             {
-                Mex.AddMessage("Last Season found: " + ConfigFile.SEASON_LAST, Mex.INFO);
-                Mex.PrintMessageInForm(Mex.FormatMessageAtIndex());
+                //Mex.AddMessage("Last Season found: " + ConfigFile.SEASON_LAST, Mex.INFO);
+                //Mex.PrintMessageInForm(Mex.FormatMessageAtIndex());
                 Mex.RemoveAll();
             }
             this.Enabled = true;

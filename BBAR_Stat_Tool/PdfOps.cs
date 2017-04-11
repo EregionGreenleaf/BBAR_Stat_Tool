@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing;
 
 
 namespace BBAR_Stat_Tool
@@ -18,7 +19,7 @@ namespace BBAR_Stat_Tool
         string imageSamplePath = string.Empty;
         double nextY;
 
-        public void DrawStats(string playerName)
+        public void DrawStats(string playerName, Bitmap dataImage = null)
         {
             // Create a temporary file
             string season = ConfigFile.SEASON_LAST < 10 ? "0" + ConfigFile.SEASON_LAST.ToString() : ConfigFile.SEASON_LAST.ToString();
@@ -60,7 +61,14 @@ namespace BBAR_Stat_Tool
                     filePath = Path.Combine(ConfigFile.DIRECTORY_OUTPUT.FullName, "chart3.png");
                     DrawImage(pdfGraphic, 4, filePath);
 
-                    // Save the document...
+                    if (dataImage != null)
+                    {
+                        PdfPage pdfPageData = pdfDocument.AddPage();
+                        XGraphics pdfGraphicData = XGraphics.FromPdfPage(pdfPageData);
+                        DrawImage(pdfGraphicData, 15, 15, dataImage, pdfPageData);
+                    }
+
+                        // Save the document...
                     try
                     {
                         pdfDocument.Save(filename);
@@ -138,6 +146,28 @@ namespace BBAR_Stat_Tool
 
             //EndBox(gfx);
         }
+
+        private void DrawImage(XGraphics gfx, double x, double y, Bitmap imageR, PdfPage pdfPageData)
+        {
+            
+            using (XImage image = imageR)
+            {
+                XRect rectangle = new XRect();
+                if (image.PointHeight + y > pdfPageData.Height || image.PointWidth + x > pdfPageData.Width)
+                    rectangle = new XRect(x, y, pdfPageData.Width - x, pdfPageData.Height - y);
+                else
+                    rectangle = new XRect(x, y, image.PointWidth+ x, image.PointHeight +y);
+                try
+                {
+                    gfx.DrawImage(image,rectangle);
+                }
+                catch (Exception exp)
+                {
+
+                }
+            }
+        }
+
 
     }
 }
