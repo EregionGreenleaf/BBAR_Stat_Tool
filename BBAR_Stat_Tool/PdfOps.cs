@@ -68,7 +68,7 @@ namespace BBAR_Stat_Tool
                         {
                             PdfPage pdfPageData = pdfDocument.AddPage();
                             XGraphics pdfGraphicData = XGraphics.FromPdfPage(pdfPageData);
-                            DrawImage(pdfGraphicData, 15, 15, dataImage, pdfPageData);
+                            DrawImage(pdfGraphicData, 25, 10, dataImage, pdfPageData);
                         }
 
                         // Save the document...
@@ -128,7 +128,7 @@ namespace BBAR_Stat_Tool
                     rectangle = new XRect(x, y, image.PointWidth+ x, image.PointHeight +y);
                 try
                 {
-                    gfx.DrawImage(image,rectangle);
+                    gfx.DrawImage(image, rectangle);
                 }
                 catch (Exception exp)
                 {

@@ -67,6 +67,21 @@ namespace BBAR_Stat_Tool
 
         private void frmMain_Load(object sender, EventArgs e)
         {
+            using (var fbd = new FolderBrowserDialog())
+            {
+                fbd.Description = "Select the folder in which to OUTPUT elaborated data." + Environment.NewLine +
+                    "Press 'CANCEL' if you want to use default directory (as determined in the config file).";
+                DialogResult result = fbd.ShowDialog();
+
+                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                {
+                    ConfigFile.DIRECTORY_OUTPUT = new DirectoryInfo(fbd.SelectedPath);
+                    //string[] files = Directory.GetFiles(fbd.SelectedPath);
+
+                    //System.Windows.Forms.MessageBox.Show("Files found: " + files.Length.ToString(), "Message");
+                }
+            }
+
             prbSinglePlayer.Enabled = false;
             prbSinglePlayer.Maximum = ConfigFile.SEASON_LAST;
             prbSinglePlayer.Value = 0;

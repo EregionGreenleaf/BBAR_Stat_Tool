@@ -180,8 +180,8 @@ namespace BBAR_Stat_Tool
         public static FileInfo PlayerDataToFile(List<PlayerStatT> playerDataList)
         {
             List<PlayerStatT> orderedList = new List<PlayerStatT>();
-
-            FileInfo file = new FileInfo(Path.Combine(ConfigFile.DIRECTORY_OUTPUT.FullName, playerDataList.First().Name + ".txt"));
+            string seasonStr = ConfigFile.SEASON_LAST < 10 ? "0" + ConfigFile.SEASON_LAST.ToString() : ConfigFile.SEASON_LAST.ToString();
+            FileInfo file = new FileInfo(Path.Combine(ConfigFile.DIRECTORY_OUTPUT.FullName, playerDataList.First().Name + "_" + seasonStr + ".txt"));
             if (file.Exists)
             {
                 FileInfo fileOld = new FileInfo(Path.Combine(Path.GetDirectoryName(file.FullName), Path.GetFileNameWithoutExtension(file.FullName) + "_OLD.txt").ToString());
