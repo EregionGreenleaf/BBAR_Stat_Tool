@@ -214,6 +214,7 @@ namespace BBAR_Stat_Tool
                 }
             }
 
+
             for(int season = 0; season <= ConfigFile.SEASON_LAST; season++) //Should be from Season = 1, not = 0 (0 represent ABSOLUTE stats)
             {
                 for(int type = 0; type <= 5; type++)
