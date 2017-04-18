@@ -8,6 +8,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Data;
 
 namespace BBAR_Stat_Tool
 {
@@ -97,6 +98,49 @@ namespace BBAR_Stat_Tool
             }
             //##############
             return true;
+        }
+
+
+        public static List<PlayerStatT> RetrievePlayerStat(string name)
+        {
+            List<PlayerStatT> playerFound = new List<PlayerStatT>();
+            using (SqlConnection con = new SqlConnection("Data Source=" + ConfigFile.DB_NAME + "\\SQLEXPRESS;Initial Catalog=LEAD_DATA;User Id=general;Password=33333333")) //Integrated Security=SSPI"))
+            {
+                try
+                {
+                    int type = 0;
+                    using (SqlCommand command = new SqlCommand("SELECT * FROM LEAD_DATA.dbo.SEASONED WHERE pname LIKE @varName and type = @pType ORDER BY season", con))
+                    {
+                        command.Parameters.AddWithValue("@pType", type);
+                        command.Parameters.Add(new SqlParameter("@varName", SqlDbType.Text) { Value = name });
+                        con.Open();
+                        using (SqlDataReader oReader = command.ExecuteReader())
+                        {
+                            while (oReader.Read())
+                            {
+                                PlayerStatT newData = new PlayerStatT();
+                                double tempDouble = 0.0;
+                                newData.Name = oReader["pname"].ToString();
+                                newData.Season = (int)oReader["season"];
+                                newData.Category = (int)oReader["type"];
+                                newData.WLr = double.TryParse(oReader["kdr"].ToString(), out tempDouble) ? tempDouble : 0.0;
+                                newData.KDr = double.TryParse(oReader["wlr"].ToString(), out tempDouble) ? tempDouble : 0.0;
+                                newData.KpM = double.TryParse(oReader["kpm"].ToString(), out tempDouble) ? tempDouble : 0.0;
+                                newData.DpM = double.TryParse(oReader["dpm"].ToString(), out tempDouble) ? tempDouble : 0.0;
+                                if (newData.Name == name)
+                                    playerFound.Add(newData);
+                            }
+                            con.Close();
+                        }
+                    }
+                }
+                catch (Exception exp)
+                {
+                    Console.WriteLine("Could not insert.");
+                }
+            }
+            //##############
+            return playerFound;
         }
 
 

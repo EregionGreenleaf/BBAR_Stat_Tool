@@ -59,9 +59,9 @@ namespace BBAR_Stat_Tool
 
 
         /// SEZIONE DB
-        public static string DB_NAME { get; set; } = "WEPLUS19\\SQLEXPRESS";
+        public static string DB_NAME { get; set; } = ConfigurationSettings.AppSettings["SQL Server Name"]; // "WEPLUS19\\SQLEXPRESS";
         public static string TABLE_NAME { get; set; } = "LEAD_DATA";
-        public static string DB_CREDENTIALS { get; set; } = "Integrated Security=SSPI";
+        public static string DB_CREDENTIALS { get; set; } = "User Id=general; Password=33333333";
 
 
         public static bool LoadConfig()

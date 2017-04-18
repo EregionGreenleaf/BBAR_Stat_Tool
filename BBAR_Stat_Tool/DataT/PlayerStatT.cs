@@ -22,12 +22,15 @@ namespace BBAR_Stat_Tool
         public int? Season { get; set; }
         public int? Category { get; set; }
         public string WebAddress { get; set; }
+        public double? KpM { get; set; }
+        public double? DpM { get; set; }
+
 
         public PlayerStatT(long? rank = null, string name = null, int? wins = null,
                            int? losses = null, double? wlr = null, int? kills = null,
                            int? deaths = null, double? kdr = null, long? gamesPlayed = null,
                            int? avarageMatchScore = null, int? webPage = null, int? season = 0,
-                           int? category = 0, string webAddress = null)
+                           int? category = 0, string webAddress = null, double? dpm = 0.0, double? kpm = 0.0)
         {
             Rank = rank;
             Name = name;
@@ -43,6 +46,8 @@ namespace BBAR_Stat_Tool
             Season = season;
             Category = category;
             WebAddress = webAddress;
+            KpM = kpm;
+            DpM = dpm;
         }
 
         public void Initialize()
@@ -61,6 +66,8 @@ namespace BBAR_Stat_Tool
             Season = 0;
             Category = 0;
             WebAddress = string.Empty;
+            KpM = 0.0;
+            DpM = 0.0;
         }
     }
 }
