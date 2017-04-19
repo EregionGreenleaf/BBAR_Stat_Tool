@@ -42,22 +42,28 @@ namespace BBAR_Stat_Tool
                 List<double> listWLr = new List<double>();
                 for (int season = 1; season <= ConfigFile.SEASON_LAST; season++)
                 {
-                    PlayerStatT actualPlayer = playerGlobal.Where(x => x.Season == season && x.Category == 0).First();
-                    if (actualPlayer.Name == playerName)
+                    List<PlayerStatT> listAllPlayer = new List<PlayerStatT>();
+                    PlayerStatT actualPlayer = new PlayerStatT();
+                    listAllPlayer = playerGlobal.Where(x => x.Season == season && x.Category == 0).ToList();
+                    actualPlayer = listAllPlayer.Count > 0 ? listAllPlayer.First() : null;
+                    if (actualPlayer != null)
                     {
-                        if (actualPlayer.KDr != null)
-                            listKDr.Add((double)actualPlayer.KDr);
+                        if (actualPlayer.Name == playerName)
+                        {
+                            if (actualPlayer.KDr != null)
+                                listKDr.Add((double)actualPlayer.KDr);
+                            else
+                                listKDr.Add(0);
+                            if (actualPlayer.WLr != null)
+                                listWLr.Add((double)actualPlayer.WLr);
+                            else
+                                listWLr.Add(0);
+                        }
                         else
+                        {
                             listKDr.Add(0);
-                        if (actualPlayer.WLr != null)
-                            listWLr.Add((double)actualPlayer.WLr);
-                        else
                             listWLr.Add(0);
-                    }
-                    else
-                    {
-                        listKDr.Add(0);
-                        listWLr.Add(0);
+                        }
                     }
                 }
                 KDr = listKDr.ToArray();
@@ -138,7 +144,7 @@ namespace BBAR_Stat_Tool
                 else
                     pcbStats.Image = textImage;
             }
-            catch
+            catch(Exception exp)
             {
 
             }

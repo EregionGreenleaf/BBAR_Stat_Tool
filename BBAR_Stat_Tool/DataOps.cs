@@ -109,7 +109,7 @@ namespace BBAR_Stat_Tool
                 try
                 {
                     int type = 0;
-                    using (SqlCommand command = new SqlCommand("SELECT * FROM LEAD_DATA.dbo.SEASONED WHERE pname LIKE @varName and type = @pType ORDER BY season", con))
+                    using (SqlCommand command = new SqlCommand("SELECT * FROM LEAD_DATA.dbo.SEASONED WHERE pname LIKE @varName ORDER BY season, type", con))
                     {
                         command.Parameters.AddWithValue("@pType", type);
                         command.Parameters.Add(new SqlParameter("@varName", SqlDbType.Text) { Value = name });
@@ -120,9 +120,16 @@ namespace BBAR_Stat_Tool
                             {
                                 PlayerStatT newData = new PlayerStatT();
                                 double tempDouble = 0.0;
+                                long tempLong = 0;
                                 newData.Name = oReader["pname"].ToString();
                                 newData.Season = (int)oReader["season"];
                                 newData.Category = (int)oReader["type"];
+                                newData.AvarageMatchScore = (int)oReader["avms"];
+                                newData.Deaths = (int)oReader["d"];
+                                newData.Kills = (int)oReader["k"];
+                                newData.Wins = (int)oReader["w"];
+                                newData.Losses = (int)oReader["l"];
+                                newData.GamesPlayed = long.TryParse(oReader["played"].ToString(), out tempLong) ? tempLong : 0;
                                 newData.WLr = double.TryParse(oReader["kdr"].ToString(), out tempDouble) ? tempDouble : 0.0;
                                 newData.KDr = double.TryParse(oReader["wlr"].ToString(), out tempDouble) ? tempDouble : 0.0;
                                 newData.KpM = double.TryParse(oReader["kpm"].ToString(), out tempDouble) ? tempDouble : 0.0;
@@ -335,95 +342,112 @@ namespace BBAR_Stat_Tool
             {
                 for (int season = 1; season <= ConfigFile.SEASON_LAST; season++)
                 {
-                    PlayerStatT actualPlayer = playerGlobal.Where(x => x.Season == season && x.Category == 0).First();
-                    if (actualPlayer.Wins != null)
-                        globalGeneral.Wins += actualPlayer.Wins;
-                    if (actualPlayer.Losses != null)
-                        globalGeneral.Losses += actualPlayer.Losses;
-                    if (actualPlayer.Kills != null)
-                        globalGeneral.Kills += actualPlayer.Kills;
-                    if (actualPlayer.Deaths != null)
-                        globalGeneral.Deaths += actualPlayer.Deaths;
-                    if (actualPlayer.GamesPlayed != null)
-                        globalListPlayedGeneral.Add((int)actualPlayer.GamesPlayed);
-                    else
-                        globalListPlayedGeneral.Add(0);
-                    if (actualPlayer.AvarageMatchScore != null)
-                        globalListAvMSGeneral.Add((int)actualPlayer.AvarageMatchScore);
-                    else
-                        globalListAvMSGeneral.Add(0);
-
-                    actualPlayer = playerGlobal.Where(x => x.Season == season && x.Category == 1).First();
-                    if (actualPlayer.Wins != null)
-                        globalLight.Wins += actualPlayer.Wins;
-                    if (actualPlayer.Losses != null)
-                        globalLight.Losses += actualPlayer.Losses;
-                    if (actualPlayer.Kills != null)
-                        globalLight.Kills += actualPlayer.Kills;
-                    if (actualPlayer.Deaths != null)
-                        globalLight.Deaths += actualPlayer.Deaths;
-                    if (actualPlayer.GamesPlayed != null)
-                        globalListPlayedLight.Add((long)actualPlayer.GamesPlayed);
-                    else
-                        globalListPlayedLight.Add(0);
-                    if (actualPlayer.AvarageMatchScore != null)
-                        globalListAvMSLight.Add((int)actualPlayer.AvarageMatchScore);
-                    else
-                        globalListAvMSLight.Add(0);
-
-                    actualPlayer = playerGlobal.Where(x => x.Season == season && x.Category == 2).First();
-                    if (actualPlayer.Wins != null)
-                        globalMedium.Wins += actualPlayer.Wins;
-                    if (actualPlayer.Losses != null)
-                        globalMedium.Losses += actualPlayer.Losses;
-                    if (actualPlayer.Kills != null)
-                        globalMedium.Kills += actualPlayer.Kills;
-                    if (actualPlayer.Deaths != null)
-                        globalMedium.Deaths += actualPlayer.Deaths;
-                    if (actualPlayer.GamesPlayed != null)
-                        globalListPlayedMedium.Add((long)actualPlayer.GamesPlayed);
-                    else
-                        globalListPlayedMedium.Add(0);
-                    if (actualPlayer.AvarageMatchScore != null)
-                        globalListAvMSMedium.Add((int)actualPlayer.AvarageMatchScore);
-                    else
-                        globalListAvMSMedium.Add(0);
-
-                    actualPlayer = playerGlobal.Where(x => x.Season == season && x.Category == 3).First();
-                    if (actualPlayer.Wins != null)
-                        globalHeavy.Wins += actualPlayer.Wins;
-                    if (actualPlayer.Losses != null)
-                        globalHeavy.Losses += actualPlayer.Losses;
-                    if (actualPlayer.Kills != null)
-                        globalHeavy.Kills += actualPlayer.Kills;
-                    if (actualPlayer.Deaths != null)
-                        globalHeavy.Deaths += actualPlayer.Deaths;
-                    if (actualPlayer.GamesPlayed != null)
-                        globalListPlayedHeavy.Add((long)actualPlayer.GamesPlayed);
-                    else
-                        globalListPlayedHeavy.Add(0);
-                    if (actualPlayer.AvarageMatchScore != null)
-                        globalListAvMSHeavy.Add((int)actualPlayer.AvarageMatchScore);
-                    else
-                        globalListAvMSHeavy.Add(0);
-
-                    actualPlayer = playerGlobal.Where(x => x.Season == season && x.Category == 4).First();
-                    if (actualPlayer.Wins != null)
-                        globalAssault.Wins += actualPlayer.Wins;
-                    if (actualPlayer.Losses != null)
-                        globalAssault.Losses += actualPlayer.Losses;
-                    if (actualPlayer.Kills != null)
-                        globalAssault.Kills += actualPlayer.Kills;
-                    if (actualPlayer.Deaths != null)
-                        globalAssault.Deaths += actualPlayer.Deaths;
-                    if (actualPlayer.GamesPlayed != null)
-                        globalListPlayedAssault.Add((long)actualPlayer.GamesPlayed);
-                    else
-                        globalListPlayedAssault.Add(0);
-                    if (actualPlayer.AvarageMatchScore != null)
-                        globalListAvMSAssault.Add((int)actualPlayer.AvarageMatchScore);
-                    else
-                        globalListAvMSAssault.Add(0);
+                    List<PlayerStatT> listAllPlayer = new List<PlayerStatT>();
+                    listAllPlayer = playerGlobal.Where(x => x.Season == season && x.Category == 0).ToList(); ;
+                    PlayerStatT actualPlayer = listAllPlayer.Count > 0 ? listAllPlayer.First() : null;
+                    if (actualPlayer != null)
+                    {
+                        if (actualPlayer.Wins != null)
+                            globalGeneral.Wins += actualPlayer.Wins;
+                        if (actualPlayer.Losses != null)
+                            globalGeneral.Losses += actualPlayer.Losses;
+                        if (actualPlayer.Kills != null)
+                            globalGeneral.Kills += actualPlayer.Kills;
+                        if (actualPlayer.Deaths != null)
+                            globalGeneral.Deaths += actualPlayer.Deaths;
+                        if (actualPlayer.GamesPlayed != null)
+                            globalListPlayedGeneral.Add((int)actualPlayer.GamesPlayed);
+                        else
+                            globalListPlayedGeneral.Add(0);
+                        if (actualPlayer.AvarageMatchScore != null)
+                            globalListAvMSGeneral.Add((int)actualPlayer.AvarageMatchScore);
+                        else
+                            globalListAvMSGeneral.Add(0);
+                    }
+                    listAllPlayer = playerGlobal.Where(x => x.Season == season && x.Category == 1).ToList();
+                    actualPlayer = listAllPlayer.Count > 0 ? listAllPlayer.First() : null;
+                    if (actualPlayer != null)
+                    {
+                        if (actualPlayer.Wins != null)
+                            globalLight.Wins += actualPlayer.Wins;
+                        if (actualPlayer.Losses != null)
+                            globalLight.Losses += actualPlayer.Losses;
+                        if (actualPlayer.Kills != null)
+                            globalLight.Kills += actualPlayer.Kills;
+                        if (actualPlayer.Deaths != null)
+                            globalLight.Deaths += actualPlayer.Deaths;
+                        if (actualPlayer.GamesPlayed != null)
+                            globalListPlayedLight.Add((long)actualPlayer.GamesPlayed);
+                        else
+                            globalListPlayedLight.Add(0);
+                        if (actualPlayer.AvarageMatchScore != null)
+                            globalListAvMSLight.Add((int)actualPlayer.AvarageMatchScore);
+                        else
+                            globalListAvMSLight.Add(0);
+                    }
+                    listAllPlayer = playerGlobal.Where(x => x.Season == season && x.Category == 2).ToList();
+                    actualPlayer = listAllPlayer.Count > 0 ? listAllPlayer.First() : null;
+                    if (actualPlayer != null)
+                    {
+                        if (actualPlayer.Wins != null)
+                            globalMedium.Wins += actualPlayer.Wins;
+                        if (actualPlayer.Losses != null)
+                            globalMedium.Losses += actualPlayer.Losses;
+                        if (actualPlayer.Kills != null)
+                            globalMedium.Kills += actualPlayer.Kills;
+                        if (actualPlayer.Deaths != null)
+                            globalMedium.Deaths += actualPlayer.Deaths;
+                        if (actualPlayer.GamesPlayed != null)
+                            globalListPlayedMedium.Add((long)actualPlayer.GamesPlayed);
+                        else
+                            globalListPlayedMedium.Add(0);
+                        if (actualPlayer.AvarageMatchScore != null)
+                            globalListAvMSMedium.Add((int)actualPlayer.AvarageMatchScore);
+                        else
+                            globalListAvMSMedium.Add(0);
+                    }
+                    listAllPlayer = playerGlobal.Where(x => x.Season == season && x.Category == 3).ToList();
+                    actualPlayer = listAllPlayer.Count > 0 ? listAllPlayer.First() : null;
+                    if (actualPlayer != null)
+                    {
+                        if (actualPlayer.Wins != null)
+                            globalHeavy.Wins += actualPlayer.Wins;
+                        if (actualPlayer.Losses != null)
+                            globalHeavy.Losses += actualPlayer.Losses;
+                        if (actualPlayer.Kills != null)
+                            globalHeavy.Kills += actualPlayer.Kills;
+                        if (actualPlayer.Deaths != null)
+                            globalHeavy.Deaths += actualPlayer.Deaths;
+                        if (actualPlayer.GamesPlayed != null)
+                            globalListPlayedHeavy.Add((long)actualPlayer.GamesPlayed);
+                        else
+                            globalListPlayedHeavy.Add(0);
+                        if (actualPlayer.AvarageMatchScore != null)
+                            globalListAvMSHeavy.Add((int)actualPlayer.AvarageMatchScore);
+                        else
+                            globalListAvMSHeavy.Add(0);
+                    }
+                    listAllPlayer = playerGlobal.Where(x => x.Season == season && x.Category == 4).ToList();
+                    actualPlayer = listAllPlayer.Count > 0 ? listAllPlayer.First() : null;
+                    if (actualPlayer != null)
+                    {
+                        if (actualPlayer.Wins != null)
+                            globalAssault.Wins += actualPlayer.Wins;
+                        if (actualPlayer.Losses != null)
+                            globalAssault.Losses += actualPlayer.Losses;
+                        if (actualPlayer.Kills != null)
+                            globalAssault.Kills += actualPlayer.Kills;
+                        if (actualPlayer.Deaths != null)
+                            globalAssault.Deaths += actualPlayer.Deaths;
+                        if (actualPlayer.GamesPlayed != null)
+                            globalListPlayedAssault.Add((long)actualPlayer.GamesPlayed);
+                        else
+                            globalListPlayedAssault.Add(0);
+                        if (actualPlayer.AvarageMatchScore != null)
+                            globalListAvMSAssault.Add((int)actualPlayer.AvarageMatchScore);
+                        else
+                            globalListAvMSAssault.Add(0);
+                    }
                 }
 
                 globalGeneral.WLr = double.IsNaN(Math.Round((double)globalGeneral.Wins / (double)globalGeneral.Losses, 2)) ? 0 : Math.Round((double)globalGeneral.Wins / (double)globalGeneral.Losses, 2);
@@ -472,7 +496,7 @@ namespace BBAR_Stat_Tool
                 playerGlobal.Add(globalHeavy);
                 playerGlobal.Add(globalAssault);
             }
-            catch
+            catch(Exception exp)
             {
                 return playerGlobal;
             }

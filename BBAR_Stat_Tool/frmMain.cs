@@ -224,5 +224,24 @@ namespace BBAR_Stat_Tool
             }
         }
 
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            this.Enabled = false;
+            string playerName = Interaction.InputBox("Insert Player Name to download:", "Download all data of Player", "PlayerName", -1, -1);
+            playerName = playerName.Trim();
+            if (!string.IsNullOrWhiteSpace(playerName))
+            {
+                List<PlayerStatT> player = DataOps.RetrievePlayerStat(playerName);
+                if (player.Count > 0)
+                {
+                    player = DataOps.AddAbsoluteSeason(player, playerName);
+                    FileInfo textFile = DataOps.PlayerDataToFile(player);
+                    frmShowCharts newChart = new frmShowCharts();
+                    newChart.Elaborate(player, playerName, textFile);
+                    newChart.Visible = true;
+                }
+            }
+            this.Enabled = true;
+        }
     }
 }
