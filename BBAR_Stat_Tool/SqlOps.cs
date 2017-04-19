@@ -55,7 +55,8 @@ namespace BBAR_Stat_Tool
         {
             List<PlayerStatT> playerFound = new List<PlayerStatT>();
             //using (SqlConnection con = new SqlConnection("Data Source=" + ConfigFile.DB_NAME + "\\SQLEXPRESS;Initial Catalog=LEAD_DATA;User Id=general;Password=33333333")) //Integrated Security=SSPI"))
-            using (SqlConnection con = new SqlConnection("Data Source=sqlexpress.cxs65yafraar.us-west-2.rds.amazonaws.com,1433;Initial Catalog=LEAD_DATA;User Id=general;Password=Red*1-333")) //Integrated Security=SSPI"))
+            // sqlexpress.cxs65yafraar.us-west-2.rds.amazonaws.com,1433
+            using (SqlConnection con = new SqlConnection("Data Source=" + ConfigFile.DB_NAME + ";Initial Catalog=LEAD_DATA;User Id=general;Password=Red*1-333")) //Integrated Security=SSPI"))
             {
                 try
                 {
