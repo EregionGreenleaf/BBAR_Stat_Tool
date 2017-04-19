@@ -237,7 +237,7 @@ namespace BBAR_Stat_Tool
                                 typeStr = "ASSAULT";
                                 break;
                         }
-                        string text = "S" + orderedList.Last().Season +
+                        string text = "S" + season +
                                       "_" + typeStr +
                                       ";0" +
                                       ";" + playerDataList.First().Name +

@@ -54,7 +54,8 @@ namespace BBAR_Stat_Tool
         public static List<PlayerStatT> RetrievePlayerStat(string name)
         {
             List<PlayerStatT> playerFound = new List<PlayerStatT>();
-            using (SqlConnection con = new SqlConnection("Data Source=" + ConfigFile.DB_NAME + "\\SQLEXPRESS;Initial Catalog=LEAD_DATA;User Id=general;Password=33333333")) //Integrated Security=SSPI"))
+            //using (SqlConnection con = new SqlConnection("Data Source=" + ConfigFile.DB_NAME + "\\SQLEXPRESS;Initial Catalog=LEAD_DATA;User Id=general;Password=33333333")) //Integrated Security=SSPI"))
+            using (SqlConnection con = new SqlConnection("Data Source=sqlexpress.cxs65yafraar.us-west-2.rds.amazonaws.com,1433;Initial Catalog=LEAD_DATA;User Id=general;Password=Red*1-333")) //Integrated Security=SSPI"))
             {
                 try
                 {
@@ -80,12 +81,12 @@ namespace BBAR_Stat_Tool
                                 newData.Wins = (int)oReader["w"];
                                 newData.Losses = (int)oReader["l"];
                                 newData.GamesPlayed = long.TryParse(oReader["played"].ToString(), out tempLong) ? tempLong : 0;
-                                newData.WLr = double.TryParse(oReader["kdr"].ToString(), out tempDouble) ? tempDouble : 0.0;
-                                newData.KDr = double.TryParse(oReader["wlr"].ToString(), out tempDouble) ? tempDouble : 0.0;
+                                newData.WLr = double.TryParse(oReader["wlr"].ToString(), out tempDouble) ? tempDouble : 0.0;
+                                newData.KDr = double.TryParse(oReader["kdr"].ToString(), out tempDouble) ? tempDouble : 0.0;
                                 newData.KpM = double.TryParse(oReader["kpm"].ToString(), out tempDouble) ? tempDouble : 0.0;
                                 newData.DpM = double.TryParse(oReader["dpm"].ToString(), out tempDouble) ? tempDouble : 0.0;
-                                if (newData.Name == name)
-                                    playerFound.Add(newData);
+                                //if (newData.Name == name)
+                                playerFound.Add(newData);
                             }
                             con.Close();
                         }

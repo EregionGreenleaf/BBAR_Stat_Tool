@@ -48,7 +48,7 @@ namespace BBAR_Stat_Tool
                     actualPlayer = listAllPlayer.Count > 0 ? listAllPlayer.First() : null;
                     if (actualPlayer != null)
                     {
-                        if (actualPlayer.Name == playerName)
+                        if (actualPlayer.Name.ToUpper() == playerName.ToUpper())
                         {
                             if (actualPlayer.KDr != null)
                                 listKDr.Add((double)actualPlayer.KDr);
@@ -94,7 +94,7 @@ namespace BBAR_Stat_Tool
                     actualPlayer = listAllPlayer.Count > 0 ? listAllPlayer.First() : null;
                     if (actualPlayer != null)
                     {
-                        if (actualPlayer.Name == playerName)
+                        if (actualPlayer.Name.ToUpper() == playerName.ToUpper())
                         {
                             if (actualPlayer.Kills != null)
                                 kills = (int)actualPlayer.Kills;
@@ -144,7 +144,7 @@ namespace BBAR_Stat_Tool
                     actualPlayer = listAllPlayer.Count > 0 ? listAllPlayer.First() : null;
                     if (actualPlayer != null)
                     {
-                        if (actualPlayer.Name == playerName)
+                        if (actualPlayer.Name.ToUpper() == playerName.ToUpper())
                         {
                             if (actualPlayer.Kills != null)
                                 listAvMS.Add((int)actualPlayer.AvarageMatchScore);

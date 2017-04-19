@@ -240,6 +240,10 @@ namespace BBAR_Stat_Tool
                     newChart.Elaborate(player, playerName, textFile);
                     newChart.Visible = true;
                 }
+                else
+                {
+                    MessageBox.Show("Player not found.", "Search Player in DB: WARNING", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+                }
             }
             this.Enabled = true;
         }

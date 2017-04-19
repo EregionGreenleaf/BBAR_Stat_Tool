@@ -48,7 +48,7 @@
             this.lblCopyright.AutoSize = true;
             this.lblCopyright.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.lblCopyright.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCopyright.Location = new System.Drawing.Point(12, 340);
+            this.lblCopyright.Location = new System.Drawing.Point(12, 382);
             this.lblCopyright.Name = "lblCopyright";
             this.lblCopyright.Size = new System.Drawing.Size(157, 12);
             this.lblCopyright.TabIndex = 0;
@@ -65,7 +65,8 @@
             this.btnOne.Size = new System.Drawing.Size(274, 28);
             this.btnOne.TabIndex = 1;
             this.btnOne.Text = "Download Seasonal Data";
-            this.ttBtnOne.SetToolTip(this.btnOne, "Configure the Data you want from the MWO Leaderboards and download them.");
+            this.ttBtnOne.SetToolTip(this.btnOne, "Downloads all seasonal data from the Web by configuring\r\nthe Data you want from t" +
+        "he MWO Leaderboards.");
             this.btnOne.UseCompatibleTextRendering = true;
             this.btnOne.UseVisualStyleBackColor = true;
             this.btnOne.Click += new System.EventHandler(this.btnOne_Click);
@@ -79,7 +80,7 @@
             this.btnTest.Size = new System.Drawing.Size(274, 28);
             this.btnTest.TabIndex = 2;
             this.btnTest.Text = "Test Connection Speed";
-            this.ttBtnOne.SetToolTip(this.btnTest, "Configure the Data you want from the MWO Leaderboards and download them.");
+            this.ttBtnOne.SetToolTip(this.btnTest, "Determines connection speed by sampling a test connection.");
             this.btnTest.UseCompatibleTextRendering = true;
             this.btnTest.UseVisualStyleBackColor = true;
             this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
@@ -92,7 +93,7 @@
             this.btnGetSinglePlayer.Name = "btnGetSinglePlayer";
             this.btnGetSinglePlayer.Size = new System.Drawing.Size(274, 27);
             this.btnGetSinglePlayer.TabIndex = 3;
-            this.btnGetSinglePlayer.Text = "Single Player Data";
+            this.btnGetSinglePlayer.Text = "Single Player Data from Web";
             this.ttBtnOne.SetToolTip(this.btnGetSinglePlayer, "Download all available Data of a single Player.\r\nOutput will be set in a file wit" +
         "h the name of the Player.");
             this.btnGetSinglePlayer.UseVisualStyleBackColor = true;
@@ -114,7 +115,7 @@
             // 
             // prbSinglePlayer
             // 
-            this.prbSinglePlayer.Location = new System.Drawing.Point(14, 277);
+            this.prbSinglePlayer.Location = new System.Drawing.Point(13, 271);
             this.prbSinglePlayer.Name = "prbSinglePlayer";
             this.prbSinglePlayer.Size = new System.Drawing.Size(272, 23);
             this.prbSinglePlayer.TabIndex = 5;
@@ -139,7 +140,7 @@
             this.lblActiveTasks.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.lblActiveTasks.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblActiveTasks.ForeColor = System.Drawing.Color.Yellow;
-            this.lblActiveTasks.Location = new System.Drawing.Point(12, 312);
+            this.lblActiveTasks.Location = new System.Drawing.Point(12, 354);
             this.lblActiveTasks.Name = "lblActiveTasks";
             this.lblActiveTasks.Size = new System.Drawing.Size(106, 16);
             this.lblActiveTasks.TabIndex = 7;
@@ -159,11 +160,16 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(196, 140);
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.button1.ForeColor = System.Drawing.Color.Black;
+            this.button1.Location = new System.Drawing.Point(13, 310);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(272, 27);
             this.button1.TabIndex = 9;
-            this.button1.Text = "button1";
+            this.button1.Text = "Single Player Data from DB";
+            this.ttBtnOne.SetToolTip(this.button1, "Elaborate Single Player stats taking data from DB\r\n(faster then Web, data not upd" +
+        "ated as Web).\r\nOutput will be set in a file with the name of the Player.");
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
@@ -172,7 +178,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(298, 361);
+            this.ClientSize = new System.Drawing.Size(298, 399);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnSQL);
             this.Controls.Add(this.lblActiveTasks);
