@@ -65,6 +65,11 @@ namespace BBAR_Stat_Tool
                             listWLr.Add(0);
                         }
                     }
+                    else
+                    {
+                        listKDr.Add(0);
+                        listWLr.Add(0);
+                    }
                 }
                 KDr = listKDr.ToArray();
                 WLr = listWLr.ToArray();
@@ -83,24 +88,36 @@ namespace BBAR_Stat_Tool
                     int kills = 0;
                     int deaths = 0;
                     int played = 0;
-                    PlayerStatT actualPlayer = playerGlobal.Where(x => x.Season == season && x.Category == 0).First();
-                    if (actualPlayer.Name == playerName)
+                    List<PlayerStatT> listAllPlayer = new List<PlayerStatT>();
+                    PlayerStatT actualPlayer = new PlayerStatT();
+                    listAllPlayer = playerGlobal.Where(x => x.Season == season && x.Category == 0).ToList();
+                    actualPlayer = listAllPlayer.Count > 0 ? listAllPlayer.First() : null;
+                    if (actualPlayer != null)
                     {
-                        if (actualPlayer.Kills != null)
-                            kills = (int)actualPlayer.Kills;
+                        if (actualPlayer.Name == playerName)
+                        {
+                            if (actualPlayer.Kills != null)
+                                kills = (int)actualPlayer.Kills;
+                            else
+                                kills = 0;
+                            if (actualPlayer.Deaths != null)
+                                deaths = (int)actualPlayer.Deaths;
+                            else
+                                deaths = 0;
+                            if (actualPlayer.GamesPlayed != 0)
+                                played = (int)actualPlayer.GamesPlayed;
+                            else
+                                played = 0;
+                            listKpM.Add((double)((double)kills / (double)played));
+                            listDpM.Add((double)((double)deaths / (double)played));
+                            listPlayedG.Add(played);
+                        }
                         else
-                            kills = 0;
-                        if (actualPlayer.Deaths != null)
-                            deaths = (int)actualPlayer.Deaths;
-                        else
-                            deaths = 0;
-                        if (actualPlayer.GamesPlayed != 0)
-                            played = (int)actualPlayer.GamesPlayed;
-                        else
-                            played = 0;
-                        listKpM.Add((double)((double)kills / (double)played));
-                        listDpM.Add((double)((double)deaths / (double)played));
-                        listPlayedG.Add(played);
+                        {
+                            listKpM.Add((double)0.0);
+                            listDpM.Add((double)0.0);
+                            listPlayedG.Add(0);
+                        }
                     }
                     else
                     {
@@ -121,13 +138,23 @@ namespace BBAR_Stat_Tool
                 List<int> listAvMS = new List<int>();
                 for (int season = 1; season <= ConfigFile.SEASON_LAST; season++)
                 {
-                    PlayerStatT actualPlayer = playerGlobal.Where(x => x.Season == season && x.Category == 0).First();
-                    if (actualPlayer.Name == playerName)
+                    List<PlayerStatT> listAllPlayer = new List<PlayerStatT>();
+                    PlayerStatT actualPlayer = new PlayerStatT();
+                    listAllPlayer = playerGlobal.Where(x => x.Season == season && x.Category == 0).ToList();
+                    actualPlayer = listAllPlayer.Count > 0 ? listAllPlayer.First() : null;
+                    if (actualPlayer != null)
                     {
-                        if (actualPlayer.Kills != null)
-                            listAvMS.Add((int)actualPlayer.AvarageMatchScore);
+                        if (actualPlayer.Name == playerName)
+                        {
+                            if (actualPlayer.Kills != null)
+                                listAvMS.Add((int)actualPlayer.AvarageMatchScore);
+                            else
+                                listAvMS.Add(0);
+                        }
                         else
+                        {
                             listAvMS.Add(0);
+                        }
                     }
                     else
                     {

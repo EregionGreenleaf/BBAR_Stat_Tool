@@ -54,102 +54,11 @@ namespace BBAR_Stat_Tool
                 actualPlayer.Category = type;
                 if(actualPlayer.Rank > 0)
                 {
-                    InsertPlayerDataInDB(actualPlayer);
+                    SqlOps.InsertPlayerDataInDB(actualPlayer);
                 }
             }
             return true;
         }
-
-
-        public static bool InsertPlayerDataInDB(PlayerStatT actualPlayer)
-        {
-            //SQL SIDE
-            //using (SqlConnection con = new SqlConnection("Data Source=" + ConfigFile.DB_NAME +
-            //                                             ";Initial Catalog=" + ConfigFile.TABLE_NAME +
-            //                                             ";" + ConfigFile.DB_CREDENTIALS))
-            using (SqlConnection con = new SqlConnection("Data Source=WEPLUS19\\SQLEXPRESS;Initial Catalog=LEAD_DATA;Integrated Security=SSPI"))
-
-            {
-                con.Open();
-                try
-                {
-                    using (SqlCommand command = new SqlCommand(
-                        "INSERT INTO SEASONED VALUES(@season, @type, @name, @rank, @w, @l, @wlr, @k, @d, @kdr, @played, @avms)", con))
-                    {
-                        command.Parameters.Add(new SqlParameter("season", (int)actualPlayer.Season));
-                        command.Parameters.Add(new SqlParameter("type", (int)actualPlayer.Category));
-                        command.Parameters.Add(new SqlParameter("name", actualPlayer.Name));
-                        command.Parameters.Add(new SqlParameter("rank", (long)actualPlayer.Rank));
-                        command.Parameters.Add(new SqlParameter("w", (int)actualPlayer.Wins));
-                        command.Parameters.Add(new SqlParameter("l", (int)actualPlayer.Losses));
-                        command.Parameters.Add(new SqlParameter("wlr", (double)actualPlayer.WLr));
-                        command.Parameters.Add(new SqlParameter("k", (int)actualPlayer.Kills));
-                        command.Parameters.Add(new SqlParameter("d", (int)actualPlayer.Deaths));
-                        command.Parameters.Add(new SqlParameter("kdr", (double)actualPlayer.KDr));
-                        command.Parameters.Add(new SqlParameter("played", (int)actualPlayer.GamesPlayed));
-                        command.Parameters.Add(new SqlParameter("avms", (int)actualPlayer.AvarageMatchScore));
-                        command.ExecuteNonQuery();
-                    }
-                }
-                catch (Exception exp)
-                {
-                    Console.WriteLine("Could not insert.");
-                }
-            }
-            //##############
-            return true;
-        }
-
-
-        public static List<PlayerStatT> RetrievePlayerStat(string name)
-        {
-            List<PlayerStatT> playerFound = new List<PlayerStatT>();
-            using (SqlConnection con = new SqlConnection("Data Source=" + ConfigFile.DB_NAME + "\\SQLEXPRESS;Initial Catalog=LEAD_DATA;User Id=general;Password=33333333")) //Integrated Security=SSPI"))
-            {
-                try
-                {
-                    int type = 0;
-                    using (SqlCommand command = new SqlCommand("SELECT * FROM LEAD_DATA.dbo.SEASONED WHERE pname LIKE @varName ORDER BY season, type", con))
-                    {
-                        command.Parameters.AddWithValue("@pType", type);
-                        command.Parameters.Add(new SqlParameter("@varName", SqlDbType.Text) { Value = name });
-                        con.Open();
-                        using (SqlDataReader oReader = command.ExecuteReader())
-                        {
-                            while (oReader.Read())
-                            {
-                                PlayerStatT newData = new PlayerStatT();
-                                double tempDouble = 0.0;
-                                long tempLong = 0;
-                                newData.Name = oReader["pname"].ToString();
-                                newData.Season = (int)oReader["season"];
-                                newData.Category = (int)oReader["type"];
-                                newData.AvarageMatchScore = (int)oReader["avms"];
-                                newData.Deaths = (int)oReader["d"];
-                                newData.Kills = (int)oReader["k"];
-                                newData.Wins = (int)oReader["w"];
-                                newData.Losses = (int)oReader["l"];
-                                newData.GamesPlayed = long.TryParse(oReader["played"].ToString(), out tempLong) ? tempLong : 0;
-                                newData.WLr = double.TryParse(oReader["kdr"].ToString(), out tempDouble) ? tempDouble : 0.0;
-                                newData.KDr = double.TryParse(oReader["wlr"].ToString(), out tempDouble) ? tempDouble : 0.0;
-                                newData.KpM = double.TryParse(oReader["kpm"].ToString(), out tempDouble) ? tempDouble : 0.0;
-                                newData.DpM = double.TryParse(oReader["dpm"].ToString(), out tempDouble) ? tempDouble : 0.0;
-                                if (newData.Name == name)
-                                    playerFound.Add(newData);
-                            }
-                            con.Close();
-                        }
-                    }
-                }
-                catch (Exception exp)
-                {
-                    Console.WriteLine("Could not insert.");
-                }
-            }
-            //##############
-            return playerFound;
-        }
-
 
         //public static List<string> DividePlayerData(string full)
         //{
@@ -268,7 +177,7 @@ namespace BBAR_Stat_Tool
 
             for(int season = 0; season <= ConfigFile.SEASON_LAST; season++) //Should be from Season = 1, not = 0 (0 represent ABSOLUTE stats)
             {
-                for(int type = 0; type <= 5; type++)
+                for(int type = 0; type <= 4; type++)
                 {
                     List<PlayerStatT> last = playerDataList.Where(x => x.Season == season && x.Category == type).ToList();
                     if (last.Count != 0)
@@ -293,8 +202,7 @@ namespace BBAR_Stat_Tool
                                 typeStr = "ASSAULT";
                                 break;
                         }
-                        
-                        string text = "S" + orderedList.Last().Season +
+                        string text = "S" + season +
                                       "_" + typeStr +
                                       ";" + orderedList.Last().Rank +
                                       ";" + orderedList.Last().Name +
@@ -306,6 +214,41 @@ namespace BBAR_Stat_Tool
                                       ";" + orderedList.Last().KDr.ToString().Replace(',', '.') +
                                       ";" + orderedList.Last().GamesPlayed +
                                       ";" + orderedList.Last().AvarageMatchScore;
+                        Logger.PrintF(file.FullName, text, false);
+                    }
+                    else
+                    {
+                        string typeStr = null;
+                        switch (type)
+                        {
+                            case 0:
+                                typeStr = "GENERAL";
+                                break;
+                            case 1:
+                                typeStr = "LIGHT";
+                                break;
+                            case 2:
+                                typeStr = "MEDIUM";
+                                break;
+                            case 3:
+                                typeStr = "HEAVY";
+                                break;
+                            case 4:
+                                typeStr = "ASSAULT";
+                                break;
+                        }
+                        string text = "S" + orderedList.Last().Season +
+                                      "_" + typeStr +
+                                      ";0" +
+                                      ";" + playerDataList.First().Name +
+                                      ";0" +
+                                      ";0" +
+                                      ";0.0" +
+                                      ";0" +
+                                      ";0" +
+                                      ";0.0" +
+                                      ";0" +
+                                      ";0";
                         Logger.PrintF(file.FullName, text, false);
                     }
                 }

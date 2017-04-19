@@ -231,7 +231,7 @@ namespace BBAR_Stat_Tool
             playerName = playerName.Trim();
             if (!string.IsNullOrWhiteSpace(playerName))
             {
-                List<PlayerStatT> player = DataOps.RetrievePlayerStat(playerName);
+                List<PlayerStatT> player = SqlOps.RetrievePlayerStat(playerName);
                 if (player.Count > 0)
                 {
                     player = DataOps.AddAbsoluteSeason(player, playerName);
