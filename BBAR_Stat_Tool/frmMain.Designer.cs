@@ -37,10 +37,10 @@
             this.btnGetSinglePlayer = new System.Windows.Forms.Button();
             this.btnLastSeason = new System.Windows.Forms.Button();
             this.prbSinglePlayer = new System.Windows.Forms.ProgressBar();
+            this.button1 = new System.Windows.Forms.Button();
             this.lblLastSeason = new System.Windows.Forms.Label();
             this.lblActiveTasks = new System.Windows.Forms.Label();
             this.btnSQL = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblCopyright
@@ -89,7 +89,7 @@
             // 
             this.btnGetSinglePlayer.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnGetSinglePlayer.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGetSinglePlayer.Location = new System.Drawing.Point(12, 244);
+            this.btnGetSinglePlayer.Location = new System.Drawing.Point(12, 169);
             this.btnGetSinglePlayer.Name = "btnGetSinglePlayer";
             this.btnGetSinglePlayer.Size = new System.Drawing.Size(274, 27);
             this.btnGetSinglePlayer.TabIndex = 3;
@@ -115,11 +115,26 @@
             // 
             // prbSinglePlayer
             // 
-            this.prbSinglePlayer.Location = new System.Drawing.Point(13, 271);
+            this.prbSinglePlayer.Location = new System.Drawing.Point(13, 196);
             this.prbSinglePlayer.Name = "prbSinglePlayer";
             this.prbSinglePlayer.Size = new System.Drawing.Size(272, 23);
             this.prbSinglePlayer.TabIndex = 5;
             this.ttBtnOne.SetToolTip(this.prbSinglePlayer, "State of the \'Single Player Data\' download process.");
+            // 
+            // button1
+            // 
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.button1.ForeColor = System.Drawing.Color.Black;
+            this.button1.Location = new System.Drawing.Point(13, 235);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(272, 27);
+            this.button1.TabIndex = 9;
+            this.button1.Text = "Single Player Data from DB";
+            this.ttBtnOne.SetToolTip(this.button1, "Elaborate Single Player stats taking data from DB\r\n(faster then Web, data not upd" +
+        "ated as Web).\r\nOutput will be set in a file with the name of the Player.");
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // lblLastSeason
             // 
@@ -150,28 +165,13 @@
             // 
             this.btnSQL.Enabled = false;
             this.btnSQL.ForeColor = System.Drawing.Color.Black;
-            this.btnSQL.Location = new System.Drawing.Point(28, 161);
+            this.btnSQL.Location = new System.Drawing.Point(33, 140);
             this.btnSQL.Name = "btnSQL";
-            this.btnSQL.Size = new System.Drawing.Size(231, 61);
+            this.btnSQL.Size = new System.Drawing.Size(231, 21);
             this.btnSQL.TabIndex = 8;
             this.btnSQL.Text = "Test SQL";
             this.btnSQL.UseVisualStyleBackColor = true;
             this.btnSQL.Click += new System.EventHandler(this.btnSQL_Click);
-            // 
-            // button1
-            // 
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.button1.ForeColor = System.Drawing.Color.Black;
-            this.button1.Location = new System.Drawing.Point(13, 310);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(272, 27);
-            this.button1.TabIndex = 9;
-            this.button1.Text = "Single Player Data from DB";
-            this.ttBtnOne.SetToolTip(this.button1, "Elaborate Single Player stats taking data from DB\r\n(faster then Web, data not upd" +
-        "ated as Web).\r\nOutput will be set in a file with the name of the Player.");
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // frmMain
             // 

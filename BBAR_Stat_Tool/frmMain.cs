@@ -98,6 +98,7 @@ namespace BBAR_Stat_Tool
         private async void btnTest2_Click(object sender, EventArgs e)
         {
             this.Enabled = false;
+            ConfigFile.IncrementTaskStarted();
             string playerName = Interaction.InputBox("Insert Player Name to download:", "Download all data of Player", "PlayerName", -1, -1);
             playerName = playerName.Trim();
             if (!string.IsNullOrWhiteSpace(playerName))
@@ -128,11 +129,13 @@ namespace BBAR_Stat_Tool
                 }
                 // Code 00
                 ConfigFile.GLOBAL_PLAYER = DataOps.AddAbsoluteSeason(ConfigFile.GLOBAL_PLAYER, playerName);
+                ConfigFile.GLOBAL_PLAYER = DataOps.PopulateKDpM(ConfigFile.GLOBAL_PLAYER);
                 FileInfo textFile = DataOps.PlayerDataToFile(ConfigFile.GLOBAL_PLAYER);
                 frmShowCharts newChart = new frmShowCharts();
                 newChart.Elaborate(ConfigFile.GLOBAL_PLAYER, playerName, textFile);
                 newChart.Visible = true;
             }
+            ConfigFile.IncrementTaskFinished();
             this.Enabled = true;
         }
 
@@ -227,6 +230,7 @@ namespace BBAR_Stat_Tool
         private void button1_Click_1(object sender, EventArgs e)
         {
             this.Enabled = false;
+            ConfigFile.IncrementTaskStarted();
             string playerName = Interaction.InputBox("Insert Player Name to download:", "Download all data of Player", "PlayerName", -1, -1);
             playerName = playerName.Trim();
             if (!string.IsNullOrWhiteSpace(playerName))
@@ -235,6 +239,7 @@ namespace BBAR_Stat_Tool
                 if (player.Count > 0)
                 {
                     player = DataOps.AddAbsoluteSeason(player, playerName);
+                    player = DataOps.PopulateKDpM(player);
                     FileInfo textFile = DataOps.PlayerDataToFile(player);
                     frmShowCharts newChart = new frmShowCharts();
                     newChart.Elaborate(player, playerName, textFile);
@@ -245,6 +250,7 @@ namespace BBAR_Stat_Tool
                     MessageBox.Show("Player not found.", "Search Player in DB: WARNING", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
                 }
             }
+            ConfigFile.IncrementTaskFinished();
             this.Enabled = true;
         }
     }

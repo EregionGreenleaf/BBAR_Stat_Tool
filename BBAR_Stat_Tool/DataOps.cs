@@ -9,6 +9,9 @@ using System.Xml.Serialization;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Data;
+using System.Drawing;
+using MigraDoc.DocumentObjectModel;
+using MigraDoc.DocumentObjectModel.Tables;
 
 namespace BBAR_Stat_Tool
 {
@@ -213,7 +216,9 @@ namespace BBAR_Stat_Tool
                                       ";" + orderedList.Last().Deaths +
                                       ";" + orderedList.Last().KDr.ToString().Replace(',', '.') +
                                       ";" + orderedList.Last().GamesPlayed +
-                                      ";" + orderedList.Last().AvarageMatchScore;
+                                      ";" + orderedList.Last().AvarageMatchScore +
+                                      ";" + orderedList.Last().KpM.ToString().Replace(',', '.') +
+                                      ";" + orderedList.Last().DpM.ToString().Replace(',', '.');
                         Logger.PrintF(file.FullName, text, false);
                     }
                     else
@@ -248,7 +253,9 @@ namespace BBAR_Stat_Tool
                                       ";0" +
                                       ";0.0" +
                                       ";0" +
-                                      ";0";
+                                      ";0" +
+                                      ";0.0" +
+                                      ";0.0";
                         Logger.PrintF(file.FullName, text, false);
                     }
                 }
@@ -487,6 +494,276 @@ namespace BBAR_Stat_Tool
             return WeightedAvarage(dA, dB);
         }
 
+        /// <summary>
+        /// Prints data in a RichTextBox
+        /// </summary>
+        /// <param name="textBox"></param>
+        /// <param name="sImageText"></param>
+        public static void PrintData(RichTextBox textBox, string sImageText /*List<PlayerStatT> playerGlobal*/)
+        {
+            string final = string.Empty;
+            string[] lines = System.IO.File.ReadAllLines(sImageText);
+            string[] type = new string[] { "  GENERAL: ", "  LIGHTS:  ", "  MEDIUMS: ", "  HEAVIES: ", "  ASSAULTS:" };
+            int counter = 0;
+            int season = 0;
+            textBox.SelectionFont = new System.Drawing.Font("Courier New", 8f, FontStyle.Bold);
+            textBox.AppendText(String.Format("{0,-4} {1,-7} {2,-7} {3,-7} {4,-7} {5,-7} {6,-7} {7,-7} {8,-7} {9,-7} {10,-7}",
+                                "  TYPE     ", "WINS", "LOSSES", "W/Lr", "KILLS", "DEATHS", "K/Dr", "GAMES", "AV.MS", "KpM", "DpM") + 
+                                Environment.NewLine);
+            textBox.SelectionFont = new System.Drawing.Font("Courier New", 8f, FontStyle.Underline | FontStyle.Italic);
+            textBox.AppendText("ABSOLUTE:" + Environment.NewLine);
+            int index = 0;
+            foreach (string line in lines)
+            {
+                index++;
+                string[] result = line.Split(';');
+                textBox.SelectionFont = new System.Drawing.Font("Courier New", 8f, FontStyle.Regular);
+                textBox.AppendText(String.Format("{0,-4} {1,-7} {2,-7} {3,-7} {4,-7} {5,-7} {6,-7} {7,-7} {8,-7} {9,-7} {10,-7}",
+                                type[counter], result[3], result[4], result[5], result[6], result[7], result[8], result[9], result[10], result[11], result[12]) + 
+                                Environment.NewLine);
+                counter++;
+                if (counter > 4)
+                {
+                    if (index + 1 <= lines.Count())
+                    {
+                        counter = 0;
+                        season++;
+                        if (season < 10)
+                        {
+                            textBox.SelectionFont = new System.Drawing.Font("Courier New", 8f, FontStyle.Underline | FontStyle.Italic);
+                            textBox.AppendText("SEASON 0" + season + ":" + Environment.NewLine);
+                        }
+                        else
+                        {
+                            textBox.SelectionFont = new System.Drawing.Font("Courier New", 8f, FontStyle.Underline | FontStyle.Italic);
+                            textBox.AppendText("SEASON " + season + ":" + Environment.NewLine);
+                        }
+                    }
+                }
+            }
+            //textBox.Text.Remove(textBox.Text.TrimEnd().LastIndexOf(Environment.NewLine));
+
+            //sImageText = final.Remove(final.TrimEnd().LastIndexOf(Environment.NewLine)); ;
+
+            //for(int season = 0; season <= ConfigFile.SEASON_LAST; season++)
+            //{
+            //    for(int type = 0; type <= 4; type++)
+            //    {
+            //        List<PlayerStatT> tempList = new List<PlayerStatT>();
+            //        PlayerStatT tempPlayer = new PlayerStatT();
+            //        tempList = playerGlobal.Where(x => x.Season == season && x.Category == type).ToList();
+            //        if(tempList.Count > 0)
+            //        {
+            //            tempPlayer.
+            //        }
+            //    }
+            //}
+        }
+
+        /// <summary>
+        /// Prints data in a PDF section
+        /// </summary>
+        /// <param name="section"></param>
+        /// <param name="sImageText"></param>
+        /// <returns></returns>
+        public static Section PrintData(Section section, string sImageText)
+        {
+            MigraDoc.DocumentObjectModel.Font font;
+            Table table = section.AddTable();
+            table.Style = "Table";
+            table.Borders.Visible = false;
+            table.Borders.Width = 0.2;
+            //table.Borders.Left.Width = 0.2;
+            //table.Borders.Right.Width = 0.2;
+            table.Rows.LeftIndent = 0;
+
+            // ## COLUMNS FORMAT SECTION
+            Column column = table.AddColumn("2.5cm");
+            column.Format.Alignment = ParagraphAlignment.Right;
+            column = table.AddColumn("1.5cm");
+            column.Format.Alignment = ParagraphAlignment.Right;
+            column = table.AddColumn("1.5cm");
+            column.Format.Alignment = ParagraphAlignment.Right;
+            column = table.AddColumn("1.5cm");
+            column.Format.Alignment = ParagraphAlignment.Right;
+            column = table.AddColumn("1.5cm");
+            column.Format.Alignment = ParagraphAlignment.Right;
+            column = table.AddColumn("1.5cm");
+            column.Format.Alignment = ParagraphAlignment.Right;
+            column = table.AddColumn("1.5cm");
+            column.Format.Alignment = ParagraphAlignment.Right;
+            column = table.AddColumn("1.5cm");
+            column.Format.Alignment = ParagraphAlignment.Right;
+            column = table.AddColumn("1.5cm");
+            column.Format.Alignment = ParagraphAlignment.Right;
+            column = table.AddColumn("1.5cm");
+            column.Format.Alignment = ParagraphAlignment.Right;
+            column = table.AddColumn("1.5cm");
+            column.Format.Alignment = ParagraphAlignment.Right;
+
+            // ## START WRITING ROWS
+            // HEADER ROW
+            font = new MigraDoc.DocumentObjectModel.Font("Courier New", 9);
+            font.Bold = true;
+            font.Italic = false;
+            font.Underline = Underline.None;
+            Row row = table.AddRow();
+            row.Format.Font = font;
+            row.Cells[0].AddParagraph("TYPE");
+            row.Cells[1].AddParagraph("WINS");
+            row.Cells[2].AddParagraph("LOSSES");
+            row.Cells[3].AddParagraph("W/Lr");
+            row.Cells[4].AddParagraph("KILLS");
+            row.Cells[5].AddParagraph("DEATHS");
+            row.Cells[6].AddParagraph("K/Dr");
+            row.Cells[7].AddParagraph("GAMES");
+            row.Cells[8].AddParagraph("AV.MS");
+            row.Cells[9].AddParagraph("KpM");
+            row.Cells[10].AddParagraph("DpM");
+
+            // ROWS
+            font = new MigraDoc.DocumentObjectModel.Font("Courier New", 9);
+            font.Bold = false;
+            font.Italic = true;
+            font.Underline = Underline.Single;
+            row = table.AddRow();
+            row.Format.Font = font;
+            row.Format.Alignment = ParagraphAlignment.Left;
+            row.Cells[0].AddParagraph("ABSOLUTE:");
+            
+
+
+            string final = string.Empty;
+            string[] lines = System.IO.File.ReadAllLines(sImageText);
+            string[] type = new string[] { "  GENERAL: ", "  LIGHTS:  ", "  MEDIUMS: ", "  HEAVIES: ", "  ASSAULTS:" };
+            int counter = 0;
+            int season = 0;
+
+
+            //font = new MigraDoc.DocumentObjectModel.Font("Courier New", 9);
+            //font.Bold = true;
+            //font.Italic = false;
+            //font.Underline = Underline.None;
+            //Paragraph paragraph = section.AddParagraph();
+            //paragraph.AddFormattedText(String.Format("{0,-4} {1,-7} {2,-7} {3,-7} {4,-7} {5,-7} {6,-7} {7,-7} {8,-7} {9,-7} {10,-7}",
+            //                    "  TYPE     ", "WINS", "LOSSES", "W/Lr", "KILLS", "DEATHS", "K/Dr", "GAMES", "AV.MS", "KpM", "DpM") +
+            //                    Environment.NewLine, font);
+
+            //font = new MigraDoc.DocumentObjectModel.Font("Courier New", 9);
+            //font.Bold = false;
+            //font.Italic = true;
+            //font.Underline = Underline.Single;
+            //paragraph = section.AddParagraph();
+            //paragraph.AddFormattedText("ABSOLUTE:" + Environment.NewLine, font);
+
+            int index = 0;
+            foreach (string line in lines)
+            {
+                index++;
+                string[] result = line.Split(';');
+
+                // HEADER ROW
+                font = new MigraDoc.DocumentObjectModel.Font("Courier New", 9);
+                font.Bold = false;
+                font.Italic = false;
+                font.Underline = Underline.None;
+                row = table.AddRow();
+                row.Format.Font = font;
+                row.Format.Alignment = ParagraphAlignment.Right;
+                row.Cells[0].AddParagraph(type[counter].ToString());
+                row.Cells[1].AddParagraph(result[3]);
+                row.Cells[2].AddParagraph(result[4]);
+                row.Cells[3].AddParagraph(result[5]);
+                row.Cells[4].AddParagraph(result[6]);
+                row.Cells[5].AddParagraph(result[7]);
+                row.Cells[6].AddParagraph(result[8]);
+                row.Cells[7].AddParagraph(result[9]);
+                row.Cells[8].AddParagraph(result[10]);
+                row.Cells[9].AddParagraph(result[11]);
+                row.Cells[10].AddParagraph(result[12]);
+
+
+                //font = new MigraDoc.DocumentObjectModel.Font("Courier New", 9);
+                //font.Bold = false;
+                //font.Italic = false;
+                //font.Underline = Underline.None;
+                //paragraph = section.AddParagraph();
+                //paragraph.AddFormattedText(String.Format("{0,-4} {1,-7} {2,-7} {3,-7} {4,-7} {5,-7} {6,-7} {7,-7} {8,-7} {9,-7} {10,-7}",
+                //                type[counter], result[3], result[4], result[5], result[6], result[7], result[8], result[9], result[10], result[11], result[12]) +
+                //                Environment.NewLine, font);
+                counter++;
+                if (counter > 4)
+                {
+                    if (index + 1 <= lines.Count())
+                    {
+                        counter = 0;
+                        season++;
+                        if (season < 10)
+                        {
+                            font = new MigraDoc.DocumentObjectModel.Font("Courier New", 9);
+                            font.Bold = false;
+                            font.Italic = true;
+                            font.Underline = Underline.Single;
+                            row = table.AddRow();
+                            row.Format.Font = font;
+                            row.Format.Alignment = ParagraphAlignment.Left;
+                            row.Cells[0].AddParagraph("SEASON 0" + season + ":");
+
+                            //font = new MigraDoc.DocumentObjectModel.Font("Courier New", 9);
+                            //font.Bold = false;
+                            //font.Italic = true;
+                            //font.Underline = Underline.Single;
+                            //paragraph = section.AddParagraph();
+                            //paragraph.AddFormattedText("SEASON 0" + season + ":" + Environment.NewLine, font);
+                        }
+                        else
+                        {
+                            font = new MigraDoc.DocumentObjectModel.Font("Courier New", 9);
+                            font.Bold = false;
+                            font.Italic = true;
+                            font.Underline = Underline.Single;
+                            row = table.AddRow();
+                            row.Format.Font = font;
+                            row.Format.Alignment = ParagraphAlignment.Left;
+                            row.Cells[0].AddParagraph("SEASON " + season + ":");
+
+                            //font = new MigraDoc.DocumentObjectModel.Font("Courier New", 9);
+                            //font.Bold = false;
+                            //font.Italic = true;
+                            //font.Underline = Underline.Single;
+                            //paragraph = section.AddParagraph();
+                            //paragraph.AddFormattedText("SEASON " + season + ":" + Environment.NewLine, font);
+                        }
+                    }
+                }
+            }
+            return section;
+        }
+
+
+        public static List<PlayerStatT> PopulateKDpM(List<PlayerStatT> playerGlobal)
+        {
+            foreach(PlayerStatT player in playerGlobal)
+            {
+                try
+                {
+                    if (player.Deaths > 0 && player.GamesPlayed > 0)
+                    {
+                        if(player.DpM == 0 || player.DpM == null)
+                            player.DpM = Math.Round((double)(player.Deaths / (double)player.GamesPlayed),2);
+                    }
+                    if (player.Kills > 0 && player.GamesPlayed > 0)
+                    {
+                        if(player.KpM == 0 || player.KpM == null)
+                            player.KpM = Math.Round((double)(player.Kills / (double)player.GamesPlayed), 2);
+                    }
+                }
+                catch (Exception exp)
+                {
+                }
+            }
+            return playerGlobal;
+        }
 
     }
 }

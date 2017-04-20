@@ -56,7 +56,7 @@ namespace BBAR_Stat_Tool
             List<PlayerStatT> playerFound = new List<PlayerStatT>();
             //using (SqlConnection con = new SqlConnection("Data Source=" + ConfigFile.DB_NAME + "\\SQLEXPRESS;Initial Catalog=LEAD_DATA;User Id=general;Password=33333333")) //Integrated Security=SSPI"))
             // sqlexpress.cxs65yafraar.us-west-2.rds.amazonaws.com,1433
-            using (SqlConnection con = new SqlConnection("Data Source=" + ConfigFile.DB_NAME + ";Initial Catalog=LEAD_DATA;User Id=general;Password=Red*1-333")) //Integrated Security=SSPI"))
+            using (SqlConnection con = new SqlConnection("Data Source=" + ConfigFile.DB_NAME + ";Initial Catalog=LEAD_DATA;User Id=general;Password=33333333")) //Integrated Security=SSPI"))
             {
                 try
                 {
@@ -76,6 +76,7 @@ namespace BBAR_Stat_Tool
                                 newData.Name = oReader["pname"].ToString();
                                 newData.Season = (int)oReader["season"];
                                 newData.Category = (int)oReader["type"];
+                                newData.Rank = (int)oReader["rank"];
                                 newData.AvarageMatchScore = (int)oReader["avms"];
                                 newData.Deaths = (int)oReader["d"];
                                 newData.Kills = (int)oReader["k"];

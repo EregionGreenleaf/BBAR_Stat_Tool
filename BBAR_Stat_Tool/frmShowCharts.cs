@@ -15,6 +15,7 @@ namespace BBAR_Stat_Tool
     {
         public string plName = string.Empty;
         public string txtFile = string.Empty;
+        FileInfo fileText;
         Bitmap txtImage = null;
 
         public frmShowCharts()
@@ -165,11 +166,16 @@ namespace BBAR_Stat_Tool
                 GraphOps.DrawChartAvMS(crtAvMS, AvMS, listPlayedG.ToArray(),
                                        (double)playerGlobal.Where(x => x.Season == 0 && x.Category == 0).First().AvarageMatchScore,
                                        Math.Round((double)playerGlobal.Where(x => x.Season == 0 && x.Category == 0).First().GamesPlayed / (double)ConfigFile.SEASON_LAST, 2));
-                Bitmap textImage = GraphOps.CreateBitmapImage(textFile.FullName, toPDF);
+                fileText = textFile;
                 if (toPDF)
-                    txtImage = textImage;
+                    PdfOps.CreatePDFFileFromTxtFile(textFile.FullName, playerName);
                 else
-                    pcbStats.Image = textImage;
+                    DataOps.PrintData(rtbData, textFile.FullName);
+                //Bitmap textImage = GraphOps.CreateBitmapImage(textFile.FullName, toPDF);
+                //if (toPDF)
+                //    txtImage = textImage;
+                //else
+                //    pcbStats.Image = textImage;
             }
             catch(Exception exp)
             {
@@ -186,9 +192,10 @@ namespace BBAR_Stat_Tool
         {
             try
             {
-                Bitmap textImage = GraphOps.CreateBitmapImage(txtFile, true);
-                PdfOps pdfOp = new PdfOps();
-                pdfOp.DrawStats(plName, textImage);
+                PdfOps.CreatePDFFileFromTxtFile(fileText.FullName, plName);
+                //Bitmap textImage = GraphOps.CreateBitmapImage(txtFile, true);
+                //PdfOps pdfOp = new PdfOps();
+                //pdfOp.DrawStats(plName, textImage);
             }
             catch
             {

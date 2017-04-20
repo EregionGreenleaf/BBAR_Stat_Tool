@@ -53,6 +53,7 @@
             this.pnlImageContainer = new System.Windows.Forms.Panel();
             this.pcbStats = new System.Windows.Forms.PictureBox();
             this.btnPrintCharts = new System.Windows.Forms.Button();
+            this.rtbData = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.crtKDWKr)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.crtKDpM)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.crtAvMS)).BeginInit();
@@ -66,7 +67,7 @@
             this.crtKDWKr.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.crtKDWKr.Legends.Add(legend1);
-            this.crtKDWKr.Location = new System.Drawing.Point(12, 12);
+            this.crtKDWKr.Location = new System.Drawing.Point(3, 12);
             this.crtKDWKr.Name = "crtKDWKr";
             series1.BorderWidth = 2;
             series1.ChartArea = "ChartArea1";
@@ -110,7 +111,7 @@
             this.crtKDpM.ChartAreas.Add(chartArea2);
             legend2.Name = "Legend1";
             this.crtKDpM.Legends.Add(legend2);
-            this.crtKDpM.Location = new System.Drawing.Point(12, 238);
+            this.crtKDpM.Location = new System.Drawing.Point(3, 238);
             this.crtKDpM.Name = "crtKDpM";
             series5.BorderWidth = 2;
             series5.ChartArea = "ChartArea1";
@@ -154,7 +155,7 @@
             this.crtAvMS.ChartAreas.Add(chartArea3);
             legend3.Name = "Legend1";
             this.crtAvMS.Legends.Add(legend3);
-            this.crtAvMS.Location = new System.Drawing.Point(12, 464);
+            this.crtAvMS.Location = new System.Drawing.Point(3, 464);
             this.crtAvMS.Name = "crtAvMS";
             series9.ChartArea = "ChartArea1";
             series9.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.SplineArea;
@@ -219,7 +220,7 @@
             this.btnPrintCharts.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnPrintCharts.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnPrintCharts.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnPrintCharts.Location = new System.Drawing.Point(591, 642);
+            this.btnPrintCharts.Location = new System.Drawing.Point(582, 642);
             this.btnPrintCharts.Name = "btnPrintCharts";
             this.btnPrintCharts.Size = new System.Drawing.Size(118, 39);
             this.btnPrintCharts.TabIndex = 6;
@@ -227,12 +228,28 @@
             this.btnPrintCharts.UseVisualStyleBackColor = true;
             this.btnPrintCharts.Click += new System.EventHandler(this.btnPrintCharts_Click);
             // 
+            // rtbData
+            // 
+            this.rtbData.BackColor = System.Drawing.Color.Black;
+            this.rtbData.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.rtbData.Cursor = System.Windows.Forms.Cursors.PanSW;
+            this.rtbData.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtbData.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.rtbData.Location = new System.Drawing.Point(711, 6);
+            this.rtbData.Name = "rtbData";
+            this.rtbData.ReadOnly = true;
+            this.rtbData.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+            this.rtbData.Size = new System.Drawing.Size(645, 675);
+            this.rtbData.TabIndex = 7;
+            this.rtbData.Text = "";
+            // 
             // frmShowCharts
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(1366, 693);
+            this.ClientSize = new System.Drawing.Size(1362, 693);
+            this.Controls.Add(this.rtbData);
             this.Controls.Add(this.btnPrintCharts);
             this.Controls.Add(this.pnlImageContainer);
             this.Controls.Add(this.crtAvMS);
@@ -260,5 +277,6 @@
         private System.Windows.Forms.Panel pnlImageContainer;
         private System.Windows.Forms.PictureBox pcbStats;
         private System.Windows.Forms.Button btnPrintCharts;
+        private System.Windows.Forms.RichTextBox rtbData;
     }
 }
