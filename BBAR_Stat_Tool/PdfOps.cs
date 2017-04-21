@@ -191,7 +191,9 @@ namespace BBAR_Stat_Tool
             PdfDocumentRenderer renderer = new PdfDocumentRenderer();
             renderer.Document = doc;
             renderer.RenderDocument();
-            renderer.Save(Path.Combine(ConfigFile.DIRECTORY_OUTPUT.FullName, playerName + "_" + ConfigFile.SEASON_LAST.ToString() + ".pdf"));
+            FileInfo fileName = new FileInfo(Path.Combine(ConfigFile.DIRECTORY_OUTPUT.FullName, playerName + "_" + ConfigFile.SEASON_LAST.ToString() + ".pdf"));
+            FileOps.CheckFile(fileName, true);
+            renderer.Save(fileName.FullName);
         }
 
 
