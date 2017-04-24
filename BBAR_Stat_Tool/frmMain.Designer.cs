@@ -41,6 +41,7 @@
             this.lblLastSeason = new System.Windows.Forms.Label();
             this.lblActiveTasks = new System.Windows.Forms.Label();
             this.btnSQL = new System.Windows.Forms.Button();
+            this.lblElaborating = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblCopyright
@@ -148,6 +149,8 @@
             this.lblLastSeason.TabIndex = 6;
             this.lblLastSeason.Text = "Last Season: 10";
             this.lblLastSeason.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ttBtnOne.SetToolTip(this.lblLastSeason, "Shows last season detected (green)\r\nor set in Config File (red)");
+            this.lblLastSeason.Click += new System.EventHandler(this.lblLastSeason_Click);
             // 
             // lblActiveTasks
             // 
@@ -173,12 +176,30 @@
             this.btnSQL.UseVisualStyleBackColor = true;
             this.btnSQL.Click += new System.EventHandler(this.btnSQL_Click);
             // 
+            // lblElaborating
+            // 
+            this.lblElaborating.AutoEllipsis = true;
+            this.lblElaborating.AutoSize = true;
+            this.lblElaborating.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.lblElaborating.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblElaborating.ForeColor = System.Drawing.Color.Red;
+            this.lblElaborating.Location = new System.Drawing.Point(91, 265);
+            this.lblElaborating.MaximumSize = new System.Drawing.Size(350, 50);
+            this.lblElaborating.Name = "lblElaborating";
+            this.lblElaborating.Size = new System.Drawing.Size(117, 19);
+            this.lblElaborating.TabIndex = 10;
+            this.lblElaborating.Text = "Retriving data...";
+            this.lblElaborating.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ttBtnOne.SetToolTip(this.lblElaborating, "Shows actual state of DB connection/elaboration");
+            this.lblElaborating.UseCompatibleTextRendering = true;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(298, 399);
+            this.Controls.Add(this.lblElaborating);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnSQL);
             this.Controls.Add(this.lblActiveTasks);
@@ -215,6 +236,7 @@
         private System.Windows.Forms.Label lblActiveTasks;
         private System.Windows.Forms.Button btnSQL;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label lblElaborating;
     }
 }
 

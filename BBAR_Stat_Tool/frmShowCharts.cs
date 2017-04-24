@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -49,21 +50,30 @@ namespace BBAR_Stat_Tool
                     actualPlayer = listAllPlayer.Count > 0 ? listAllPlayer.First() : null;
                     if (actualPlayer != null)
                     {
-                        if (actualPlayer.Name.ToUpper() == playerName.ToUpper())
+                        if (actualPlayer.Name != null)
                         {
-                            if (actualPlayer.KDr != null)
-                                listKDr.Add((double)actualPlayer.KDr);
+                            if (actualPlayer.Name.ToUpper() == playerName.ToUpper())
+                            {
+                                plName = actualPlayer.Name;
+                                if (actualPlayer.KDr != null)
+                                    listKDr.Add((double)actualPlayer.KDr);
+                                else
+                                    listKDr.Add(0);
+                                if (actualPlayer.WLr != null)
+                                    listWLr.Add((double)actualPlayer.WLr);
+                                else
+                                    listWLr.Add(0);
+                            }
                             else
+                            {
                                 listKDr.Add(0);
-                            if (actualPlayer.WLr != null)
-                                listWLr.Add((double)actualPlayer.WLr);
-                            else
                                 listWLr.Add(0);
+                            }
                         }
                         else
                         {
-                            listKDr.Add(0);
-                            listWLr.Add(0);
+                            listKDr.Add((double)0.0);
+                            listWLr.Add((double)0.0);
                         }
                     }
                     else
@@ -95,23 +105,32 @@ namespace BBAR_Stat_Tool
                     actualPlayer = listAllPlayer.Count > 0 ? listAllPlayer.First() : null;
                     if (actualPlayer != null)
                     {
-                        if (actualPlayer.Name.ToUpper() == playerName.ToUpper())
+                        if (actualPlayer.Name != null)
                         {
-                            if (actualPlayer.Kills != null)
-                                kills = (int)actualPlayer.Kills;
+                            if (actualPlayer.Name.ToUpper() == playerName.ToUpper())
+                            {
+                                if (actualPlayer.Kills != null)
+                                    kills = (int)actualPlayer.Kills;
+                                else
+                                    kills = 0;
+                                if (actualPlayer.Deaths != null)
+                                    deaths = (int)actualPlayer.Deaths;
+                                else
+                                    deaths = 0;
+                                if (actualPlayer.GamesPlayed != 0)
+                                    played = (int)actualPlayer.GamesPlayed;
+                                else
+                                    played = 0;
+                                listKpM.Add((double)((double)kills / (double)played));
+                                listDpM.Add((double)((double)deaths / (double)played));
+                                listPlayedG.Add(played);
+                            }
                             else
-                                kills = 0;
-                            if (actualPlayer.Deaths != null)
-                                deaths = (int)actualPlayer.Deaths;
-                            else
-                                deaths = 0;
-                            if (actualPlayer.GamesPlayed != 0)
-                                played = (int)actualPlayer.GamesPlayed;
-                            else
-                                played = 0;
-                            listKpM.Add((double)((double)kills / (double)played));
-                            listDpM.Add((double)((double)deaths / (double)played));
-                            listPlayedG.Add(played);
+                            {
+                                listKpM.Add((double)0.0);
+                                listDpM.Add((double)0.0);
+                                listPlayedG.Add(0);
+                            }
                         }
                         else
                         {
@@ -145,12 +164,19 @@ namespace BBAR_Stat_Tool
                     actualPlayer = listAllPlayer.Count > 0 ? listAllPlayer.First() : null;
                     if (actualPlayer != null)
                     {
-                        if (actualPlayer.Name.ToUpper() == playerName.ToUpper())
+                        if (actualPlayer.Name != null)
                         {
-                            if (actualPlayer.Kills != null)
-                                listAvMS.Add((int)actualPlayer.AvarageMatchScore);
+                            if (actualPlayer.Name.ToUpper() == playerName.ToUpper())
+                            {
+                                if (actualPlayer.Kills != null)
+                                    listAvMS.Add((int)actualPlayer.AvarageMatchScore);
+                                else
+                                    listAvMS.Add(0);
+                            }
                             else
+                            {
                                 listAvMS.Add(0);
+                            }
                         }
                         else
                         {
@@ -166,6 +192,7 @@ namespace BBAR_Stat_Tool
                 GraphOps.DrawChartAvMS(crtAvMS, AvMS, listPlayedG.ToArray(),
                                        (double)playerGlobal.Where(x => x.Season == 0 && x.Category == 0).First().AvarageMatchScore,
                                        Math.Round((double)playerGlobal.Where(x => x.Season == 0 && x.Category == 0).First().GamesPlayed / (double)ConfigFile.SEASON_LAST, 2));
+                this.Text = "BBARST - Live Charts - " + plName;
                 fileText = textFile;
                 if (toPDF)
                     PdfOps.CreatePDFFileFromTxtFile(textFile.FullName, playerName);
@@ -202,5 +229,14 @@ namespace BBAR_Stat_Tool
 
             }
         }
+
+        private void frmShowCharts_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            ConfigFile.ACTUAL_MAIN.BringToFront();
+            Thread.Sleep(150);
+            ConfigFile.ACTUAL_MAIN.BringToFront();
+        }
+
+
     }
 }

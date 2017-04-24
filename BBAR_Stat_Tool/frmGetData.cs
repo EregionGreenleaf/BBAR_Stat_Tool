@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -71,6 +72,16 @@ namespace BBAR_Stat_Tool
         private void frmGetData_Load(object sender, EventArgs e)
         {
             Logger.PrintC("test: " + e.ToString());
+            FileInfo localCredentials = new FileInfo(ConfigFile.LOCAL_CREDENTIALS);
+            if (localCredentials.Exists)
+            {
+                string[] fileCredentials = File.ReadAllLines(localCredentials.FullName);
+                if(fileCredentials.Count() == 2)
+                {
+                    txtEMail.Text = fileCredentials[0];
+                    txtPassword.Text = fileCredentials[1];
+                }
+            }
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -572,6 +583,8 @@ namespace BBAR_Stat_Tool
         {
             string email = txtEMail.Text;
             string password = txtPassword.Text;
+
+            
             //Task<int> response = await WebOps.CheckCredentials(email, password);
             int response = await WebOps.CheckCredentials(email, password);
 
@@ -606,6 +619,28 @@ namespace BBAR_Stat_Tool
                 Mex.RemoveAll();
                 return;
             }
+
+            // saves email & password to a local file
+            if (ckbSaveCredentials.Checked)
+            {
+                if (!new FileInfo(ConfigFile.LOCAL_CREDENTIALS).Exists)
+                {
+                    File.WriteAllLines(ConfigFile.LOCAL_CREDENTIALS, new string[] { email, password });
+                }
+                else
+                {
+                    try
+                    {
+                        File.Delete(ConfigFile.LOCAL_CREDENTIALS);
+                    }
+                    catch
+                    {
+
+                    }
+                    File.WriteAllLines(ConfigFile.LOCAL_CREDENTIALS, new string[] { email, password });
+                }
+            }
+
             DownloadData baseData = new DownloadData(user: email,
                                                      password: password,
                                                      season: season);

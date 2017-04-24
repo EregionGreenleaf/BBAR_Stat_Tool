@@ -54,8 +54,6 @@ namespace BBAR_Stat_Tool
         public static List<PlayerStatT> RetrievePlayerStat(string name)
         {
             List<PlayerStatT> playerFound = new List<PlayerStatT>();
-            //using (SqlConnection con = new SqlConnection("Data Source=" + ConfigFile.DB_NAME + "\\SQLEXPRESS;Initial Catalog=LEAD_DATA;User Id=general;Password=33333333")) //Integrated Security=SSPI"))
-            // sqlexpress.cxs65yafraar.us-west-2.rds.amazonaws.com,1433
             using (SqlConnection con = new SqlConnection("Data Source=" + ConfigFile.DB_NAME + ";Initial Catalog=LEAD_DATA;User Id=general;Password=33333333")) //Integrated Security=SSPI"))
             {
                 try
@@ -87,7 +85,6 @@ namespace BBAR_Stat_Tool
                                 newData.KDr = double.TryParse(oReader["kdr"].ToString(), out tempDouble) ? tempDouble : 0.0;
                                 newData.KpM = double.TryParse(oReader["kpm"].ToString(), out tempDouble) ? tempDouble : 0.0;
                                 newData.DpM = double.TryParse(oReader["dpm"].ToString(), out tempDouble) ? tempDouble : 0.0;
-                                //if (newData.Name == name)
                                 playerFound.Add(newData);
                             }
                             con.Close();
@@ -99,7 +96,6 @@ namespace BBAR_Stat_Tool
                     Console.WriteLine("Could not insert.");
                 }
             }
-            //##############
             return playerFound;
         }
 

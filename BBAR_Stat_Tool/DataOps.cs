@@ -82,10 +82,41 @@ namespace BBAR_Stat_Tool
         //    return new List<string>();
         //}
 
-        public static string SearchPlayerData(string full)
+        public static string SearchPlayerData(string full, string name = null)
         {
-            int index = full.IndexOf("<tr class=");
-            string subString = full.Substring(index + 24);
+            string subString = string.Empty;
+            string[] arrayString;
+            if (name == null)
+            {
+                int index = full.IndexOf("<tr class=");
+                subString = full.Substring(index + 24);
+            }
+            else
+            {
+                arrayString = full.Split(';');
+                int indexOfName = 0;
+                for(int i = 0; i < arrayString.Count(); i++)
+                {
+                    if (arrayString[i].ToUpper() == name.ToUpper())
+                    {
+                        indexOfName = i;
+                        break;
+                    }
+                }
+                if (indexOfName > 0)
+                {
+                    subString = arrayString[indexOfName - 1].Replace("\r\n", string.Empty) + ";" +
+                        arrayString[indexOfName] + ";" +
+                        arrayString[indexOfName + 1] + ";" +
+                        arrayString[indexOfName + 2] + ";" +
+                        arrayString[indexOfName + 3] + ";" +
+                        arrayString[indexOfName + 4] + ";" +
+                        arrayString[indexOfName + 5] + ";" +
+                        arrayString[indexOfName + 6] + ";" +
+                        arrayString[indexOfName + 7] + ";" +
+                        arrayString[indexOfName + 8] + ";";
+                }
+            }
             string[] partial = subString.Split(';');
             string[] finalArray = partial.Take(10).ToArray();
             string finalString = string.Join(";",finalArray);

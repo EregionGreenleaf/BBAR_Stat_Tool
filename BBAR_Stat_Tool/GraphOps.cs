@@ -124,7 +124,7 @@ namespace BBAR_Stat_Tool
             int intWidth = 0;
             int intHeight = 0;
             // Create the Font object for the image text drawing.
-            Font objFont = new Font("Courier New", (float)12.5, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            Font objFont = new Font("Courier New", 12.5f, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             // Create a graphics object to measure the text's width and height.
             Graphics objGraphics = Graphics.FromImage(objBmpImage);
             // This is where the bitmap size is determined.

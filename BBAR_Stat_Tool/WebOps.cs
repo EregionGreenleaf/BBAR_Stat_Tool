@@ -4,12 +4,14 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Windows.Forms;
@@ -102,7 +104,7 @@ namespace BBAR_Stat_Tool
                     risposta = await client.GetAsync(address);
                     responseBodyAsText = risposta.Content.ReadAsStringAsync().Result;
                     resp = DataOps.ParseHTML(responseBodyAsText);
-                    string statString = DataOps.SearchPlayerData(resp);
+                    //string statString = DataOps.SearchPlayerData(resp);
                     resp = DataOps.ParseHTML(responseBodyAsText);
                     if (resp.Contains(ownRank))
                         resp = resp.Replace(ownRank, string.Empty);
@@ -163,7 +165,12 @@ namespace BBAR_Stat_Tool
                         risposta = await client.GetAsync(address);
                         responseBodyAsText = risposta.Content.ReadAsStringAsync().Result;
                         resp = DataOps.ParseHTML(responseBodyAsText);
-                        string statString = DataOps.SearchPlayerData(resp);
+                        string statString = string.Empty;
+                        if (resp.Contains("<tr class="))
+                            statString = DataOps.SearchPlayerData(resp);
+                        else
+                            if (resp.ToUpper().Contains(playerName.ToUpper()))
+                                statString = DataOps.SearchPlayerData(resp, playerName);
                         PlayerStatT actualPlayerStat = DataOps.ParsePlayerStat(statString);
                         actualPlayerStat.Season = thisSeason;
                         actualPlayerStat.Category = thisCategory;

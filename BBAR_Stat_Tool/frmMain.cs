@@ -67,6 +67,9 @@ namespace BBAR_Stat_Tool
 
         private void frmMain_Load(object sender, EventArgs e)
         {
+            this.BringToFront();
+            lblElaborating.Text = "Not elaborating.";
+            lblElaborating.ForeColor = Color.Green;
             using (var fbd = new FolderBrowserDialog())
             {
                 fbd.Description = "Select the folder in which to OUTPUT elaborated data." + Environment.NewLine +
@@ -82,16 +85,19 @@ namespace BBAR_Stat_Tool
                 }
             }
 
+            this.BringToFront();
+
             prbSinglePlayer.Enabled = false;
             prbSinglePlayer.Maximum = ConfigFile.SEASON_LAST;
             prbSinglePlayer.Value = 0;
             lblLastSeason.Text = "Last Season: " + ConfigFile.SEASON_LAST;
+            this.BringToFront();
         }
 
-        private void btnTest_Click(object sender, EventArgs e)
+        private async void btnTest_Click(object sender, EventArgs e)
         {
             this.Enabled = false;
-            GeneralOps.RefreshDownloadTime();
+            await GeneralOps.RefreshDownloadTime();
             this.Enabled = true;
         }
 
@@ -142,9 +148,23 @@ namespace BBAR_Stat_Tool
         private async void button1_Click(object sender, EventArgs e)
         {
             this.Enabled = false;
+            int lastRecorded = ConfigFile.SEASON_LAST;
             await WebOps.FindLastSeason();
             lblLastSeason.Text = "Last Season: " + ConfigFile.SEASON_LAST.ToString();
             lblLastSeason.ForeColor = Color.Green;
+            if (lastRecorded != ConfigFile.SEASON_LAST)
+                MessageBox.Show("New Last Season found: " + ConfigFile.SEASON_LAST, 
+                    "Search for last Season available", 
+                    MessageBoxButtons.OK, 
+                    MessageBoxIcon.Information, 
+                    MessageBoxDefaultButton.Button1);
+            else
+                MessageBox.Show("No new Seasons founded." + Environment.NewLine + 
+                    "Last available Season remains : " + ConfigFile.SEASON_LAST, 
+                    "Search for last Season available", 
+                    MessageBoxButtons.OK, 
+                    MessageBoxIcon.Information, 
+                    MessageBoxDefaultButton.Button1);
             if (ConfigFile.LAST_SEASON_CHECKED)
             {
                 //Mex.AddMessage("Last Season found: " + ConfigFile.SEASON_LAST, Mex.INFO);
@@ -229,13 +249,28 @@ namespace BBAR_Stat_Tool
 
         private void button1_Click_1(object sender, EventArgs e)
         {
+            // gray out this form
             this.Enabled = false;
+            // increments active tasks
             ConfigFile.IncrementTaskStarted();
+            // asks for the "player name" to the user
             string playerName = Interaction.InputBox("Insert Player Name to download:", "Download all data of Player", "PlayerName", -1, -1);
+            lblElaborating.Text = "Retriving data...";
+            lblElaborating.ForeColor = Color.Green;
+            // opens a "waiting to complete" form
+            //frmWaiting waiting = new frmWaiting("Retriving data from remote DB...");
+            //waiting.lblInformation.Text = "Retriving data from remote DB...";
+            //waiting.Enabled = true;
+            //waiting.Show();
+            //waiting.BringToFront();
+
             playerName = playerName.Trim();
             if (!string.IsNullOrWhiteSpace(playerName))
             {
                 List<PlayerStatT> player = SqlOps.RetrievePlayerStat(playerName);
+                lblElaborating.Text = "Elaborating data...";
+                lblElaborating.ForeColor = Color.Red;
+                //waiting.lblInformation.Text = "Elaborating data...";
                 if (player.Count > 0)
                 {
                     player = DataOps.AddAbsoluteSeason(player, playerName);
@@ -243,15 +278,28 @@ namespace BBAR_Stat_Tool
                     FileInfo textFile = DataOps.PlayerDataToFile(player);
                     frmShowCharts newChart = new frmShowCharts();
                     newChart.Elaborate(player, playerName, textFile);
+                    //waiting.Dispose();
                     newChart.Visible = true;
                 }
                 else
                 {
+                    //waiting.Dispose();
                     MessageBox.Show("Player not found.", "Search Player in DB: WARNING", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+                    this.BringToFront();
                 }
             }
+            this.BringToFront();
             ConfigFile.IncrementTaskFinished();
+            //waiting.Dispose();
+            lblElaborating.Text = "Not elaborating.";
+            lblElaborating.ForeColor = Color.Green;
+            this.BringToFront();
             this.Enabled = true;
+        }
+
+        private void lblLastSeason_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

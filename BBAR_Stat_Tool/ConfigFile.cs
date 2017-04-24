@@ -26,6 +26,8 @@ namespace BBAR_Stat_Tool
         public static Semaphore _Global = new Semaphore(0, 1);
         public static Semaphore _GlobalDB = new Semaphore(0, 1);
 
+
+        public static string LOCAL_CREDENTIALS = Path.Combine(APP_PATH, "loc_crd.bk");
         public static string SAVE_PATH { get; set; }
         public static int SEASON_FIRST { get; set; }
         public static int SEASON_LAST { get; set; }

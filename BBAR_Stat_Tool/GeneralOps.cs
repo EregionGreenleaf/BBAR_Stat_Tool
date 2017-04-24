@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace BBAR_Stat_Tool
 {
@@ -40,10 +41,14 @@ namespace BBAR_Stat_Tool
             frm.Hide();
         }
 
-        public static async void RefreshDownloadTime()
+        public static async Task RefreshDownloadTime()
         {
             double time = await WebOps.TestSpeed();
             ConfigFile.TIME_PAGE = time > 0 ? (time / 10000) * 1001 : 0;
+            if(ConfigFile.TIME_PAGE > 0)
+                MessageBox.Show("Estimated download time per page: " + Math.Round(ConfigFile.TIME_PAGE, 2).ToString() + " ms", "Download Test Speed", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+            else
+                MessageBox.Show("Test failed." + Environment.NewLine + "Check your connection.", "Download Test Speed", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
         }
     }
 }

@@ -75,6 +75,7 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.txtEMail = new System.Windows.Forms.TextBox();
+            this.ckbSaveCredentials = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -520,7 +521,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(104, 5);
+            this.label3.Location = new System.Drawing.Point(91, 3);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(147, 23);
             this.label3.TabIndex = 1;
@@ -533,7 +534,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(27, 35);
+            this.label1.Location = new System.Drawing.Point(27, 27);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(47, 18);
             this.label1.TabIndex = 2;
@@ -544,7 +545,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Comic Sans MS", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(9, 65);
+            this.label2.Location = new System.Drawing.Point(9, 57);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(65, 18);
             this.label2.TabIndex = 4;
@@ -560,7 +561,7 @@
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(166, 35);
             this.btnCancel.TabIndex = 10;
-            this.btnCancel.Text = "Cancel";
+            this.btnCancel.Text = "Back";
             this.toolTip1.SetToolTip(this.btnCancel, "Returns to the Main menu");
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -582,6 +583,7 @@
             // panel2
             // 
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.ckbSaveCredentials);
             this.panel2.Controls.Add(this.txtPassword);
             this.panel2.Controls.Add(this.label2);
             this.panel2.Controls.Add(this.txtEMail);
@@ -597,7 +599,7 @@
             this.txtPassword.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.txtPassword.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtPassword.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPassword.Location = new System.Drawing.Point(80, 67);
+            this.txtPassword.Location = new System.Drawing.Point(80, 59);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Size = new System.Drawing.Size(210, 15);
             this.txtPassword.TabIndex = 5;
@@ -608,10 +610,22 @@
             this.txtEMail.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.txtEMail.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtEMail.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtEMail.Location = new System.Drawing.Point(80, 37);
+            this.txtEMail.Location = new System.Drawing.Point(80, 29);
             this.txtEMail.Name = "txtEMail";
             this.txtEMail.Size = new System.Drawing.Size(210, 15);
             this.txtEMail.TabIndex = 3;
+            // 
+            // ckbSaveCredentials
+            // 
+            this.ckbSaveCredentials.AutoSize = true;
+            this.ckbSaveCredentials.Location = new System.Drawing.Point(159, 80);
+            this.ckbSaveCredentials.Name = "ckbSaveCredentials";
+            this.ckbSaveCredentials.Size = new System.Drawing.Size(131, 17);
+            this.ckbSaveCredentials.TabIndex = 6;
+            this.ckbSaveCredentials.Text = "Memorize credentials?";
+            this.toolTip1.SetToolTip(this.ckbSaveCredentials, "Check only if you are the only one using this computer.\r\nData will be saved in a " +
+        "local file.");
+            this.ckbSaveCredentials.UseVisualStyleBackColor = true;
             // 
             // frmGetData
             // 
@@ -690,5 +704,6 @@
         private System.Windows.Forms.ProgressBar prbPageProgressHeavy;
         private System.Windows.Forms.ProgressBar prbPageProgressMedium;
         private System.Windows.Forms.ProgressBar prbPageProgressLight;
+        private System.Windows.Forms.CheckBox ckbSaveCredentials;
     }
 }

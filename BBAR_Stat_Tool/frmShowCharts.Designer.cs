@@ -258,6 +258,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmShowCharts";
             this.Text = "BBARST - Charts";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmShowCharts_FormClosed);
             this.Load += new System.EventHandler(this.frmShowCharts_Load);
             ((System.ComponentModel.ISupportInitialize)(this.crtKDWKr)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.crtKDpM)).EndInit();
