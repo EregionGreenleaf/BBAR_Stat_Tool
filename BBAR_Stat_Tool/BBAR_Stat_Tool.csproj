@@ -139,6 +139,12 @@
     <Compile Include="GeneralOps.cs" />
     <Compile Include="GraphOps.cs" />
     <Compile Include="HtmlPage.cs" />
+    <Compile Include="frmInputBoxX.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmInputBoxX.Designer.cs">
+      <DependentUpon>frmInputBoxX.cs</DependentUpon>
+    </Compile>
     <Compile Include="Logger.cs" />
     <Compile Include="Mex.cs" />
     <Compile Include="DataT\PlayerStatT.cs" />
@@ -171,6 +177,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmWaiting.resx">
       <DependentUpon>frmWaiting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmInputBoxX.resx">
+      <DependentUpon>frmInputBoxX.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -217,6 +226,7 @@
   <ItemGroup>
     <Content Include="BBARST.ico" />
     <Content Include="Omicron.ico" />
+    <Content Include="PlayerList.txt" />
     <Content Include="TODO.txt" />
   </ItemGroup>
   <ItemGroup>

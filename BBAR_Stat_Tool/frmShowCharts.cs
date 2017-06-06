@@ -219,7 +219,10 @@ namespace BBAR_Stat_Tool
         {
             try
             {
-                PdfOps.CreatePDFFileFromTxtFile(fileText.FullName, plName);
+                string filePDF = PdfOps.CreatePDFFileFromTxtFile(fileText.FullName, plName);
+                if(File.Exists(filePDF))
+                    System.Diagnostics.Process.Start(filePDF);
+
                 //Bitmap textImage = GraphOps.CreateBitmapImage(txtFile, true);
                 //PdfOps pdfOp = new PdfOps();
                 //pdfOp.DrawStats(plName, textImage);

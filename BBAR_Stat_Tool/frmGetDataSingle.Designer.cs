@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             this.button1 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.playerStatTBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.playerStatTBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.tlpDataTable = new System.Windows.Forms.TableLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)(this.playerStatTBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.playerStatTBindingSource1)).BeginInit();
             this.SuspendLayout();
@@ -47,6 +47,17 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // textBox1
+            // 
+            this.textBox1.AcceptsReturn = true;
+            this.textBox1.AllowDrop = true;
+            this.textBox1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.textBox1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.textBox1.Location = new System.Drawing.Point(27, 12);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(224, 20);
+            this.textBox1.TabIndex = 1;
+            // 
             // playerStatTBindingSource
             // 
             this.playerStatTBindingSource.DataSource = typeof(BBAR_Stat_Tool.PlayerStatT);
@@ -55,48 +66,26 @@
             // 
             this.playerStatTBindingSource1.DataSource = typeof(BBAR_Stat_Tool.PlayerStatT);
             // 
-            // tlpDataTable
-            // 
-            this.tlpDataTable.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.tlpDataTable.ColumnCount = 11;
-            this.tlpDataTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tlpDataTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tlpDataTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tlpDataTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tlpDataTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tlpDataTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tlpDataTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tlpDataTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tlpDataTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tlpDataTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tlpDataTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tlpDataTable.Location = new System.Drawing.Point(13, 12);
-            this.tlpDataTable.Name = "tlpDataTable";
-            this.tlpDataTable.RowCount = 3;
-            this.tlpDataTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpDataTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpDataTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpDataTable.Size = new System.Drawing.Size(669, 422);
-            this.tlpDataTable.TabIndex = 2;
-            this.tlpDataTable.Paint += new System.Windows.Forms.PaintEventHandler(this.tlpDataTable_Paint);
-            // 
             // frmGetDataSingle
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(722, 475);
-            this.Controls.Add(this.tlpDataTable);
+            this.ClientSize = new System.Drawing.Size(334, 475);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button1);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "frmGetDataSingle";
-            this.Text = "BBARST - Get Data from single Player";
+            this.Text = "BBARST - Get Data for a list of Players";
             this.Load += new System.EventHandler(this.frmGetDataSingle_Load);
             this.Shown += new System.EventHandler(this.frmGetDataSingle_Show);
             ((System.ComponentModel.ISupportInitialize)(this.playerStatTBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.playerStatTBindingSource1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -105,6 +94,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.BindingSource playerStatTBindingSource;
         private System.Windows.Forms.BindingSource playerStatTBindingSource1;
-        private System.Windows.Forms.TableLayoutPanel tlpDataTable;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -59,7 +60,16 @@ namespace BBAR_Stat_Tool
 
         private void frmGetDataSingle_Load(object sender, EventArgs e)
         {
+            FileInfo localCredentials = new FileInfo(ConfigFile.FULL_LIST_NAMES);
+            string[] listNames = File.ReadAllLines(localCredentials.FullName);
+            listNames.ToList().ForEach(x => x = x.Trim());
 
+            var source = new AutoCompleteStringCollection();
+            source.AddRange(listNames);
+
+            textBox1.AutoCompleteCustomSource = source;
+            textBox1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            textBox1.AutoCompleteSource = AutoCompleteSource.CustomSource;
         }
 
         private void tlpDataTable_Paint(object sender, PaintEventArgs e)

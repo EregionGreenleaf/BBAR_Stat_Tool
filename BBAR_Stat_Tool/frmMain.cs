@@ -104,44 +104,57 @@ namespace BBAR_Stat_Tool
         private async void btnTest2_Click(object sender, EventArgs e)
         {
             this.Enabled = false;
+
             ConfigFile.IncrementTaskStarted();
-            string playerName = Interaction.InputBox("Insert Player Name to download:", "Download all data of Player", "PlayerName", -1, -1);
-            playerName = playerName.Trim();
+            string playerName = string.Empty; //Interaction.InputBox("Insert Player Name to download:", "Download all data of Player", "PlayerName", -1, -1);
+
+
+            frmInputBoxX input = new frmInputBoxX();
+            DialogResult result = input.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                playerName = string.IsNullOrWhiteSpace(ConfigFile.ACTUAL_PLAYER) ? null : ConfigFile.ACTUAL_PLAYER;
+            }
+
             if (!string.IsNullOrWhiteSpace(playerName))
             {
-                ConfigFile._Global = new Semaphore(1, 1);
-                List<int> typeList = new List<int> { 0, 1, 2, 3, 4 };
-                List<int> seasonsList = new List<int>();
-                for (int i = 1; i <= ConfigFile.SEASON_LAST; i++)
-                    seasonsList.Add(i);
-
-                ConfigFile.GLOBAL_PLAYER = new List<PlayerStatT>();
-
-                List<int> actualSeason = new List<int> { 1 };
-                List<int> actualType = new List<int> { 1 };
-
-                //await WebOps.SearchPlayer(playerName, new List<int> { 1 }, new List<int> { 0 }, ConfigFile.DEFAULT_USER, ConfigFile.DEFAULT_PASS);
-
-                prbSinglePlayer.Maximum = 5;
-                prbSinglePlayer.Enabled = true;
-                prbSinglePlayer.Value = 0;
-
-                int[] typeArray = typeList.ToArray();
-                int[] seasonArray = actualSeason.ToArray();
-                for (int typeCat = 0; typeCat <= 4; typeCat++)
+                playerName = playerName.Trim();
+                if (!string.IsNullOrWhiteSpace(playerName))
                 {
-                    await Task.WhenAll(seasonsList.Select(i => WebOps.SearchPlayer(playerName, new List<int> { i }, new List<int> { typeCat }, ConfigFile.DEFAULT_USER, ConfigFile.DEFAULT_PASS)).ToArray());
-                    prbSinglePlayer.Value = typeCat + 1;
+                    ConfigFile._Global = new Semaphore(1, 1);
+                    List<int> typeList = new List<int> { 0, 1, 2, 3, 4 };
+                    List<int> seasonsList = new List<int>();
+                    for (int i = 1; i <= ConfigFile.SEASON_LAST; i++)
+                        seasonsList.Add(i);
+
+                    ConfigFile.GLOBAL_PLAYER = new List<PlayerStatT>();
+
+                    List<int> actualSeason = new List<int> { 1 };
+                    List<int> actualType = new List<int> { 1 };
+
+                    //await WebOps.SearchPlayer(playerName, new List<int> { 1 }, new List<int> { 0 }, ConfigFile.DEFAULT_USER, ConfigFile.DEFAULT_PASS);
+
+                    prbSinglePlayer.Maximum = 5;
+                    prbSinglePlayer.Enabled = true;
+                    prbSinglePlayer.Value = 0;
+
+                    int[] typeArray = typeList.ToArray();
+                    int[] seasonArray = actualSeason.ToArray();
+                    for (int typeCat = 0; typeCat <= 4; typeCat++)
+                    {
+                        await Task.WhenAll(seasonsList.Select(i => WebOps.SearchPlayer(playerName, new List<int> { i }, new List<int> { typeCat }, ConfigFile.DEFAULT_USER, ConfigFile.DEFAULT_PASS)).ToArray());
+                        prbSinglePlayer.Value = typeCat + 1;
+                    }
+                    // Code 00
+                    ConfigFile.GLOBAL_PLAYER = DataOps.AddAbsoluteSeason(ConfigFile.GLOBAL_PLAYER, playerName);
+                    ConfigFile.GLOBAL_PLAYER = DataOps.PopulateKDpM(ConfigFile.GLOBAL_PLAYER);
+                    FileInfo textFile = DataOps.PlayerDataToFile(ConfigFile.GLOBAL_PLAYER);
+                    frmShowCharts newChart = new frmShowCharts();
+                    newChart.Elaborate(ConfigFile.GLOBAL_PLAYER, playerName, textFile);
+                    newChart.Visible = true;
                 }
-                // Code 00
-                ConfigFile.GLOBAL_PLAYER = DataOps.AddAbsoluteSeason(ConfigFile.GLOBAL_PLAYER, playerName);
-                ConfigFile.GLOBAL_PLAYER = DataOps.PopulateKDpM(ConfigFile.GLOBAL_PLAYER);
-                FileInfo textFile = DataOps.PlayerDataToFile(ConfigFile.GLOBAL_PLAYER);
-                frmShowCharts newChart = new frmShowCharts();
-                newChart.Elaborate(ConfigFile.GLOBAL_PLAYER, playerName, textFile);
-                newChart.Visible = true;
+                ConfigFile.IncrementTaskFinished();
             }
-            ConfigFile.IncrementTaskFinished();
             this.Enabled = true;
         }
 
@@ -299,6 +312,56 @@ namespace BBAR_Stat_Tool
 
         private void lblLastSeason_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private async void button2_Click(object sender, EventArgs e)
+        {
+            frmInputBoxX input = new frmInputBoxX();
+            input.Show();
+            frmGetDataSingle newChart = new frmGetDataSingle();
+            newChart.Visible = true;
+
+            //this.Enabled = false;
+            //ConfigFile.IncrementTaskStarted();
+            //string playerName = Interaction.InputBox("Insert Player Name to download:", "Download all data of Player", "PlayerName", -1, -1);
+            //playerName = playerName.Trim();
+            //if (!string.IsNullOrWhiteSpace(playerName))
+            //{
+            //    ConfigFile._Global = new Semaphore(1, 1);
+            //    List<int> typeList = new List<int> { 0, 1, 2, 3, 4 };
+            //    List<int> seasonsList = new List<int>();
+            //    for (int i = 1; i <= ConfigFile.SEASON_LAST; i++)
+            //        seasonsList.Add(i);
+
+            //    ConfigFile.GLOBAL_PLAYER = new List<PlayerStatT>();
+
+            //    List<int> actualSeason = new List<int> { 1 };
+            //    List<int> actualType = new List<int> { 1 };
+
+            //    //await WebOps.SearchPlayer(playerName, new List<int> { 1 }, new List<int> { 0 }, ConfigFile.DEFAULT_USER, ConfigFile.DEFAULT_PASS);
+
+            //    prbSinglePlayer.Maximum = 5;
+            //    prbSinglePlayer.Enabled = true;
+            //    prbSinglePlayer.Value = 0;
+
+            //    int[] typeArray = typeList.ToArray();
+            //    int[] seasonArray = actualSeason.ToArray();
+            //    for (int typeCat = 0; typeCat <= 4; typeCat++)
+            //    {
+            //        await Task.WhenAll(seasonsList.Select(i => WebOps.SearchPlayer(playerName, new List<int> { i }, new List<int> { typeCat }, ConfigFile.DEFAULT_USER, ConfigFile.DEFAULT_PASS)).ToArray());
+            //        prbSinglePlayer.Value = typeCat + 1;
+            //    }
+            //    // Code 00
+            //    ConfigFile.GLOBAL_PLAYER = DataOps.AddAbsoluteSeason(ConfigFile.GLOBAL_PLAYER, playerName);
+            //    ConfigFile.GLOBAL_PLAYER = DataOps.PopulateKDpM(ConfigFile.GLOBAL_PLAYER);
+            //    FileInfo textFile = DataOps.PlayerDataToFile(ConfigFile.GLOBAL_PLAYER);
+            //    frmShowCharts newChart = new frmShowCharts();
+            //    newChart.Elaborate(ConfigFile.GLOBAL_PLAYER, playerName, textFile);
+            //    newChart.Visible = true;
+            //}
+            //ConfigFile.IncrementTaskFinished();
+            //this.Enabled = true;
 
         }
     }

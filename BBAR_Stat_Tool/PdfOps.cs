@@ -138,7 +138,7 @@ namespace BBAR_Stat_Tool
             }
         }
 
-        public static void CreatePDFFileFromTxtFile(string textfilefullpath, string playerName)
+        public static string CreatePDFFileFromTxtFile(string textfilefullpath, string playerName)
         {
             Document doc = new Document();
             Section section = doc.AddSection();
@@ -196,6 +196,7 @@ namespace BBAR_Stat_Tool
             renderer.Save(fileName.FullName);
             if(fileName.Exists)
                 Process.Start(fileName.FullName);
+            return fileName.FullName;
         }
 
 

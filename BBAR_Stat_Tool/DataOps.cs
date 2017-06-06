@@ -103,18 +103,22 @@ namespace BBAR_Stat_Tool
                         break;
                     }
                 }
+
+                //Il valore esatto è determinato dalla Classe e dal Livello del Personaggio e può essere fisso (per i Maghi e i Ladri) o variabile (per i Guerrieri).
+                //Consulta il paragrafo relativo alla Classe del tuo Personaggio nel Capitolo II e sagna il valore sulla Scheda.
+                
                 if (indexOfName > 0)
                 {
                     subString = arrayString[indexOfName - 1].Replace("\r\n", string.Empty) + ";" +
-                        arrayString[indexOfName] + ";" +
-                        arrayString[indexOfName + 1] + ";" +
-                        arrayString[indexOfName + 2] + ";" +
-                        arrayString[indexOfName + 3] + ";" +
-                        arrayString[indexOfName + 4] + ";" +
-                        arrayString[indexOfName + 5] + ";" +
-                        arrayString[indexOfName + 6] + ";" +
-                        arrayString[indexOfName + 7] + ";" +
-                        arrayString[indexOfName + 8] + ";";
+                                arrayString[indexOfName] + ";" +
+                                arrayString[indexOfName + 1] + ";" +
+                                arrayString[indexOfName + 2] + ";" +
+                                arrayString[indexOfName + 3] + ";" +
+                                arrayString[indexOfName + 4] + ";" +
+                                arrayString[indexOfName + 5] + ";" +
+                                arrayString[indexOfName + 6] + ";" +
+                                arrayString[indexOfName + 7] + ";" +
+                                arrayString[indexOfName + 8] + ";";
                 }
             }
             string[] partial = subString.Split(';');

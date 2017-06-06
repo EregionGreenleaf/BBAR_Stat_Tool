@@ -28,6 +28,10 @@ namespace BBAR_Stat_Tool
 
 
         public static string LOCAL_CREDENTIALS = Path.Combine(APP_PATH, "loc_crd.bk");
+        public static string FULL_LIST_NAMES = Path.Combine(APP_PATH, "PlayerList.exe");
+        public static string[] ACTUAL_LIST_NAME = File.ReadAllLines(new FileInfo(FULL_LIST_NAMES).Exists ? FULL_LIST_NAMES : null);
+        public static string ACTUAL_PLAYER { get; set; } = string.Empty;
+        
         public static string SAVE_PATH { get; set; }
         public static int SEASON_FIRST { get; set; }
         public static int SEASON_LAST { get; set; }
@@ -110,6 +114,10 @@ namespace BBAR_Stat_Tool
                 HEAVY = false;
                 ASSAULT = false;
                 EXPECTED_TIME = double.TryParse(ConfigurationSettings.AppSettings["Expected download time per page"], out tempDouble) ? tempDouble : 2.0;
+
+                // trims all Players Names in list
+                ACTUAL_LIST_NAME.ToList().ForEach(x => x = x.Trim());
+
                 return true;
             }
             catch (Exception exp)
