@@ -194,8 +194,8 @@ namespace BBAR_Stat_Tool
             FileInfo fileName = new FileInfo(Path.Combine(ConfigFile.DIRECTORY_OUTPUT.FullName, playerName + "_" + ConfigFile.SEASON_LAST.ToString() + ".pdf"));
             FileOps.CheckFile(fileName, true);
             renderer.Save(fileName.FullName);
-            if(fileName.Exists)
-                Process.Start(fileName.FullName);
+            //if(fileName.Exists)
+            //    Process.Start(fileName.FullName);
             return fileName.FullName;
         }
 

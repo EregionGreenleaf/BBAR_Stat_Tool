@@ -31,6 +31,7 @@ namespace BBAR_Stat_Tool
         public static string FULL_LIST_NAMES = Path.Combine(APP_PATH, "PlayerList.exe");
         public static string[] ACTUAL_LIST_NAME = File.ReadAllLines(new FileInfo(FULL_LIST_NAMES).Exists ? FULL_LIST_NAMES : null);
         public static string ACTUAL_PLAYER { get; set; } = string.Empty;
+        public static List<string> ACTUAL_PLAYER_LIST { get; set; } = new List<string>();
         
         public static string SAVE_PATH { get; set; }
         public static int SEASON_FIRST { get; set; }

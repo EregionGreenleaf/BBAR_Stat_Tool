@@ -76,5 +76,22 @@ namespace BBAR_Stat_Tool
         {
 
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            List<string> list = textBox1.Lines.ToList();
+            list.ForEach(x => x = x.Trim());
+            if (list.Count > 0)
+            {
+                ConfigFile.ACTUAL_PLAYER_LIST = list;
+                this.DialogResult = DialogResult.OK;
+            }
+            else
+            {
+                ConfigFile.ACTUAL_PLAYER_LIST = new List<string>();
+                this.DialogResult = DialogResult.Cancel;
+            }
+            this.Close();
+        }
     }
 }

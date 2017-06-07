@@ -317,10 +317,70 @@ namespace BBAR_Stat_Tool
 
         private async void button2_Click(object sender, EventArgs e)
         {
-            frmInputBoxX input = new frmInputBoxX();
-            input.Show();
-            frmGetDataSingle newChart = new frmGetDataSingle();
-            newChart.Visible = true;
+            frmGetDataSingle getList = new frmGetDataSingle();
+            DialogResult result = getList.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                if(ConfigFile.ACTUAL_PLAYER_LIST.Count > 0)
+                {
+                    prbPlayerList.Maximum = 5*ConfigFile.ACTUAL_PLAYER_LIST.Count;
+                    prbPlayerList.Enabled = true;
+                    prbPlayerList.Value = 0;
+                    ConfigFile.IncrementTaskStarted();
+
+                    foreach (string playerName in ConfigFile.ACTUAL_PLAYER_LIST)
+                    {
+                        if (!string.IsNullOrWhiteSpace(playerName.Trim()))
+                        {
+                            ConfigFile._Global = new Semaphore(1, 1);
+                            List<int> typeList = new List<int> { 0, 1, 2, 3, 4 };
+                            List<int> seasonsList = new List<int>();
+                            for (int i = 1; i <= ConfigFile.SEASON_LAST; i++)
+                                seasonsList.Add(i);
+
+                            ConfigFile.GLOBAL_PLAYER = new List<PlayerStatT>();
+
+                            List<int> actualSeason = new List<int> { 1 };
+                            List<int> actualType = new List<int> { 1 };
+
+                            //await WebOps.SearchPlayer(playerName, new List<int> { 1 }, new List<int> { 0 }, ConfigFile.DEFAULT_USER, ConfigFile.DEFAULT_PASS);
+
+
+                            int[] typeArray = typeList.ToArray();
+                            int[] seasonArray = actualSeason.ToArray();
+                            for (int typeCat = 0; typeCat <= 4; typeCat++)
+                            {
+                                await Task.WhenAll(seasonsList.Select(i => WebOps.SearchPlayer(playerName.Trim(), new List<int> { i }, new List<int> { typeCat }, ConfigFile.DEFAULT_USER, ConfigFile.DEFAULT_PASS)).ToArray());
+                                prbPlayerList.Value = prbPlayerList.Value + 1;
+                            }
+                            // Code 00
+                            ConfigFile.GLOBAL_PLAYER = DataOps.AddAbsoluteSeason(ConfigFile.GLOBAL_PLAYER, playerName.Trim());
+                            ConfigFile.GLOBAL_PLAYER = DataOps.PopulateKDpM(ConfigFile.GLOBAL_PLAYER);
+                            FileInfo textFile = DataOps.PlayerDataToFile(ConfigFile.GLOBAL_PLAYER);
+                            frmShowCharts newChart = new frmShowCharts();
+                            newChart.Elaborate(ConfigFile.GLOBAL_PLAYER, playerName, textFile);
+                            newChart.btnPrintCharts_Click(this, null);
+                            //newChart.Visible = true;
+                        }
+                        else
+                        {
+                            prbPlayerList.Value = prbPlayerList.Value + 5;
+                        }
+
+                    }
+
+                    ConfigFile.IncrementTaskFinished();
+                    MessageBox.Show("Finished elaborating stats and printing relative PDFs for " + ConfigFile.ACTUAL_PLAYER_LIST.Count() + " players.", "Stats Elaboration", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+                }
+                else
+                {
+                    MessageBox.Show("No Player Names inserted." + Environment.NewLine + "No data will be elaborated.", "Stats Elaboration", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+                }
+            }
+            else
+            {
+                MessageBox.Show("No Player Names inserted." + Environment.NewLine + "No data will be elaborated.", "Stats Elaboration", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+            }
 
             //this.Enabled = false;
             //ConfigFile.IncrementTaskStarted();

@@ -40,10 +40,10 @@
             this.button1 = new System.Windows.Forms.Button();
             this.lblLastSeason = new System.Windows.Forms.Label();
             this.lblElaborating = new System.Windows.Forms.Label();
+            this.prbPlayerList = new System.Windows.Forms.ProgressBar();
+            this.button2 = new System.Windows.Forms.Button();
             this.lblActiveTasks = new System.Windows.Forms.Label();
             this.btnSQL = new System.Windows.Forms.Button();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.button2 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblCopyright
@@ -51,7 +51,7 @@
             this.lblCopyright.AutoSize = true;
             this.lblCopyright.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.lblCopyright.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCopyright.Location = new System.Drawing.Point(12, 382);
+            this.lblCopyright.Location = new System.Drawing.Point(369, 287);
             this.lblCopyright.Name = "lblCopyright";
             this.lblCopyright.Size = new System.Drawing.Size(157, 12);
             this.lblCopyright.TabIndex = 0;
@@ -63,7 +63,7 @@
             // 
             this.btnOne.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnOne.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnOne.Location = new System.Drawing.Point(12, 106);
+            this.btnOne.Location = new System.Drawing.Point(10, 112);
             this.btnOne.Name = "btnOne";
             this.btnOne.Size = new System.Drawing.Size(274, 28);
             this.btnOne.TabIndex = 1;
@@ -78,7 +78,7 @@
             // 
             this.btnTest.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnTest.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnTest.Location = new System.Drawing.Point(12, 72);
+            this.btnTest.Location = new System.Drawing.Point(12, 45);
             this.btnTest.Name = "btnTest";
             this.btnTest.Size = new System.Drawing.Size(274, 28);
             this.btnTest.TabIndex = 2;
@@ -92,7 +92,7 @@
             // 
             this.btnGetSinglePlayer.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnGetSinglePlayer.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGetSinglePlayer.Location = new System.Drawing.Point(12, 169);
+            this.btnGetSinglePlayer.Location = new System.Drawing.Point(10, 175);
             this.btnGetSinglePlayer.Name = "btnGetSinglePlayer";
             this.btnGetSinglePlayer.Size = new System.Drawing.Size(274, 27);
             this.btnGetSinglePlayer.TabIndex = 3;
@@ -118,9 +118,9 @@
             // 
             // prbSinglePlayer
             // 
-            this.prbSinglePlayer.Location = new System.Drawing.Point(13, 196);
+            this.prbSinglePlayer.Location = new System.Drawing.Point(290, 175);
             this.prbSinglePlayer.Name = "prbSinglePlayer";
-            this.prbSinglePlayer.Size = new System.Drawing.Size(272, 23);
+            this.prbSinglePlayer.Size = new System.Drawing.Size(272, 27);
             this.prbSinglePlayer.TabIndex = 5;
             this.ttBtnOne.SetToolTip(this.prbSinglePlayer, "State of the \'Single Player Data\' download process.");
             // 
@@ -129,9 +129,9 @@
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
             this.button1.ForeColor = System.Drawing.Color.Black;
-            this.button1.Location = new System.Drawing.Point(13, 235);
+            this.button1.Location = new System.Drawing.Point(10, 241);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(272, 27);
+            this.button1.Size = new System.Drawing.Size(274, 27);
             this.button1.TabIndex = 9;
             this.button1.Text = "Single Player Data from DB";
             this.ttBtnOne.SetToolTip(this.button1, "Elaborate Single Player stats taking data from DB\r\n(faster then Web, data not upd" +
@@ -145,7 +145,7 @@
             this.lblLastSeason.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.lblLastSeason.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLastSeason.ForeColor = System.Drawing.Color.Red;
-            this.lblLastSeason.Location = new System.Drawing.Point(91, 42);
+            this.lblLastSeason.Location = new System.Drawing.Point(292, 18);
             this.lblLastSeason.Name = "lblLastSeason";
             this.lblLastSeason.Size = new System.Drawing.Size(118, 16);
             this.lblLastSeason.TabIndex = 6;
@@ -161,7 +161,7 @@
             this.lblElaborating.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.lblElaborating.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblElaborating.ForeColor = System.Drawing.Color.Red;
-            this.lblElaborating.Location = new System.Drawing.Point(91, 265);
+            this.lblElaborating.Location = new System.Drawing.Point(288, 246);
             this.lblElaborating.MaximumSize = new System.Drawing.Size(350, 50);
             this.lblElaborating.Name = "lblElaborating";
             this.lblElaborating.Size = new System.Drawing.Size(117, 19);
@@ -171,43 +171,19 @@
             this.ttBtnOne.SetToolTip(this.lblElaborating, "Shows actual state of DB connection/elaboration");
             this.lblElaborating.UseCompatibleTextRendering = true;
             // 
-            // lblActiveTasks
+            // prbPlayerList
             // 
-            this.lblActiveTasks.AutoSize = true;
-            this.lblActiveTasks.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.lblActiveTasks.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblActiveTasks.ForeColor = System.Drawing.Color.Yellow;
-            this.lblActiveTasks.Location = new System.Drawing.Point(12, 362);
-            this.lblActiveTasks.Name = "lblActiveTasks";
-            this.lblActiveTasks.Size = new System.Drawing.Size(106, 16);
-            this.lblActiveTasks.TabIndex = 7;
-            this.lblActiveTasks.Text = "Active Tasks: ";
-            // 
-            // btnSQL
-            // 
-            this.btnSQL.Enabled = false;
-            this.btnSQL.ForeColor = System.Drawing.Color.Black;
-            this.btnSQL.Location = new System.Drawing.Point(33, 140);
-            this.btnSQL.Name = "btnSQL";
-            this.btnSQL.Size = new System.Drawing.Size(231, 21);
-            this.btnSQL.TabIndex = 8;
-            this.btnSQL.Text = "Test SQL";
-            this.btnSQL.UseVisualStyleBackColor = true;
-            this.btnSQL.Click += new System.EventHandler(this.btnSQL_Click);
-            // 
-            // progressBar1
-            // 
-            this.progressBar1.Location = new System.Drawing.Point(12, 324);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(272, 23);
-            this.progressBar1.TabIndex = 12;
-            this.ttBtnOne.SetToolTip(this.progressBar1, "State of the \'Single Player Data\' download process.");
+            this.prbPlayerList.Location = new System.Drawing.Point(290, 208);
+            this.prbPlayerList.Name = "prbPlayerList";
+            this.prbPlayerList.Size = new System.Drawing.Size(272, 27);
+            this.prbPlayerList.TabIndex = 12;
+            this.ttBtnOne.SetToolTip(this.prbPlayerList, "State of the \'Single Player Data\' download process.");
             // 
             // button2
             // 
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(11, 297);
+            this.button2.Location = new System.Drawing.Point(10, 208);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(274, 27);
             this.button2.TabIndex = 11;
@@ -217,13 +193,37 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // lblActiveTasks
+            // 
+            this.lblActiveTasks.AutoSize = true;
+            this.lblActiveTasks.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.lblActiveTasks.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblActiveTasks.ForeColor = System.Drawing.Color.Yellow;
+            this.lblActiveTasks.Location = new System.Drawing.Point(12, 283);
+            this.lblActiveTasks.Name = "lblActiveTasks";
+            this.lblActiveTasks.Size = new System.Drawing.Size(106, 16);
+            this.lblActiveTasks.TabIndex = 7;
+            this.lblActiveTasks.Text = "Active Tasks: ";
+            // 
+            // btnSQL
+            // 
+            this.btnSQL.Enabled = false;
+            this.btnSQL.ForeColor = System.Drawing.Color.Black;
+            this.btnSQL.Location = new System.Drawing.Point(295, 115);
+            this.btnSQL.Name = "btnSQL";
+            this.btnSQL.Size = new System.Drawing.Size(231, 21);
+            this.btnSQL.TabIndex = 8;
+            this.btnSQL.Text = "Admin: Load to SQL Server";
+            this.btnSQL.UseVisualStyleBackColor = true;
+            this.btnSQL.Click += new System.EventHandler(this.btnSQL_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(298, 399);
-            this.Controls.Add(this.progressBar1);
+            this.ClientSize = new System.Drawing.Size(572, 306);
+            this.Controls.Add(this.prbPlayerList);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.lblElaborating);
             this.Controls.Add(this.button1);
@@ -263,7 +263,7 @@
         private System.Windows.Forms.Button btnSQL;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label lblElaborating;
-        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.ProgressBar prbPlayerList;
         private System.Windows.Forms.Button button2;
     }
 }

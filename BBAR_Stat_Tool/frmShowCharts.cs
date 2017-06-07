@@ -215,13 +215,14 @@ namespace BBAR_Stat_Tool
 
         }
 
-        private void btnPrintCharts_Click(object sender, EventArgs e)
+        public void btnPrintCharts_Click(object sender, EventArgs e)
         {
             try
             {
                 string filePDF = PdfOps.CreatePDFFileFromTxtFile(fileText.FullName, plName);
                 if(File.Exists(filePDF))
-                    System.Diagnostics.Process.Start(filePDF);
+                    if(e != null)
+                        System.Diagnostics.Process.Start(filePDF);
 
                 //Bitmap textImage = GraphOps.CreateBitmapImage(txtFile, true);
                 //PdfOps pdfOp = new PdfOps();
