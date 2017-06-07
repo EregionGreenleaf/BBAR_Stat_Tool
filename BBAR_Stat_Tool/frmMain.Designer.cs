@@ -42,8 +42,10 @@
             this.lblElaborating = new System.Windows.Forms.Label();
             this.prbPlayerList = new System.Windows.Forms.ProgressBar();
             this.button2 = new System.Windows.Forms.Button();
-            this.lblActiveTasks = new System.Windows.Forms.Label();
             this.btnSQL = new System.Windows.Forms.Button();
+            this.lblActiveTasks = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // lblCopyright
@@ -51,7 +53,7 @@
             this.lblCopyright.AutoSize = true;
             this.lblCopyright.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.lblCopyright.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCopyright.Location = new System.Drawing.Point(369, 287);
+            this.lblCopyright.Location = new System.Drawing.Point(367, 291);
             this.lblCopyright.Name = "lblCopyright";
             this.lblCopyright.Size = new System.Drawing.Size(157, 12);
             this.lblCopyright.TabIndex = 0;
@@ -188,10 +190,23 @@
             this.button2.Size = new System.Drawing.Size(274, 27);
             this.button2.TabIndex = 11;
             this.button2.Text = "List of Players\' Data from Web";
-            this.ttBtnOne.SetToolTip(this.button2, "Download all available Data of a single Player.\r\nOutput will be set in a file wit" +
-        "h the name of the Player.");
+            this.ttBtnOne.SetToolTip(this.button2, "Download all available Data of a list of players.\r\nOutput will be set in a series" +
+        " of files with the name \r\nof the Players, with the relative PDF.");
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // btnSQL
+            // 
+            this.btnSQL.Enabled = false;
+            this.btnSQL.ForeColor = System.Drawing.Color.Black;
+            this.btnSQL.Location = new System.Drawing.Point(295, 115);
+            this.btnSQL.Name = "btnSQL";
+            this.btnSQL.Size = new System.Drawing.Size(231, 21);
+            this.btnSQL.TabIndex = 8;
+            this.btnSQL.Text = "Admin: Load to SQL Server";
+            this.ttBtnOne.SetToolTip(this.btnSQL, "Reserved to server administration");
+            this.btnSQL.UseVisualStyleBackColor = true;
+            this.btnSQL.Click += new System.EventHandler(this.btnSQL_Click);
             // 
             // lblActiveTasks
             // 
@@ -205,17 +220,15 @@
             this.lblActiveTasks.TabIndex = 7;
             this.lblActiveTasks.Text = "Active Tasks: ";
             // 
-            // btnSQL
+            // pictureBox1
             // 
-            this.btnSQL.Enabled = false;
-            this.btnSQL.ForeColor = System.Drawing.Color.Black;
-            this.btnSQL.Location = new System.Drawing.Point(295, 115);
-            this.btnSQL.Name = "btnSQL";
-            this.btnSQL.Size = new System.Drawing.Size(231, 21);
-            this.btnSQL.TabIndex = 8;
-            this.btnSQL.Text = "Admin: Load to SQL Server";
-            this.btnSQL.UseVisualStyleBackColor = true;
-            this.btnSQL.Click += new System.EventHandler(this.btnSQL_Click);
+            this.pictureBox1.Image = global::BBAR_Stat_Tool.Properties.Resources.Mauler;
+            this.pictureBox1.Location = new System.Drawing.Point(347, -24);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(244, 341);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 13;
+            this.pictureBox1.TabStop = false;
             // 
             // frmMain
             // 
@@ -236,6 +249,7 @@
             this.Controls.Add(this.btnTest);
             this.Controls.Add(this.btnOne);
             this.Controls.Add(this.lblCopyright);
+            this.Controls.Add(this.pictureBox1);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -244,6 +258,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "BBAR Stat Tool";
             this.Load += new System.EventHandler(this.frmMain_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -265,6 +280,7 @@
         private System.Windows.Forms.Label lblElaborating;
         private System.Windows.Forms.ProgressBar prbPlayerList;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 

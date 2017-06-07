@@ -59,5 +59,15 @@ namespace BBAR_Stat_Tool.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Mauler {
+            get {
+                object obj = ResourceManager.GetObject("Mauler", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }
