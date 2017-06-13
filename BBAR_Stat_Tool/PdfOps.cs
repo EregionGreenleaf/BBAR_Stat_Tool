@@ -142,34 +142,46 @@ namespace BBAR_Stat_Tool
         {
             Document doc = new Document();
             Section section = doc.AddSection();
+            section.PageSetup.TopMargin = 25;
             section.PageSetup.LeftMargin = 30;
-            section.PageSetup.RightMargin = 10;
+            section.PageSetup.RightMargin = 30;
 
-            MigraDoc.DocumentObjectModel.Font font = new MigraDoc.DocumentObjectModel.Font("Courier New", 14);
+            MigraDoc.DocumentObjectModel.Font font = new MigraDoc.DocumentObjectModel.Font("Adobe Garamond Pro", 18);
             font.Bold = true;
             font.Italic = false;
             font.Underline = Underline.None;
             Paragraph paragraph = section.AddParagraph();
             paragraph.AddFormattedText(playerName + "'s Stats up to Season " + ConfigFile.SEASON_LAST, font);
-
+            paragraph.Format.Alignment = ParagraphAlignment.Center;
+            Paragraph paragraph2 = section.AddParagraph();
+            paragraph2.AddFormattedText("  ", new MigraDoc.DocumentObjectModel.Font("Courier New", 10));
 
             if (new FileInfo(Path.Combine(ConfigFile.DIRECTORY_OUTPUT.FullName, "chart.png")).Exists)
             {
                 MigraDoc.DocumentObjectModel.Shapes.Image image = section.AddImage(Path.Combine(ConfigFile.DIRECTORY_OUTPUT.FullName, "chart.png"));
+                image.Width = "16cm";
                 image.LockAspectRatio = true;
-                image.Left = 0;
+                image.Left = MigraDoc.DocumentObjectModel.Shapes.ShapePosition.Center;
+                image.LineFormat.Visible = true;
+                image.LineFormat.Width = 1;
             }
             if (new FileInfo(Path.Combine(ConfigFile.DIRECTORY_OUTPUT.FullName, "chart2.png")).Exists)
             {
                 MigraDoc.DocumentObjectModel.Shapes.Image image = section.AddImage(Path.Combine(ConfigFile.DIRECTORY_OUTPUT.FullName, "chart2.png"));
+                image.Width = "16cm";
                 image.LockAspectRatio = true;
-                image.Left = 0;
+                image.Left = MigraDoc.DocumentObjectModel.Shapes.ShapePosition.Center;
+                image.LineFormat.Visible = true;
+                image.LineFormat.Width = 1;
             }
             if (new FileInfo(Path.Combine(ConfigFile.DIRECTORY_OUTPUT.FullName, "chart3.png")).Exists)
             {
                 MigraDoc.DocumentObjectModel.Shapes.Image image = section.AddImage(Path.Combine(ConfigFile.DIRECTORY_OUTPUT.FullName, "chart3.png"));
+                image.Width = "16cm";
                 image.LockAspectRatio = true;
-                image.Left = 0;
+                image.Left = MigraDoc.DocumentObjectModel.Shapes.ShapePosition.Center;
+                image.LineFormat.Visible = true;
+                image.LineFormat.Width = 1;
             }
 
             //just font arrangements as you wish

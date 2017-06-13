@@ -604,13 +604,16 @@ namespace BBAR_Stat_Tool
         public static Section PrintData(Section section, string sImageText)
         {
             MigraDoc.DocumentObjectModel.Font font;
+            MigraDoc.DocumentObjectModel.Font fontHeader;
+
             Table table = section.AddTable();
+            table.Format.Alignment = ParagraphAlignment.Center;
             table.Style = "Table";
             table.Borders.Visible = false;
             table.Borders.Width = 0.2;
             //table.Borders.Left.Width = 0.2;
             //table.Borders.Right.Width = 0.2;
-            table.Rows.LeftIndent = 0;
+            table.Rows.LeftIndent = 20;
 
             // ## COLUMNS FORMAT SECTION
             Column column = table.AddColumn("2.5cm");
@@ -643,29 +646,60 @@ namespace BBAR_Stat_Tool
             font.Italic = false;
             font.Underline = Underline.None;
             Row row = table.AddRow();
-            row.Format.Font = font;
-            row.Cells[0].AddParagraph("TYPE");
-            row.Cells[1].AddParagraph("WINS");
-            row.Cells[2].AddParagraph("LOSSES");
-            row.Cells[3].AddParagraph("W/Lr");
-            row.Cells[4].AddParagraph("KILLS");
-            row.Cells[5].AddParagraph("DEATHS");
-            row.Cells[6].AddParagraph("K/Dr");
-            row.Cells[7].AddParagraph("GAMES");
-            row.Cells[8].AddParagraph("AV.MS");
-            row.Cells[9].AddParagraph("KpM");
-            row.Cells[10].AddParagraph("DpM");
+            //row.Format.Font = font;
+            ////row.Format.Shading = ParagraphFormat.
+            //row.Cells[0].AddParagraph("TYPE");
+            //row.Cells[1].AddParagraph("WINS");
+            //row.Cells[2].AddParagraph("LOSSES");
+            //row.Cells[3].AddParagraph("W/Lr");
+            //row.Cells[4].AddParagraph("KILLS");
+            //row.Cells[5].AddParagraph("DEATHS");
+            //row.Cells[6].AddParagraph("K/Dr");
+            //row.Cells[7].AddParagraph("GAMES");
+            //row.Cells[8].AddParagraph("AV.MS");
+            //row.Cells[9].AddParagraph("KpM");
+            //row.Cells[10].AddParagraph("DpM");
 
             // ROWS
             font = new MigraDoc.DocumentObjectModel.Font("Courier New", 9);
-            font.Bold = false;
+            font.Bold = true;
             font.Italic = true;
             font.Underline = Underline.Single;
+            fontHeader = new MigraDoc.DocumentObjectModel.Font("Courier New", 8);
+            fontHeader.Bold = true;
+            fontHeader.Italic = true;
+            fontHeader.Underline = Underline.None;
+
             row = table.AddRow();
-            row.Format.Font = font;
-            row.Format.Alignment = ParagraphAlignment.Left;
+            row.Shading.Color = Colors.Red;
+            row.Format.Font = fontHeader;
+            row.Format.Font.Color = Colors.Black;
+            row.VerticalAlignment= VerticalAlignment.Center;
+            //row.Format.Alignment 
             row.Cells[0].AddParagraph("ABSOLUTE:");
-            
+            row.Cells[0].Format.Font = font;
+            row.Cells[1].Format.Alignment = ParagraphAlignment.Left;
+            row.Cells[1].AddParagraph("WINS");
+            row.Cells[1].Format.Alignment = ParagraphAlignment.Right;
+            row.Cells[2].AddParagraph("LOSSES");
+            row.Cells[2].Format.Alignment = ParagraphAlignment.Right;
+            row.Cells[3].AddParagraph("W/Lr");
+            row.Cells[3].Format.Alignment = ParagraphAlignment.Right;
+            row.Cells[4].AddParagraph("KILLS");
+            row.Cells[4].Format.Alignment = ParagraphAlignment.Right;
+            row.Cells[5].AddParagraph("DEATHS");
+            row.Cells[5].Format.Alignment = ParagraphAlignment.Right;
+            row.Cells[6].AddParagraph("K/Dr");
+            row.Cells[6].Format.Alignment = ParagraphAlignment.Right;
+            row.Cells[7].AddParagraph("GAMES");
+            row.Cells[7].Format.Alignment = ParagraphAlignment.Right;
+            row.Cells[8].AddParagraph("AV.MS");
+            row.Cells[8].Format.Alignment = ParagraphAlignment.Right;
+            row.Cells[9].AddParagraph("KpM");
+            row.Cells[9].Format.Alignment = ParagraphAlignment.Right;
+            row.Cells[10].AddParagraph("DpM");
+            row.Cells[10].Format.Alignment = ParagraphAlignment.Right;
+
 
 
             string final = string.Empty;
@@ -697,6 +731,9 @@ namespace BBAR_Stat_Tool
                 index++;
                 string[] result = line.Split(';');
 
+                //row.Cells[0].Shading.Color;
+                MigraDoc.DocumentObjectModel.Color color = index % 2 != 0 ? Colors.LightGray : Colors.WhiteSmoke;
+
                 // HEADER ROW
                 font = new MigraDoc.DocumentObjectModel.Font("Courier New", 9);
                 font.Bold = false;
@@ -705,6 +742,7 @@ namespace BBAR_Stat_Tool
                 row = table.AddRow();
                 row.Format.Font = font;
                 row.Format.Alignment = ParagraphAlignment.Right;
+                row.Shading.Color = color;
                 row.Cells[0].AddParagraph(type[counter].ToString());
                 row.Cells[1].AddParagraph(result[3]);
                 row.Cells[2].AddParagraph(result[4]);
@@ -733,42 +771,71 @@ namespace BBAR_Stat_Tool
                     {
                         counter = 0;
                         season++;
+                        row = table.AddRow();
+                        font = new MigraDoc.DocumentObjectModel.Font("Courier New", 9);
+                        font.Bold = true;
+                        font.Italic = true;
+                        font.Underline = Underline.Single;
+                        fontHeader = new MigraDoc.DocumentObjectModel.Font("Courier New", 8);
+                        fontHeader.Bold = true;
+                        fontHeader.Italic = true;
+                        fontHeader.Underline = Underline.None;
+
+                        row = table.AddRow();
+                        row.Shading.Color = Colors.Black;
+                        row.Format.Font = fontHeader;
+                        row.Format.Font.Color = Colors.WhiteSmoke;
+                        row.VerticalAlignment = VerticalAlignment.Center;
+                        //row.Format.Alignment 
                         if (season < 10)
                         {
-                            font = new MigraDoc.DocumentObjectModel.Font("Courier New", 9);
-                            font.Bold = false;
-                            font.Italic = true;
-                            font.Underline = Underline.Single;
-                            row = table.AddRow();
-                            row.Format.Font = font;
-                            row.Format.Alignment = ParagraphAlignment.Left;
-                            row.Cells[0].AddParagraph("SEASON 0" + season + ":");
-
                             //font = new MigraDoc.DocumentObjectModel.Font("Courier New", 9);
                             //font.Bold = false;
                             //font.Italic = true;
                             //font.Underline = Underline.Single;
-                            //paragraph = section.AddParagraph();
-                            //paragraph.AddFormattedText("SEASON 0" + season + ":" + Environment.NewLine, font);
+                            //
+                            //row.Shading.Color = Colors.Black;
+                            //row.Format.Font = font;
+                            //row.Format.Font.Color = Colors.WhiteSmoke;
+                            //row.Format.Alignment = ParagraphAlignment.Left;
+                            row.Cells[0].AddParagraph("SEASON 0" + season + ":");
                         }
                         else
                         {
-                            font = new MigraDoc.DocumentObjectModel.Font("Courier New", 9);
-                            font.Bold = false;
-                            font.Italic = true;
-                            font.Underline = Underline.Single;
-                            row = table.AddRow();
-                            row.Format.Font = font;
-                            row.Format.Alignment = ParagraphAlignment.Left;
-                            row.Cells[0].AddParagraph("SEASON " + season + ":");
-
                             //font = new MigraDoc.DocumentObjectModel.Font("Courier New", 9);
                             //font.Bold = false;
                             //font.Italic = true;
                             //font.Underline = Underline.Single;
-                            //paragraph = section.AddParagraph();
-                            //paragraph.AddFormattedText("SEASON " + season + ":" + Environment.NewLine, font);
+                            //row = table.AddRow();
+                            //row.Shading.Color = Colors.Black;
+                            //row.Format.Font = font;
+                            //row.Format.Font.Color = Colors.WhiteSmoke;
+                            //row.Format.Alignment = ParagraphAlignment.Left;
+                            row.Cells[0].AddParagraph("SEASON " + season + ":");
                         }
+                        row.Cells[0].Format.Font = font;
+                        row.Cells[1].Format.Alignment = ParagraphAlignment.Left;
+                        row.Cells[1].AddParagraph("WINS");
+                        row.Cells[1].Format.Alignment = ParagraphAlignment.Right;
+                        row.Cells[2].AddParagraph("LOSSES");
+                        row.Cells[2].Format.Alignment = ParagraphAlignment.Right;
+                        row.Cells[3].AddParagraph("W/Lr");
+                        row.Cells[3].Format.Alignment = ParagraphAlignment.Right;
+                        row.Cells[4].AddParagraph("KILLS");
+                        row.Cells[4].Format.Alignment = ParagraphAlignment.Right;
+                        row.Cells[5].AddParagraph("DEATHS");
+                        row.Cells[5].Format.Alignment = ParagraphAlignment.Right;
+                        row.Cells[6].AddParagraph("K/Dr");
+                        row.Cells[6].Format.Alignment = ParagraphAlignment.Right;
+                        row.Cells[7].AddParagraph("GAMES");
+                        row.Cells[7].Format.Alignment = ParagraphAlignment.Right;
+                        row.Cells[8].AddParagraph("AV.MS");
+                        row.Cells[8].Format.Alignment = ParagraphAlignment.Right;
+                        row.Cells[9].AddParagraph("KpM");
+                        row.Cells[9].Format.Alignment = ParagraphAlignment.Right;
+                        row.Cells[10].AddParagraph("DpM");
+                        row.Cells[10].Format.Alignment = ParagraphAlignment.Right;
+
                     }
                 }
             }
