@@ -746,22 +746,6 @@ namespace BBAR_Stat_Tool
 
             string[] byClass = ParseByClass(lines);
 
-            //font = new MigraDoc.DocumentObjectModel.Font("Courier New", 9);
-            //font.Bold = true;
-            //font.Italic = false;
-            //font.Underline = Underline.None;
-            //Paragraph paragraph = section.AddParagraph();
-            //paragraph.AddFormattedText(String.Format("{0,-4} {1,-7} {2,-7} {3,-7} {4,-7} {5,-7} {6,-7} {7,-7} {8,-7} {9,-7} {10,-7}",
-            //                    "  TYPE     ", "WINS", "LOSSES", "W/Lr", "KILLS", "DEATHS", "K/Dr", "GAMES", "AV.MS", "KpM", "DpM") +
-            //                    Environment.NewLine, font);
-
-            //font = new MigraDoc.DocumentObjectModel.Font("Courier New", 9);
-            //font.Bold = false;
-            //font.Italic = true;
-            //font.Underline = Underline.Single;
-            //paragraph = section.AddParagraph();
-            //paragraph.AddFormattedText("ABSOLUTE:" + Environment.NewLine, font);
-
             int index = 0;
             foreach (string line in lines)
             {
@@ -791,7 +775,6 @@ namespace BBAR_Stat_Tool
                 row.Cells[8].AddParagraph(result[10]);
                 row.Cells[9].AddParagraph(result[11]);
                 row.Cells[10].AddParagraph(result[12]);
-
 
                 counter++;
                 if (counter > 4)
@@ -847,7 +830,7 @@ namespace BBAR_Stat_Tool
 
 
             // ByClass Section
-                //section.AddPageBreak();
+            //section.AddPageBreak();
             row = table.AddRow();
             row = table.AddRow();
 

@@ -156,12 +156,12 @@ namespace BBAR_Stat_Tool
             paragraph.Format.Shading.Color = Colors.LightSteelBlue;
             paragraph.Format.Alignment = ParagraphAlignment.Center;
             Paragraph paragraph2 = section.AddParagraph();
-            paragraph2.AddFormattedText("  ", new MigraDoc.DocumentObjectModel.Font("Courier New", 10));
+            paragraph2.AddFormattedText("  ", new MigraDoc.DocumentObjectModel.Font("Courier New", 24));
 
             if (new FileInfo(Path.Combine(ConfigFile.DIRECTORY_OUTPUT.FullName, "chart.png")).Exists)
             {
                 MigraDoc.DocumentObjectModel.Shapes.Image image = section.AddImage(Path.Combine(ConfigFile.DIRECTORY_OUTPUT.FullName, "chart.png"));
-                image.Width = "17cm";
+                image.Width = "18cm";
                 image.LockAspectRatio = true;
                 image.Left = MigraDoc.DocumentObjectModel.Shapes.ShapePosition.Center;
                 image.LineFormat.Visible = true;
@@ -174,7 +174,7 @@ namespace BBAR_Stat_Tool
             if (new FileInfo(Path.Combine(ConfigFile.DIRECTORY_OUTPUT.FullName, "chart2.png")).Exists)
             {
                 MigraDoc.DocumentObjectModel.Shapes.Image image = section.AddImage(Path.Combine(ConfigFile.DIRECTORY_OUTPUT.FullName, "chart2.png"));
-                image.Width = "17cm";
+                image.Width = "18cm";
                 image.LockAspectRatio = true;
                 image.Left = MigraDoc.DocumentObjectModel.Shapes.ShapePosition.Center;
                 image.LineFormat.Visible = true;
@@ -187,7 +187,7 @@ namespace BBAR_Stat_Tool
             if (new FileInfo(Path.Combine(ConfigFile.DIRECTORY_OUTPUT.FullName, "chart3.png")).Exists)
             {
                 MigraDoc.DocumentObjectModel.Shapes.Image image = section.AddImage(Path.Combine(ConfigFile.DIRECTORY_OUTPUT.FullName, "chart3.png"));
-                image.Width = "17cm";
+                image.Width = "18cm";
                 image.LockAspectRatio = true;
                 image.Left = MigraDoc.DocumentObjectModel.Shapes.ShapePosition.Center;
                 image.LineFormat.Visible = true;
