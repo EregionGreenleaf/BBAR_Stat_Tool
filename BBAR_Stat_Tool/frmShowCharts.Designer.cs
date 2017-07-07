@@ -46,6 +46,16 @@
             System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series12 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series13 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series14 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series15 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series16 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series17 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series18 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series19 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series20 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmShowCharts));
             this.crtKDWKr = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.crtKDpM = new System.Windows.Forms.DataVisualization.Charting.Chart();
@@ -54,11 +64,13 @@
             this.pcbStats = new System.Windows.Forms.PictureBox();
             this.btnPrintCharts = new System.Windows.Forms.Button();
             this.rtbData = new System.Windows.Forms.RichTextBox();
+            this.crtByClass = new System.Windows.Forms.DataVisualization.Charting.Chart();
             ((System.ComponentModel.ISupportInitialize)(this.crtKDWKr)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.crtKDpM)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.crtAvMS)).BeginInit();
             this.pnlImageContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pcbStats)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.crtByClass)).BeginInit();
             this.SuspendLayout();
             // 
             // crtKDWKr
@@ -104,6 +116,7 @@
             this.crtKDWKr.Size = new System.Drawing.Size(700, 220);
             this.crtKDWKr.TabIndex = 0;
             this.crtKDWKr.Text = "chart1";
+            this.crtKDWKr.Click += new System.EventHandler(this.crtKDWKr_Click);
             // 
             // crtKDpM
             // 
@@ -243,12 +256,90 @@
             this.rtbData.TabIndex = 7;
             this.rtbData.Text = "";
             // 
+            // crtByClass
+            // 
+            chartArea4.Name = "ChartArea1";
+            this.crtByClass.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.crtByClass.Legends.Add(legend4);
+            this.crtByClass.Location = new System.Drawing.Point(117, 44);
+            this.crtByClass.Name = "crtByClass";
+            series13.BorderWidth = 2;
+            series13.ChartArea = "ChartArea1";
+            series13.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series13.Color = System.Drawing.Color.Blue;
+            series13.CustomProperties = "LineTension=0.3";
+            series13.Legend = "Legend1";
+            series13.Name = "KDr";
+            series14.BorderWidth = 2;
+            series14.ChartArea = "ChartArea1";
+            series14.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series14.Color = System.Drawing.Color.Fuchsia;
+            series14.CustomProperties = "LineTension=0.3";
+            series14.Legend = "Legend1";
+            series14.Name = "WLr";
+            series15.BorderWidth = 2;
+            series15.ChartArea = "ChartArea1";
+            series15.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series15.Color = System.Drawing.Color.Red;
+            series15.CustomProperties = "LineTension=0.3";
+            series15.Legend = "Legend1";
+            series15.Name = "KpM";
+            series16.BorderWidth = 2;
+            series16.ChartArea = "ChartArea1";
+            series16.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series16.Color = System.Drawing.Color.Lime;
+            series16.CustomProperties = "LineTension=0.3";
+            series16.Legend = "Legend1";
+            series16.Name = "DpM";
+            series17.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
+            series17.ChartArea = "ChartArea1";
+            series17.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series17.Color = System.Drawing.Color.Blue;
+            series17.Legend = "Legend1";
+            series17.Name = "avKDr";
+            series17.ShadowOffset = 1;
+            series18.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
+            series18.ChartArea = "ChartArea1";
+            series18.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series18.Color = System.Drawing.Color.Fuchsia;
+            series18.Legend = "Legend1";
+            series18.Name = "avWLr";
+            series18.ShadowOffset = 1;
+            series19.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
+            series19.ChartArea = "ChartArea1";
+            series19.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series19.Color = System.Drawing.Color.Red;
+            series19.Legend = "Legend1";
+            series19.Name = "avKpM";
+            series19.ShadowOffset = 1;
+            series20.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
+            series20.ChartArea = "ChartArea1";
+            series20.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series20.Color = System.Drawing.Color.Lime;
+            series20.Legend = "Legend1";
+            series20.Name = "avDpM";
+            series20.ShadowOffset = 1;
+            this.crtByClass.Series.Add(series13);
+            this.crtByClass.Series.Add(series14);
+            this.crtByClass.Series.Add(series15);
+            this.crtByClass.Series.Add(series16);
+            this.crtByClass.Series.Add(series17);
+            this.crtByClass.Series.Add(series18);
+            this.crtByClass.Series.Add(series19);
+            this.crtByClass.Series.Add(series20);
+            this.crtByClass.Size = new System.Drawing.Size(700, 220);
+            this.crtByClass.TabIndex = 8;
+            this.crtByClass.Text = "TEXT";
+            this.crtByClass.Visible = false;
+            // 
             // frmShowCharts
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(1362, 693);
+            this.Controls.Add(this.crtByClass);
             this.Controls.Add(this.rtbData);
             this.Controls.Add(this.btnPrintCharts);
             this.Controls.Add(this.pnlImageContainer);
@@ -266,6 +357,7 @@
             this.pnlImageContainer.ResumeLayout(false);
             this.pnlImageContainer.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pcbStats)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.crtByClass)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -279,5 +371,6 @@
         private System.Windows.Forms.PictureBox pcbStats;
         private System.Windows.Forms.Button btnPrintCharts;
         private System.Windows.Forms.RichTextBox rtbData;
+        private System.Windows.Forms.DataVisualization.Charting.Chart crtByClass;
     }
 }

@@ -200,7 +200,9 @@ namespace BBAR_Stat_Tool
 
             //just font arrangements as you wish
 
-            section = DataOps.PrintData(section, textfilefullpath);
+            section = DataOps.PrintDataSeason(section, textfilefullpath);
+            section.AddPageBreak();
+            section = DataOps.PrintDataByCategory(section, textfilefullpath);
             //add each line to pdf 
             //foreach (string line in textFileLines)
             //{

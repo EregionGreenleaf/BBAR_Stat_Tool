@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace BBAR_Stat_Tool
 {
@@ -17,7 +18,7 @@ namespace BBAR_Stat_Tool
         public string plName = string.Empty;
         public string txtFile = string.Empty;
         FileInfo fileText;
-        Bitmap txtImage = null;
+        //Bitmap txtImage = null;
 
         public frmShowCharts()
         {
@@ -194,17 +195,121 @@ namespace BBAR_Stat_Tool
                                        Math.Round((double)playerGlobal.Where(x => x.Season == 0 && x.Category == 0).First().GamesPlayed / (double)ConfigFile.SEASON_LAST, 2));
                 this.Text = "BBARST - Live Charts - " + plName;
                 fileText = textFile;
+
+
+
+
+
+                List<double> lightKDr = new List<double>();
+                List<double> lightWLr = new List<double>();
+                List<double> lightKpM = new List<double>();
+                List<double> lightDpM = new List<double>();
+                List<double> mediumKDr = new List<double>();
+                List<double> mediumWLr = new List<double>();
+                List<double> mediumKpM = new List<double>();
+                List<double> mediumDpM = new List<double>();
+                List<double> heavyKDr = new List<double>();
+                List<double> heavyWLr = new List<double>();
+                List<double> heavyKpM = new List<double>();
+                List<double> heavyDpM = new List<double>();
+                List<double> assaultKDr = new List<double>();
+                List<double> assaultWLr = new List<double>();
+                List<double> assaultKpM = new List<double>();
+                List<double> assaultDpM = new List<double>();
+
+                try
+                {
+                    playerGlobal.OrderBy(x => x.Season).ToList().ForEach(z =>
+                    {
+                        if (z.Category == 1)
+                        {
+                            lightKDr.Add(z.KDr == null ? 0 : (double)z.KDr);
+                            lightWLr.Add(z.WLr == null ? 0 : (double)z.WLr);
+                            lightKpM.Add(z.KpM == null ? 0 : (double)z.KpM);
+                            lightDpM.Add(z.DpM == null ? 0 : (double)z.DpM);
+                        }
+                        if (z.Category == 2)
+                        {
+                            mediumKDr.Add(z.KDr == null ? 0 : (double)z.KDr);
+                            mediumWLr.Add(z.WLr == null ? 0 : (double)z.WLr);
+                            mediumKpM.Add(z.KpM == null ? 0 : (double)z.KpM);
+                            mediumDpM.Add(z.DpM == null ? 0 : (double)z.DpM);
+                        }
+                        if (z.Category == 3)
+                        {
+                            heavyKDr.Add(z.KDr == null ? 0 : (double)z.KDr);
+                            heavyWLr.Add(z.WLr == null ? 0 : (double)z.WLr);
+                            heavyKpM.Add(z.KpM == null ? 0 : (double)z.KpM);
+                            heavyDpM.Add(z.DpM == null ? 0 : (double)z.DpM);
+                        }
+                        if (z.Category == 4)
+                        {
+                            assaultKDr.Add(z.KDr == null ? 0 : (double)z.KDr);
+                            assaultWLr.Add(z.WLr == null ? 0 : (double)z.WLr);
+                            assaultKpM.Add(z.KpM == null ? 0 : (double)z.KpM);
+                            assaultDpM.Add(z.DpM == null ? 0 : (double)z.DpM);
+                        }
+                    });
+                }
+                catch(Exception exp)
+                {
+                    Logger.PrintC(exp.Message);
+                }
+
+                //playerGlobal.Where(x => x.Season == 0 && x.Category == 1).FirstOrDefault().DpM;
+                GraphOps.DrawChartByClass(crtByClass, lightKDr.ToArray(), lightWLr.ToArray(), lightKpM.ToArray(), lightDpM.ToArray(), "Light",
+                                    (double)playerGlobal.Where(x => x.Season == 0 && x.Category == 1).FirstOrDefault().KDr,
+                                    (double)playerGlobal.Where(x => x.Season == 0 && x.Category == 1).FirstOrDefault().WLr,
+                                    (double)playerGlobal.Where(x => x.Season == 0 && x.Category == 1).FirstOrDefault().KpM,
+                                    (double)playerGlobal.Where(x => x.Season == 0 && x.Category == 1).FirstOrDefault().DpM);
+                GraphOps.DrawChartByClass(crtByClass, mediumKDr.ToArray(), mediumWLr.ToArray(), mediumKpM.ToArray(), mediumDpM.ToArray(), "Medium",
+                                    (double)playerGlobal.Where(x => x.Season == 0 && x.Category == 2).FirstOrDefault().KDr,
+                                    (double)playerGlobal.Where(x => x.Season == 0 && x.Category == 2).FirstOrDefault().WLr,
+                                    (double)playerGlobal.Where(x => x.Season == 0 && x.Category == 2).FirstOrDefault().KpM,
+                                    (double)playerGlobal.Where(x => x.Season == 0 && x.Category == 2).FirstOrDefault().DpM);
+                GraphOps.DrawChartByClass(crtByClass, heavyKDr.ToArray(), heavyWLr.ToArray(), heavyKpM.ToArray(), heavyDpM.ToArray(), "Heavy",
+                                    (double)playerGlobal.Where(x => x.Season == 0 && x.Category == 3).FirstOrDefault().KDr,
+                                    (double)playerGlobal.Where(x => x.Season == 0 && x.Category == 3).FirstOrDefault().WLr,
+                                    (double)playerGlobal.Where(x => x.Season == 0 && x.Category == 3).FirstOrDefault().KpM,
+                                    (double)playerGlobal.Where(x => x.Season == 0 && x.Category == 3).FirstOrDefault().DpM);
+                GraphOps.DrawChartByClass(crtByClass, assaultKDr.ToArray(), assaultWLr.ToArray(), assaultKpM.ToArray(), assaultDpM.ToArray(), "Assault",
+                                    (double)playerGlobal.Where(x => x.Season == 0 && x.Category == 4).FirstOrDefault().KDr,
+                                    (double)playerGlobal.Where(x => x.Season == 0 && x.Category == 4).FirstOrDefault().WLr,
+                                    (double)playerGlobal.Where(x => x.Season == 0 && x.Category == 4).FirstOrDefault().KpM,
+                                    (double)playerGlobal.Where(x => x.Season == 0 && x.Category == 4).FirstOrDefault().DpM);
+
+
+
+
                 if (toPDF)
                     PdfOps.CreatePDFFileFromTxtFile(textFile.FullName, playerName);
                 else
                     DataOps.PrintData(rtbData, textFile.FullName);
+
+                /*
+                if (new FileInfo(Path.Combine(ConfigFile.DIRECTORY_OUTPUT.FullName, "chart.png")).Exists)
+                    File.Delete(Path.Combine(ConfigFile.DIRECTORY_OUTPUT.FullName, "chart.png"));
+                if (new FileInfo(Path.Combine(ConfigFile.DIRECTORY_OUTPUT.FullName, "chart2.png")).Exists)
+                    File.Delete(Path.Combine(ConfigFile.DIRECTORY_OUTPUT.FullName, "chart2.png"));
+                if (new FileInfo(Path.Combine(ConfigFile.DIRECTORY_OUTPUT.FullName, "chart3.png")).Exists)
+                    File.Delete(Path.Combine(ConfigFile.DIRECTORY_OUTPUT.FullName, "chart3.png"));
+                if (new FileInfo(Path.Combine(ConfigFile.DIRECTORY_OUTPUT.FullName, "Light.png")).Exists)
+                    File.Delete(Path.Combine(ConfigFile.DIRECTORY_OUTPUT.FullName, "Light.png"));
+                if (new FileInfo(Path.Combine(ConfigFile.DIRECTORY_OUTPUT.FullName, "Medium.png")).Exists)
+                    File.Delete(Path.Combine(ConfigFile.DIRECTORY_OUTPUT.FullName, "Medium.png"));
+                if (new FileInfo(Path.Combine(ConfigFile.DIRECTORY_OUTPUT.FullName, "Heavy.png")).Exists)
+                    File.Delete(Path.Combine(ConfigFile.DIRECTORY_OUTPUT.FullName, "Heavy.png"));
+                if (new FileInfo(Path.Combine(ConfigFile.DIRECTORY_OUTPUT.FullName, "Assault.png")).Exists)
+                    File.Delete(Path.Combine(ConfigFile.DIRECTORY_OUTPUT.FullName, "Assault.png"));
+                */
+
                 //Bitmap textImage = GraphOps.CreateBitmapImage(textFile.FullName, toPDF);
                 //if (toPDF)
                 //    txtImage = textImage;
                 //else
                 //    pcbStats.Image = textImage;
             }
-            catch(Exception exp)
+            catch (Exception exp)
             {
 
             }
@@ -228,9 +333,9 @@ namespace BBAR_Stat_Tool
                 //PdfOps pdfOp = new PdfOps();
                 //pdfOp.DrawStats(plName, textImage);
             }
-            catch
+            catch(Exception exp)
             {
-
+                Logger.PrintC(exp.Message);
             }
         }
 
@@ -241,6 +346,9 @@ namespace BBAR_Stat_Tool
             ConfigFile.ACTUAL_MAIN.BringToFront();
         }
 
+        private void crtKDWKr_Click(object sender, EventArgs e)
+        {
 
+        }
     }
 }

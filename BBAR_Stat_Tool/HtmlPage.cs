@@ -10,6 +10,5 @@ namespace BBAR_Stat_Tool
     {
         public string PageName { get; set; }
         public string Body { get; set; }
-
     }
 }
